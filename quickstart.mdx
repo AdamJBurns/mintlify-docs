@@ -6,7 +6,7 @@ icon: 'rocket'
 
 ## Overview
 
-This guide walks you through setting up Link Health Monitor from account creation to your first crawl results. By the end, you'll have a complete picture of your website's link health.
+This guide walks you through setting up SEO Crawler from account creation to your first crawl results. By the end, you'll have a complete picture of your website's link health.
 
 <Info>
   **Time to complete**: ~5 minutes (plus DNS propagation time for domain verification)
@@ -16,7 +16,7 @@ This guide walks you through setting up Link Health Monitor from account creatio
 
 <Steps>
   <Step title="Create Your Account">
-    Visit [app.linkhealthmonitor.com](https://app.linkhealthmonitor.com/signup) and sign up with your email or continue with Google/GitHub authentication.
+    Visit [app.seocrawler.app](https://app.seocrawler.app/signup) and sign up with your email or continue with Google/GitHub authentication.
     
     <Tip>
       Start with our **Free plan** to explore the platform. You can upgrade anytime to unlock more features.
@@ -39,8 +39,8 @@ This guide walks you through setting up Link Health Monitor from account creatio
     Domain verification ensures you have permission to crawl the domain. Add a DNS TXT record to prove ownership:
     
     **Record Type**: `TXT`  
-    **Host/Name**: `_lhm-verify`  
-    **Value**: `lhm-site-verification=<your-token>`
+    **Host/Name**: `_seocrawler-verify`  
+    **Value**: `seocrawler-verification=<your-token>`
     
     <Accordion title="Quick Setup Guides by Provider">
       <AccordionGroup>
@@ -50,7 +50,7 @@ This guide walks you through setting up Link Health Monitor from account creatio
           3. Go to **DNS** → **Records**
           4. Click **Add record**
           5. Select Type: `TXT`
-          6. Name: `_lhm-verify`
+          6. Name: `_seocrawler-verify`
           7. Content: Your verification token
           8. Click **Save**
         </Accordion>
@@ -59,7 +59,7 @@ This guide walks you through setting up Link Health Monitor from account creatio
           2. Go to **My Products** → **DNS**
           3. Click **Add** under Records
           4. Select Type: `TXT`
-          5. Name: `_lhm-verify`
+          5. Name: `_seocrawler-verify`
           6. Value: Your verification token
           7. TTL: 1 Hour
           8. Click **Save**
@@ -70,7 +70,7 @@ This guide walks you through setting up Link Health Monitor from account creatio
           3. Click **Advanced DNS**
           4. Click **Add New Record**
           5. Type: `TXT Record`
-          6. Host: `_lhm-verify`
+          6. Host: `_seocrawler-verify`
           7. Value: Your verification token
           8. Click the checkmark to save
         </Accordion>
@@ -169,7 +169,7 @@ This guide walks you through setting up Link Health Monitor from account creatio
   <Card
     title="Contact Support"
     icon="headset"
-    href="mailto:support@linkhealthmonitor.com"
+    href="mailto:support@seocrawler.app"
   >
     Our team typically responds within 2 hours.
   </Card>

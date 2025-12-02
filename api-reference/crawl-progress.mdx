@@ -20,7 +20,7 @@ Retrieve the current progress of a crawl.
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/progress" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/progress" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -188,10 +188,10 @@ Recommended polling approach:
 async function waitForCrawlComplete(crawlId, pollInterval = 5000) {
   while (true) {
     const response = await fetch(
-      `https://api.linkhealthmonitor.com/v1/crawl/${crawlId}/progress`,
+      `https://api.seocrawler.app/v1/crawl/${crawlId}/progress`,
       {
         headers: {
-          'Authorization': `Bearer ${process.env.LHM_API_KEY}`
+          'Authorization': `Bearer ${process.env.SEO_CRAWLER_API_KEY}`
         }
       }
     );
@@ -238,7 +238,7 @@ POST /v1/crawl/{crawlId}/cancel
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/cancel" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/cancel" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Link Health Monitor",
+  "name": "SEO Crawler",
   "colors": {
     "primary": "#6366f1",
     "light": "#818cf8",
@@ -112,12 +112,12 @@
       "anchors": [
         {
           "anchor": "Dashboard",
-          "href": "https://app.linkhealthmonitor.com",
+          "href": "https://app.seocrawler.app",
           "icon": "gauge-high"
         },
         {
           "anchor": "Status",
-          "href": "https://status.linkhealthmonitor.com",
+          "href": "https://status.seocrawler.app",
           "icon": "signal-bars"
         }
       ]
@@ -131,13 +131,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:support@linkhealthmonitor.com"
+        "href": "mailto:support@seocrawler.app"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "https://app.linkhealthmonitor.com/signup"
+      "href": "https://app.seocrawler.app/signup"
     }
   },
   "contextual": {
@@ -151,9 +151,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/linkhealthmon",
-      "github": "https://github.com/linkhealthmonitor",
-      "linkedin": "https://linkedin.com/company/linkhealthmonitor"
+      "x": "https://x.com/seocrawler",
+      "github": "https://github.com/seocrawler",
+      "linkedin": "https://linkedin.com/company/seocrawler"
     }
   },
   "seo": {

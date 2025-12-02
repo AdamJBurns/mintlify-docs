@@ -47,7 +47,7 @@ Generate a shareable report from crawl results.
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/reports" \
+  "https://api.seocrawler.app/v1/reports" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -107,7 +107,7 @@ Request a PDF version of the report:
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/reports" \
+  "https://api.seocrawler.app/v1/reports" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -132,7 +132,7 @@ curl -X POST \
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/reports/report-123e4567-e89b-12d3-a456-426614174301" \
+  "https://api.seocrawler.app/v1/reports/report-123e4567-e89b-12d3-a456-426614174301" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -143,7 +143,7 @@ curl -X GET \
   "reportId": "report-123e4567-e89b-12d3-a456-426614174301",
   "format": "pdf",
   "status": "ready",
-  "download_url": "https://api.linkhealthmonitor.com/v1/reports/report-123e4567-e89b-12d3-a456-426614174301/download",
+  "download_url": "https://api.seocrawler.app/v1/reports/report-123e4567-e89b-12d3-a456-426614174301/download",
   "file_size": 245678,
   "expires_at": "2024-12-09T16:00:00Z"
 }
@@ -169,7 +169,7 @@ GET /v1/reports
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/reports?domainId=123e4567-e89b-12d3-a456-426614174000" \
+  "https://api.seocrawler.app/v1/reports?domainId=123e4567-e89b-12d3-a456-426614174000" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -249,7 +249,7 @@ PATCH /v1/reports/{reportId}
 
 ```bash
 curl -X PATCH \
-  "https://api.linkhealthmonitor.com/v1/reports/report-123e4567-e89b-12d3-a456-426614174300" \
+  "https://api.seocrawler.app/v1/reports/report-123e4567-e89b-12d3-a456-426614174300" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -281,7 +281,7 @@ DELETE /v1/reports/{reportId}
 
 ```bash
 curl -X DELETE \
-  "https://api.linkhealthmonitor.com/v1/reports/report-123e4567-e89b-12d3-a456-426614174300" \
+  "https://api.seocrawler.app/v1/reports/report-123e4567-e89b-12d3-a456-426614174300" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

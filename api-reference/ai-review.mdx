@@ -34,7 +34,7 @@ Request an AI-powered analysis of a completed crawl.
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/ai-review" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/ai-review" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -186,7 +186,7 @@ GET /v1/ai-review/{reviewId}
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/ai-review/789e4567-e89b-12d3-a456-426614174200" \
+  "https://api.seocrawler.app/v1/ai-review/789e4567-e89b-12d3-a456-426614174200" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -273,7 +273,7 @@ GET /v1/account/usage
     "used": 5,
     "limit": 5,
     "resets_at": "2024-12-15T00:00:00Z",
-    "upgrade_url": "https://app.linkhealthmonitor.com/billing"
+    "upgrade_url": "https://app.seocrawler.app/billing"
   }
 }
 ```

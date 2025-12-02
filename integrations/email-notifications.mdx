@@ -188,7 +188,7 @@ Certificate Details:
 Action Required:
 1. Renew your SSL certificate
 2. Install the new certificate on your server
-3. Verify installation with Link Health Monitor
+3. Verify installation with SEO Crawler
 
 [Check SSL Status] [Renew Guide]
 
@@ -317,7 +317,7 @@ spam@test.com       Crawl Complete: test.com     ✗ Bounced
 <AccordionGroup>
   <Accordion title="Not receiving emails">
     1. Check spam/junk folder
-    2. Add `notifications@linkhealthmonitor.com` to contacts
+    2. Add `notifications@seocrawler.app` to contacts
     3. Verify email address in settings
     4. Check delivery log for bounces
     5. Ensure notification type is enabled
@@ -391,7 +391,7 @@ Manage notifications via API:
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/settings/notifications" \
+  "https://api.seocrawler.app/v1/settings/notifications" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -399,7 +399,7 @@ curl -X GET \
 
 ```bash
 curl -X PATCH \
-  "https://api.linkhealthmonitor.com/v1/settings/notifications" \
+  "https://api.seocrawler.app/v1/settings/notifications" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

@@ -6,7 +6,7 @@ icon: 'key'
 
 ## Overview
 
-The Link Health Monitor API uses API keys for authentication. All API requests must include a valid API key in the request header.
+The SEO Crawler API uses API keys for authentication. All API requests must include a valid API key in the request header.
 
 <Info>
   **API Access**: Available on Pro and Agency plans only.
@@ -42,7 +42,7 @@ Include your API key in the `Authorization` header of every request:
 
 ```bash
 curl -X GET \
-  https://api.linkhealthmonitor.com/v1/domains \
+  https://api.seocrawler.app/v1/domains \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -58,17 +58,17 @@ curl -X GET \
   <Tab title="cURL">
     ```bash
     curl -X GET \
-      https://api.linkhealthmonitor.com/v1/domains \
-      -H "Authorization: Bearer lhm_live_abc123xyz789"
+      https://api.seocrawler.app/v1/domains \
+      -H "Authorization: Bearer seo_live_abc123xyz789"
     ```
   </Tab>
   
   <Tab title="JavaScript">
     ```javascript
-    const response = await fetch('https://api.linkhealthmonitor.com/v1/domains', {
+    const response = await fetch('https://api.seocrawler.app/v1/domains', {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer lhm_live_abc123xyz789',
+        'Authorization': 'Bearer seo_live_abc123xyz789',
         'Content-Type': 'application/json'
       }
     });
@@ -82,12 +82,12 @@ curl -X GET \
     import requests
     
     headers = {
-        'Authorization': 'Bearer lhm_live_abc123xyz789',
+        'Authorization': 'Bearer seo_live_abc123xyz789',
         'Content-Type': 'application/json'
     }
     
     response = requests.get(
-        'https://api.linkhealthmonitor.com/v1/domains',
+        'https://api.seocrawler.app/v1/domains',
         headers=headers
     )
     
@@ -100,10 +100,10 @@ curl -X GET \
     <?php
     $ch = curl_init();
     
-    curl_setopt($ch, CURLOPT_URL, 'https://api.linkhealthmonitor.com/v1/domains');
+    curl_setopt($ch, CURLOPT_URL, 'https://api.seocrawler.app/v1/domains');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer lhm_live_abc123xyz789',
+        'Authorization: Bearer seo_live_abc123xyz789',
         'Content-Type: application/json'
     ]);
     
@@ -119,8 +119,8 @@ curl -X GET \
 
 | Key Type | Prefix | Usage |
 |----------|--------|-------|
-| **Live** | `lhm_live_` | Production use |
-| **Test** | `lhm_test_` | Testing and development |
+| **Live** | `seo_live_` | Production use |
+| **Test** | `seo_test_` | Testing and development |
 
 <Note>
   Test keys work identically to live keys but are labeled differently for easier identification. Both use your production data.
@@ -240,7 +240,7 @@ async function apiRequest(url, options, maxRetries = 3) {
   "error": {
     "code": "invalid_api_key",
     "message": "The provided API key is invalid.",
-    "documentation_url": "https://docs.linkhealthmonitor.com/api-reference/authentication"
+    "documentation_url": "https://docs.seocrawler.app/api-reference/authentication"
   }
 }
 ```
@@ -266,10 +266,10 @@ async function apiRequest(url, options, maxRetries = 3) {
 
 ```bash
 # .env file (never commit this!)
-LHM_API_KEY=lhm_live_abc123xyz789
+SEO_CRAWLER_API_KEY=seo_live_abc123xyz789
 
 # Usage in code
-const apiKey = process.env.LHM_API_KEY;
+const apiKey = process.env.SEO_CRAWLER_API_KEY;
 ```
 
 ### Storing Keys Securely
@@ -288,7 +288,7 @@ Recommended storage options:
 All API requests use this base URL:
 
 ```
-https://api.linkhealthmonitor.com/v1
+https://api.seocrawler.app/v1
 ```
 
 ## Next Steps

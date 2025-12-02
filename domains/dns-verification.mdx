@@ -19,8 +19,8 @@ DNS verification requires adding a TXT record to your domain's DNS settings:
 | Field | Value |
 |-------|-------|
 | **Type** | `TXT` |
-| **Host/Name** | `_lhm-verify` |
-| **Value** | `lhm-site-verification=<your-token>` |
+| **Host/Name** | `_seocrawler-verify` |
+| **Value** | `seocrawler-verification=<your-token>` |
 
 When you click **Verify**, we query your DNS for this record. If found with the correct token, your domain is verified.
 
@@ -31,7 +31,7 @@ When you click **Verify**, we query your DNS for this record. If found with the 
     From your domain's verification page, copy the full TXT record value:
     
     ```
-    lhm-site-verification=abc123xyz789
+    seocrawler-verification=abc123xyz789
     ```
     
     <Warning>
@@ -45,7 +45,7 @@ When you click **Verify**, we query your DNS for this record. If found with the 
   
   <Step title="Add TXT Record">
     Create a new TXT record with:
-    - **Name/Host**: `_lhm-verify`
+    - **Name/Host**: `_seocrawler-verify`
     - **Value/Content**: Your verification token
     - **TTL**: 300 or lowest available
   </Step>
@@ -55,7 +55,7 @@ When you click **Verify**, we query your DNS for this record. If found with the 
   </Step>
   
   <Step title="Click Verify">
-    Return to Link Health Monitor and click **Verify Domain**.
+    Return to SEO Crawler and click **Verify Domain**.
   </Step>
 </Steps>
 
@@ -78,8 +78,8 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         | Field | Value |
         |-------|-------|
         | Type | `TXT` |
-        | Name | `_lhm-verify` |
-        | Content | `lhm-site-verification=<token>` |
+        | Name | `_seocrawler-verify` |
+        | Content | `seocrawler-verification=<token>` |
         | TTL | Auto |
         
         <Note>
@@ -109,8 +109,8 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         | Field | Value |
         |-------|-------|
         | Type | `TXT` |
-        | Name | `_lhm-verify` |
-        | Value | `lhm-site-verification=<token>` |
+        | Name | `_seocrawler-verify` |
+        | Value | `seocrawler-verification=<token>` |
         | TTL | 1 Hour |
       </Step>
       
@@ -136,8 +136,8 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         | Field | Value |
         |-------|-------|
         | Type | `TXT Record` |
-        | Host | `_lhm-verify` |
-        | Value | `lhm-site-verification=<token>` |
+        | Host | `_seocrawler-verify` |
+        | Value | `seocrawler-verification=<token>` |
         | TTL | Automatic |
       </Step>
       
@@ -162,9 +162,9 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         
         | Field | Value |
         |-------|-------|
-        | Record name | `_lhm-verify` |
+        | Record name | `_seocrawler-verify` |
         | Record type | `TXT` |
-        | Value | `"lhm-site-verification=<token>"` |
+        | Value | `"seocrawler-verification=<token>"` |
         | TTL | 300 |
         
         <Warning>
@@ -193,10 +193,10 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         
         | Field | Value |
         |-------|-------|
-        | Host name | `_lhm-verify` |
+        | Host name | `_seocrawler-verify` |
         | Type | `TXT` |
         | TTL | 3600 |
-        | Data | `lhm-site-verification=<token>` |
+        | Data | `seocrawler-verification=<token>` |
       </Step>
       
       <Step title="Save">
@@ -220,8 +220,8 @@ When you click **Verify**, we query your DNS for this record. If found with the 
         
         | Field | Value |
         |-------|-------|
-        | Hostname | `_lhm-verify` |
-        | Value | `lhm-site-verification=<token>` |
+        | Hostname | `_seocrawler-verify` |
+        | Value | `seocrawler-verification=<token>` |
         | TTL | 300 |
       </Step>
       
@@ -234,30 +234,30 @@ When you click **Verify**, we query your DNS for this record. If found with the 
 
 ## Verifying Your DNS Record
 
-Before clicking Verify in Link Health Monitor, confirm your DNS record is active:
+Before clicking Verify in SEO Crawler, confirm your DNS record is active:
 
 ### Using Command Line
 
 <Tabs>
   <Tab title="macOS/Linux">
     ```bash
-    dig TXT _lhm-verify.example.com +short
+    dig TXT _seocrawler-verify.example.com +short
     ```
     
     Expected output:
     ```
-    "lhm-site-verification=abc123xyz789"
+    "seocrawler-verification=abc123xyz789"
     ```
   </Tab>
   
   <Tab title="Windows">
     ```powershell
-    nslookup -type=TXT _lhm-verify.example.com
+    nslookup -type=TXT _seocrawler-verify.example.com
     ```
     
     Expected output:
     ```
-    _lhm-verify.example.com    text = "lhm-site-verification=abc123xyz789"
+    _seocrawler-verify.example.com    text = "seocrawler-verification=abc123xyz789"
     ```
   </Tab>
 </Tabs>
@@ -268,7 +268,7 @@ Before clicking Verify in Link Health Monitor, confirm your DNS record is active
 - [MXToolbox DNS Lookup](https://mxtoolbox.com/DNSLookup.aspx)
 - [WhatsMyDNS](https://www.whatsmydns.net/)
 
-Enter `_lhm-verify.example.com` (with your domain) and select TXT record type.
+Enter `_seocrawler-verify.example.com` (with your domain) and select TXT record type.
 
 ## DNS Propagation
 
@@ -323,9 +323,9 @@ For subdomains, add the TXT record at the subdomain level:
 
 | Domain | TXT Record Host |
 |--------|-----------------|
-| `example.com` | `_lhm-verify` |
-| `blog.example.com` | `_lhm-verify.blog` |
-| `app.example.com` | `_lhm-verify.app` |
+| `example.com` | `_seocrawler-verify` |
+| `blog.example.com` | `_seocrawler-verify.blog` |
+| `app.example.com` | `_seocrawler-verify.app` |
 
 <Tip>
   If you've verified the root domain, you can optionally enable **Auto-verify subdomains** to skip verification for subdomains.

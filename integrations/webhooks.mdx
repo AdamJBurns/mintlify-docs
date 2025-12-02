@@ -6,7 +6,7 @@ icon: 'webhook'
 
 ## Overview
 
-Webhooks allow you to receive real-time HTTP notifications when events occur in Link Health Monitor. Instead of polling the API, webhooks push data to your server immediately when something happens.
+Webhooks allow you to receive real-time HTTP notifications when events occur in SEO Crawler. Instead of polling the API, webhooks push data to your server immediately when something happens.
 
 <Info>
   **Available on**: Pro and Agency plans
@@ -58,11 +58,11 @@ Webhooks allow you to receive real-time HTTP notifications when events occur in 
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/webhooks" \
+  "https://api.seocrawler.app/v1/webhooks" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "url": "https://your-server.com/webhooks/lhm",
+    "url": "https://your-server.com/webhooks/seocrawler",
     "events": ["crawl.completed", "issues.new"],
     "secret": "your-webhook-secret"
   }'
@@ -102,7 +102,7 @@ All webhooks share a common structure:
       "seo_issues": 34
     },
     "duration_seconds": 263,
-    "results_url": "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results"
+    "results_url": "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results"
   }
 }
 ```
@@ -182,7 +182,7 @@ All webhooks share a common structure:
 All webhook requests include a signature header for verification:
 
 ```
-X-LHM-Signature: sha256=abc123...
+X-SEO-Signature: sha256=abc123...
 ```
 
 ### Signature Verification
@@ -205,8 +205,8 @@ X-LHM-Signature: sha256=abc123...
     }
     
     // Express middleware
-    app.post('/webhooks/lhm', express.raw({type: 'application/json'}), (req, res) => {
-      const signature = req.headers['x-lhm-signature'];
+    app.post('/webhooks/seocrawler', express.raw({type: 'application/json'}), (req, res) => {
+      const signature = req.headers['x-seo-signature'];
       const payload = req.body.toString();
       
       if (!verifyWebhook(payload, signature, process.env.WEBHOOK_SECRET)) {
@@ -239,9 +239,9 @@ X-LHM-Signature: sha256=abc123...
         
         return hmac.compare_digest(signature, expected)
     
-    @app.route('/webhooks/lhm', methods=['POST'])
+    @app.route('/webhooks/seocrawler', methods=['POST'])
     def handle_webhook():
-        signature = request.headers.get('X-LHM-Signature')
+        signature = request.headers.get('X-SEO-Signature')
         payload = request.data
         
         if not verify_webhook(payload, signature, os.environ['WEBHOOK_SECRET']):
@@ -264,7 +264,7 @@ X-LHM-Signature: sha256=abc123...
     }
     
     $payload = file_get_contents('php://input');
-    $signature = $_SERVER['HTTP_X_LHM_SIGNATURE'] ?? '';
+    $signature = $_SERVER['HTTP_X_SEO_SIGNATURE'] ?? '';
     $secret = getenv('WEBHOOK_SECRET');
     
     if (!verifyWebhook($payload, $signature, $secret)) {
@@ -333,7 +333,7 @@ issues.new          ✓ Success   200         38ms
 ```javascript
 const processedEvents = new Set();
 
-app.post('/webhooks/lhm', async (req, res) => {
+app.post('/webhooks/seocrawler', async (req, res) => {
   const event = req.body;
   
   // Check if already processed
@@ -358,7 +358,7 @@ app.post('/webhooks/lhm', async (req, res) => {
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/webhooks" \
+  "https://api.seocrawler.app/v1/webhooks" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -366,7 +366,7 @@ curl -X GET \
 
 ```bash
 curl -X PATCH \
-  "https://api.linkhealthmonitor.com/v1/webhooks/wh_123" \
+  "https://api.seocrawler.app/v1/webhooks/wh_123" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -378,7 +378,7 @@ curl -X PATCH \
 
 ```bash
 curl -X DELETE \
-  "https://api.linkhealthmonitor.com/v1/webhooks/wh_123" \
+  "https://api.seocrawler.app/v1/webhooks/wh_123" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -388,7 +388,7 @@ curl -X DELETE \
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/webhooks/wh_123/test" \
+  "https://api.seocrawler.app/v1/webhooks/wh_123/test" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -405,7 +405,7 @@ Use tools like [ngrok](https://ngrok.com) to expose local endpoints:
 ngrok http 3000
 
 # Use the ngrok URL as your webhook endpoint
-# https://abc123.ngrok.io/webhooks/lhm
+# https://abc123.ngrok.io/webhooks/seocrawler
 ```
 
 ## Troubleshooting

@@ -6,7 +6,7 @@ icon: 'globe'
 
 ## Overview
 
-Custom domains let you serve shared reports from your own subdomain (e.g., `reports.youragency.com`) instead of the default Link Health Monitor domain. This provides a seamless branded experience for your clients.
+Custom domains let you serve shared reports from your own subdomain (e.g., `reports.youragency.com`) instead of the default SEO Crawler domain. This provides a seamless branded experience for your clients.
 
 <Info>
   **Available on**: Agency plan only
@@ -22,7 +22,7 @@ Custom domains let you serve shared reports from your own subdomain (e.g., `repo
     Clients trust links from domains they recognize.
   </Card>
   <Card title="White-Label Complete" icon="eye-slash">
-    No visible connection to Link Health Monitor.
+    No visible connection to SEO Crawler.
   </Card>
   <Card title="Custom Email Sender" icon="envelope">
     Send reports from your own email domain.
@@ -34,8 +34,8 @@ Custom domains let you serve shared reports from your own subdomain (e.g., `repo
 ```
 Without Custom Domain:
 ─────────────────────────────────────────
-Share URL: app.linkhealthmonitor.com/share/abc123
-Email From: reports@linkhealthmonitor.com
+Share URL: app.seocrawler.app/share/abc123
+Email From: reports@seocrawler.app
 
 With Custom Domain:
 ─────────────────────────────────────────
@@ -75,7 +75,7 @@ Email From: reports@youragency.com
     |-------|-------|
     | **Type** | `CNAME` |
     | **Name/Host** | `reports` (or your chosen subdomain) |
-    | **Target/Value** | `custom.linkhealthmonitor.com` |
+    | **Target/Value** | `custom.seocrawler.app` |
     | **TTL** | 300 (or Auto) |
   </Step>
   
@@ -106,7 +106,7 @@ Email From: reports@youragency.com
         |-------|-------|
         | Type | `CNAME` |
         | Name | `reports` |
-        | Target | `custom.linkhealthmonitor.com` |
+        | Target | `custom.seocrawler.app` |
         | Proxy status | **DNS only** (gray cloud) |
         
         <Warning>
@@ -133,7 +133,7 @@ Email From: reports@youragency.com
         |-------|-------|
         | Type | `CNAME` |
         | Name | `reports` |
-        | Value | `custom.linkhealthmonitor.com` |
+        | Value | `custom.seocrawler.app` |
         | TTL | 1 Hour |
       </Step>
       
@@ -156,7 +156,7 @@ Email From: reports@youragency.com
         |-------|-------|
         | Type | `CNAME Record` |
         | Host | `reports` |
-        | Value | `custom.linkhealthmonitor.com` |
+        | Value | `custom.seocrawler.app` |
         | TTL | Automatic |
       </Step>
       
@@ -179,7 +179,7 @@ Email From: reports@youragency.com
         |-------|-------|
         | Record name | `reports` |
         | Record type | `CNAME` |
-        | Value | `custom.linkhealthmonitor.com` |
+        | Value | `custom.seocrawler.app` |
         | TTL | 300 |
       </Step>
       
@@ -201,7 +201,7 @@ Verify your CNAME record is active:
 dig CNAME reports.youragency.com +short
 
 # Expected output:
-custom.linkhealthmonitor.com.
+custom.seocrawler.app.
 ```
 
 ```powershell
@@ -209,7 +209,7 @@ custom.linkhealthmonitor.com.
 nslookup -type=CNAME reports.youragency.com
 
 # Expected output:
-reports.youragency.com    canonical name = custom.linkhealthmonitor.com
+reports.youragency.com    canonical name = custom.seocrawler.app
 ```
 
 ### Check SSL Certificate
@@ -234,7 +234,7 @@ Add these records to your DNS:
 |------|------|-------|
 | `TXT` | `_dmarc` | `v=DMARC1; p=none; rua=mailto:dmarc@youragency.com` |
 | `TXT` | `lhm._domainkey` | (Provided in settings) |
-| `TXT` | `@` or root | `v=spf1 include:_spf.linkhealthmonitor.com ~all` |
+| `TXT` | `@` or root | `v=spf1 include:_spf.seocrawler.app ~all` |
 
 ### Verifying Email Setup
 
@@ -277,7 +277,7 @@ Agency plans support one custom domain. Need multiple?
 
 ### Removing a Custom Domain
 
-To revert to the default LHM domain:
+To revert to the default SEO Crawler domain:
 
 1. Go to **Settings** → **Custom Domain**
 2. Click **Remove Custom Domain**
@@ -292,7 +292,7 @@ Share links will revert to using the default domain.
     **Check these common issues:**
     
     1. **CNAME not propagated**: Wait 15-30 minutes and retry
-    2. **Wrong target**: Ensure CNAME points to `custom.linkhealthmonitor.com` exactly
+    2. **Wrong target**: Ensure CNAME points to `custom.seocrawler.app` exactly
     3. **Cloudflare proxy enabled**: Disable orange cloud (use DNS only)
     4. **Conflicting records**: Remove any A records for the same subdomain
     

@@ -28,7 +28,7 @@ Retrieve all domains in your account.
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/domains?status=verified&limit=10" \
+  "https://api.seocrawler.app/v1/domains?status=verified&limit=10" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -127,7 +127,7 @@ GET /v1/domains/{domainId}
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
+  "https://api.seocrawler.app/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -143,7 +143,7 @@ curl -X GET \
   "verification": {
     "method": "dns",
     "verified_at": "2024-11-01T10:30:00Z",
-    "token": "_lhm-verify.example.com"
+    "token": "_seocrawler-verify.example.com"
   },
   "settings": {
     "protocol": "https",
@@ -196,7 +196,7 @@ POST /v1/domains
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/domains" \
+  "https://api.seocrawler.app/v1/domains" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -219,8 +219,8 @@ curl -X POST \
   "status": "pending",
   "verification": {
     "method": "dns",
-    "token": "lhm-site-verification=abc123xyz789",
-    "instructions": "Add TXT record: _lhm-verify.newsite.com"
+    "token": "seocrawler-verification=abc123xyz789",
+    "instructions": "Add TXT record: _seocrawler-verify.newsite.com"
   },
   "created_at": "2024-12-02T15:00:00Z"
 }
@@ -245,7 +245,7 @@ POST /v1/domains/{domainId}/verify
 
 ```bash
 curl -X POST \
-  "https://api.linkhealthmonitor.com/v1/domains/323e4567-e89b-12d3-a456-426614174002/verify" \
+  "https://api.seocrawler.app/v1/domains/323e4567-e89b-12d3-a456-426614174002/verify" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -314,7 +314,7 @@ PATCH /v1/domains/{domainId}
 
 ```bash
 curl -X PATCH \
-  "https://api.linkhealthmonitor.com/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
+  "https://api.seocrawler.app/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -361,7 +361,7 @@ DELETE /v1/domains/{domainId}
 
 ```bash
 curl -X DELETE \
-  "https://api.linkhealthmonitor.com/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
+  "https://api.seocrawler.app/v1/domains/123e4567-e89b-12d3-a456-426614174000" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 

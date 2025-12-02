@@ -36,7 +36,7 @@ Retrieve detailed results from a completed crawl.
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=errors&limit=50" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=errors&limit=50" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -157,7 +157,7 @@ Retrieve all checked URLs (not just errors):
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=all" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=all" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -167,7 +167,7 @@ Retrieve pages with SEO problems:
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=seo" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=seo" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -217,7 +217,7 @@ Retrieve redirect chain analysis:
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=redirects" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results?type=redirects" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -277,7 +277,7 @@ GET /v1/crawl/{crawlId}/export
 
 ```bash
 curl -X GET \
-  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/export?format=csv&type=errors" \
+  "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/export?format=csv&type=errors" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -o broken-links.csv
 ```

@@ -19,7 +19,7 @@ Domain verification is straightforward, but DNS can be tricky. This guide covers
   
   ```bash
   # Check if record exists
-  dig TXT _lhm-verify.example.com +short
+  dig TXT _seocrawler-verify.example.com +short
   ```
 </Accordion>
 
@@ -32,11 +32,11 @@ Domain verification is straightforward, but DNS can be tricky. This guide covers
   
   | Mistake | Entered | Should Be |
   |---------|---------|-----------|
-  | Wrong host | `_lhm-verify.example.com` | `_lhm-verify` |
-  | Added to www | `_lhm-verify.www` | `_lhm-verify` |
-  | Full URL | `_lhm-verify.example.com.` | `_lhm-verify` |
+  | Wrong host | `_seocrawler-verify.example.com` | `_seocrawler-verify` |
+  | Added to www | `_seocrawler-verify.www` | `_seocrawler-verify` |
+  | Full URL | `_seocrawler-verify.example.com.` | `_seocrawler-verify` |
   
-  **Solution**: Delete the incorrect record and create a new one with just `_lhm-verify` as the host/name.
+  **Solution**: Delete the incorrect record and create a new one with just `_seocrawler-verify` as the host/name.
 </Accordion>
 
 <Accordion title="DNS zone is not active">
@@ -72,13 +72,13 @@ Domain verification is straightforward, but DNS can be tricky. This guide covers
   
   The correct format is:
   ```
-  lhm-site-verification=abc123xyz789
+  seocrawler-verification=abc123xyz789
   ```
   
   Not:
   ```
-  lhm-site-verification= abc123xyz789    (extra space)
-  lhm-site-verification=abc123           (incomplete)
+  seocrawler-verification= abc123xyz789    (extra space)
+  seocrawler-verification=abc123           (incomplete)
   abc123xyz789                           (missing prefix)
   ```
 </Accordion>
@@ -97,8 +97,8 @@ Domain verification is straightforward, but DNS can be tricky. This guide covers
   
   If your provider auto-adds quotes, don't add extra ones:
   
-  ❌ `""lhm-site-verification=abc123""`  
-  ✅ `lhm-site-verification=abc123`
+  ❌ `""seocrawler-verification=abc123""`  
+  ✅ `seocrawler-verification=abc123`
 </Accordion>
 
 ### "Verification timed out"
@@ -133,27 +133,27 @@ Check that your TXT record is queryable:
   <Tab title="Using dig (recommended)">
     ```bash
     # Basic lookup
-    dig TXT _lhm-verify.example.com +short
+    dig TXT _seocrawler-verify.example.com +short
     
     # With specific DNS server
-    dig TXT _lhm-verify.example.com @8.8.8.8 +short
+    dig TXT _seocrawler-verify.example.com @8.8.8.8 +short
     
     # Verbose output for debugging
-    dig TXT _lhm-verify.example.com +noall +answer
+    dig TXT _seocrawler-verify.example.com +noall +answer
     ```
     
     **Expected output**:
     ```
-    "lhm-site-verification=abc123xyz789"
+    "seocrawler-verification=abc123xyz789"
     ```
   </Tab>
   
   <Tab title="Using nslookup (Windows)">
     ```powershell
-    nslookup -type=TXT _lhm-verify.example.com
+    nslookup -type=TXT _seocrawler-verify.example.com
     
     # Using Google's DNS
-    nslookup -type=TXT _lhm-verify.example.com 8.8.8.8
+    nslookup -type=TXT _seocrawler-verify.example.com 8.8.8.8
     ```
   </Tab>
   
@@ -161,7 +161,7 @@ Check that your TXT record is queryable:
     Use these if you can't run commands locally:
     
     1. Go to [WhatsMyDNS](https://www.whatsmydns.net/)
-    2. Enter: `_lhm-verify.example.com`
+    2. Enter: `_seocrawler-verify.example.com`
     3. Select: `TXT`
     4. Click: Search
     
@@ -174,7 +174,7 @@ Check that your TXT record is queryable:
 If the record exists, verify the value matches:
 
 1. Copy the value from your DNS provider
-2. Copy the expected value from Link Health Monitor
+2. Copy the expected value from SEO Crawler
 3. Compare character by character
 
 Use a diff tool or this command:
@@ -201,10 +201,10 @@ DNS can propagate at different speeds globally:
 
 ```bash
 # Test from different DNS servers
-dig TXT _lhm-verify.example.com @8.8.8.8 +short      # Google
-dig TXT _lhm-verify.example.com @1.1.1.1 +short      # Cloudflare
-dig TXT _lhm-verify.example.com @9.9.9.9 +short      # Quad9
-dig TXT _lhm-verify.example.com @208.67.222.222 +short # OpenDNS
+dig TXT _seocrawler-verify.example.com @8.8.8.8 +short      # Google
+dig TXT _seocrawler-verify.example.com @1.1.1.1 +short      # Cloudflare
+dig TXT _seocrawler-verify.example.com @9.9.9.9 +short      # Quad9
+dig TXT _seocrawler-verify.example.com @208.67.222.222 +short # OpenDNS
 ```
 
 If some return the record and others don't, propagation is still in progress.
@@ -243,8 +243,8 @@ If some return the record and others don't, propagation is still in progress.
     - Multiple strings need separate quotes
     - Don't escape internal characters
     
-    **Correct**: `"lhm-site-verification=abc123"`  
-    **Wrong**: `lhm-site-verification=abc123`
+    **Correct**: `"seocrawler-verification=abc123"`  
+    **Wrong**: `seocrawler-verification=abc123`
   </Accordion>
   
   <Accordion title="cPanel: Finding DNS settings">
@@ -282,12 +282,12 @@ If you've tried everything above:
     Collect:
     - Your domain name
     - Screenshot of your DNS settings
-    - Output of `dig TXT _lhm-verify.yourdomain.com`
+    - Output of `dig TXT _seocrawler-verify.yourdomain.com`
     - Your DNS provider name
   </Step>
   
   <Step title="Contact Support">
-    Email [support@linkhealthmonitor.com](mailto:support@linkhealthmonitor.com) with:
+    Email [support@seocrawler.app](mailto:support@seocrawler.app) with:
     - Subject: "DNS Verification Issue - [your domain]"
     - Information gathered above
     - Steps you've already tried
