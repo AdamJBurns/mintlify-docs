@@ -106,6 +106,17 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Updates",
+            "pages": [
+              "changelog"
+            ]
+          }
+        ]
       }
     ],
     "global": {
@@ -114,6 +125,11 @@
           "anchor": "Dashboard",
           "href": "https://app.seocrawler.app",
           "icon": "gauge-high"
+        },
+        {
+          "anchor": "Changelog",
+          "href": "/changelog",
+          "icon": "clock-rotate-left"
         },
         {
           "anchor": "Status",

@@ -1,8 +1,276 @@
 ---
 title: 'SEO Crawler'
-description: 'Automated link monitoring, SEO analysis, and website health checks'
+description: 'Automated link monitoring, SEO analysis, and website health checks for modern teams'
 ---
 
-<meta httpEquiv="refresh" content="0; url=/introduction" />
+<img
+  className="block dark:hidden rounded-xl shadow-lg"
+  src="/images/hero-light.png"
+  alt="SEO Crawler Dashboard"
+/>
+<img
+  className="hidden dark:block rounded-xl shadow-lg"
+  src="/images/hero-dark.png"
+  alt="SEO Crawler Dashboard"
+/>
 
-Redirecting to [Introduction](/introduction)...
+## Keep Your Website Healthy, Automatically
+
+SEO Crawler is the comprehensive platform that monitors your website 24/7, detecting broken links, analyzing SEO issues, and providing AI-powered recommendations before problems impact your users or search rankings.
+
+<CardGroup cols={2}>
+  <Card
+    title="Start Crawling in Minutes"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Add your domain, verify ownership, and launch your first crawl in under 5 minutes.
+  </Card>
+  <Card
+    title="Explore Features"
+    icon="sparkles"
+    href="/introduction"
+  >
+    Discover all the ways SEO Crawler keeps your website performing at its best.
+  </Card>
+</CardGroup>
+
+---
+
+## Why Teams Choose SEO Crawler
+
+<CardGroup cols={3}>
+  <Card title="Save Hours Weekly" icon="clock">
+    Automate tedious link checking that would take hours to do manually.
+  </Card>
+  <Card title="Catch Issues First" icon="bell">
+    Get alerted to problems before your users or search engines find them.
+  </Card>
+  <Card title="Improve Rankings" icon="arrow-trend-up">
+    Healthy sites rank higher. Fix issues that hurt your SEO performance.
+  </Card>
+</CardGroup>
+
+---
+
+## Powerful Features, Simple Interface
+
+<Tabs>
+  <Tab title="Link Monitoring">
+    ### Broken Link Detection
+    
+    Automatically discover and track every link on your domain. Get instant alerts when links break, with detailed information about where broken links appear and how to fix them.
+    
+    - **Internal Links**: Find broken navigation and dead-end pages
+    - **External Links**: Detect when third-party resources become unavailable  
+    - **Image Links**: Identify missing images affecting your content
+    - **Redirect Chains**: Spot inefficient redirect paths hurting performance
+    
+    <Card title="Learn More" icon="link-slash" href="/features/broken-link-detection">
+      See how broken link detection works →
+    </Card>
+  </Tab>
+  
+  <Tab title="SEO Analysis">
+    ### On-Page SEO Health
+    
+    Comprehensive analysis of every page's SEO factors, with actionable recommendations to improve your search visibility.
+    
+    - **Meta Tags**: Title, description, and Open Graph optimization
+    - **Heading Structure**: H1-H6 hierarchy analysis
+    - **Image Optimization**: Alt text and file size checks
+    - **Structured Data**: Schema.org validation
+    
+    <Card title="Learn More" icon="magnifying-glass-chart" href="/features/seo-analysis">
+      Explore SEO analysis features →
+    </Card>
+  </Tab>
+  
+  <Tab title="Performance">
+    ### Response Time Tracking
+    
+    Monitor page load times across your entire domain. Identify slow resources and track performance trends over time.
+    
+    - **Load Time Monitoring**: Track TTFB and full page load
+    - **Trend Analysis**: Spot performance degradation early
+    - **Slow Resource Detection**: Find bottlenecks in your stack
+    - **Historical Data**: Compare performance over time
+    
+    <Card title="Learn More" icon="gauge-high" href="/features/response-time-tracking">
+      Dive into performance tracking →
+    </Card>
+  </Tab>
+  
+  <Tab title="AI Reviews">
+    ### Intelligent Analysis
+    
+    Let AI analyze your crawl results and provide prioritized, actionable recommendations with ready-to-use code fixes.
+    
+    - **Smart Prioritization**: Focus on issues with the biggest impact
+    - **Code Snippets**: Copy-paste fixes for common problems
+    - **Natural Language**: Easy-to-understand explanations
+    - **Bulk Recommendations**: Efficiently fix similar issues
+    
+    <Card title="Learn More" icon="sparkles" href="/features/ai-review">
+      See AI reviews in action →
+    </Card>
+  </Tab>
+</Tabs>
+
+---
+
+## How It Works
+
+<Steps>
+  <Step title="Add Your Domain">
+    Enter your website URL and verify ownership via DNS TXT record or meta tag. Takes just a few minutes.
+  </Step>
+  <Step title="Configure Your Crawl">
+    Set crawl depth, page limits, and choose which checks to run. Use presets for common scenarios or customize everything.
+  </Step>
+  <Step title="Launch & Monitor">
+    Start the crawl and watch results come in real-time. Our crawler respects robots.txt and rate limits to avoid impacting your site.
+  </Step>
+  <Step title="Review & Fix">
+    Get a comprehensive report with prioritized issues. Use AI-powered recommendations to fix problems efficiently.
+  </Step>
+</Steps>
+
+---
+
+## Built for Every Team
+
+<AccordionGroup>
+  <Accordion title="Website Owners & Developers" icon="code">
+    Keep your site healthy without constant manual checking. Get alerts when something breaks and fix issues with detailed technical reports.
+    
+    **Popular features:**
+    - Automated crawl scheduling
+    - Webhook integrations for CI/CD
+    - API access for custom workflows
+  </Accordion>
+  
+  <Accordion title="SEO Professionals" icon="chart-line">
+    Deep analysis tools for comprehensive SEO audits. Export professional reports and track improvements over time.
+    
+    **Popular features:**
+    - Full SEO audit reports
+    - Historical trend data
+    - Exportable PDF reports
+  </Accordion>
+  
+  <Accordion title="Marketing Agencies" icon="building">
+    Manage multiple client sites from one dashboard. White-label reports with your branding and custom domains.
+    
+    **Popular features:**
+    - Multi-client management
+    - White-label branding
+    - Custom report domains
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## What You'll Detect
+
+| Issue Type | Description | Impact |
+|------------|-------------|--------|
+| **Broken Links (4xx)** | Pages returning 404 Not Found or similar | Lost traffic, poor UX |
+| **Server Errors (5xx)** | Backend failures and timeouts | Critical functionality loss |
+| **Redirect Chains** | Multiple redirects before final destination | Slow load times, wasted crawl budget |
+| **Redirect Loops** | Infinite redirect cycles | Complete page inaccessibility |
+| **SSL Issues** | Certificate problems and mixed content | Security warnings, trust loss |
+| **Missing Meta Tags** | Pages without titles or descriptions | Poor search visibility |
+| **Missing Alt Text** | Images without accessibility descriptions | SEO penalty, accessibility issues |
+| **Slow Response Times** | Pages taking too long to load | High bounce rates |
+
+---
+
+## Integrations & API
+
+<CardGroup cols={2}>
+  <Card title="REST API" icon="code" href="/api-reference/authentication">
+    Full API access to trigger crawls, fetch results, and integrate with your existing tools and workflows.
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/integrations/webhooks">
+    Get real-time notifications when crawls complete or critical issues are detected.
+  </Card>
+  <Card title="Email Alerts" icon="envelope" href="/integrations/email-notifications">
+    Configurable email notifications for your team when issues need attention.
+  </Card>
+  <Card title="Export Reports" icon="file-export" href="/crawling/sharing-results">
+    Download detailed reports in PDF, CSV, or JSON formats for clients and stakeholders.
+  </Card>
+</CardGroup>
+
+---
+
+## Flexible Plans
+
+<CardGroup cols={3}>
+  <Card title="Free" icon="gift">
+    **$0/month**
+    
+    Perfect for personal sites and testing
+    - 1 domain
+    - 500 pages per crawl
+    - Weekly scheduled crawls
+  </Card>
+  <Card title="Pro" icon="star">
+    **$29/month**
+    
+    For growing businesses
+    - 10 domains
+    - 10,000 pages per crawl
+    - Daily scheduled crawls
+    - API access
+  </Card>
+  <Card title="Agency" icon="building">
+    **$99/month**
+    
+    For agencies and enterprises
+    - Unlimited domains
+    - 100,000 pages per crawl
+    - Hourly scheduling
+    - White-label reports
+  </Card>
+</CardGroup>
+
+<Card title="View All Plans" icon="arrow-right" href="/billing/plans">
+  Compare all features and find the right plan for your needs →
+</Card>
+
+---
+
+## Ready to Get Started?
+
+<CardGroup cols={2}>
+  <Card
+    title="Quickstart Guide"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Add your first domain and run a crawl in under 5 minutes.
+  </Card>
+  <Card
+    title="Core Concepts"
+    icon="book"
+    href="/concepts"
+  >
+    Learn the fundamentals of link monitoring and SEO analysis.
+  </Card>
+  <Card
+    title="API Documentation"
+    icon="code"
+    href="/api-reference/authentication"
+  >
+    Integrate SEO Crawler into your existing workflows.
+  </Card>
+  <Card
+    title="Feature Overview"
+    icon="list-check"
+    href="/introduction"
+  >
+    Explore everything SEO Crawler can do for your website.
+  </Card>
+</CardGroup>
