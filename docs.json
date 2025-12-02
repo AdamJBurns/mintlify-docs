@@ -107,11 +107,6 @@
           "icon": "gauge-high"
         },
         {
-          "anchor": "Changelog",
-          "href": "/changelog",
-          "icon": "clock-rotate-left"
-        },
-        {
           "anchor": "Status",
           "href": "https://status.seocrawler.app",
           "icon": "signal-bars"
