@@ -31,10 +31,10 @@
           {
             "group": "Writing content",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "common/markdown",
+              "common/code",
+              "common/images",
+              "common/reusable-snippets"
             ]
           },
           {
