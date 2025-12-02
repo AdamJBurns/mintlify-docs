@@ -1,18 +1,18 @@
 ---
 title: 'Webhooks'
-description: 'Receive real-time notifications when events occur'
+description: 'Receive real-time notifications when events occur - Coming Soon'
 icon: 'webhook'
 ---
 
-## Overview
+<Note>
+  **Webhooks are coming soon!** This feature will be available alongside our API launch.
+</Note>
 
-Webhooks allow you to receive real-time HTTP notifications when events occur in SEO Crawler. Instead of polling the API, webhooks push data to your server immediately when something happens.
+## What Are Webhooks?
 
-<Info>
-  **Available on**: Pro and Agency plans
-</Info>
+Webhooks allow you to receive real-time HTTP notifications when events occur in SEO Crawler. Instead of polling for updates, webhooks push data to your server immediately when something happens.
 
-## Supported Events
+## Planned Events
 
 | Event | Description |
 |-------|-------------|
@@ -20,70 +20,14 @@ Webhooks allow you to receive real-time HTTP notifications when events occur in 
 | `crawl.completed` | A crawl finished successfully |
 | `crawl.failed` | A crawl encountered an error |
 | `domain.verified` | Domain verification succeeded |
-| `domain.verification_failed` | Domain verification failed |
 | `ssl.expiring` | SSL certificate expiring soon |
 | `ssl.expired` | SSL certificate has expired |
 | `issues.new` | New issues discovered |
 | `issues.resolved` | Previously detected issues fixed |
 
-## Setting Up Webhooks
+## Example Payload
 
-### Via Dashboard
-
-<Steps>
-  <Step title="Open Webhook Settings">
-    Navigate to **Settings** → **Webhooks**.
-  </Step>
-  
-  <Step title="Add Endpoint">
-    Click **Add Webhook** and enter:
-    
-    | Field | Description |
-    |-------|-------------|
-    | **URL** | Your HTTPS endpoint URL |
-    | **Events** | Which events to receive |
-    | **Secret** | Signing secret (auto-generated or custom) |
-  </Step>
-  
-  <Step title="Test Webhook">
-    Click **Send Test** to verify your endpoint works.
-  </Step>
-  
-  <Step title="Save">
-    Click **Save Webhook** to activate.
-  </Step>
-</Steps>
-
-### Via API
-
-```bash
-curl -X POST \
-  "https://api.seocrawler.app/v1/webhooks" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://your-server.com/webhooks/seocrawler",
-    "events": ["crawl.completed", "issues.new"],
-    "secret": "your-webhook-secret"
-  }'
-```
-
-## Webhook Payload
-
-All webhooks share a common structure:
-
-```json
-{
-  "id": "evt_123abc",
-  "event": "crawl.completed",
-  "created_at": "2024-12-02T15:04:23Z",
-  "data": {
-    // Event-specific data
-  }
-}
-```
-
-### Event: crawl.completed
+Here's what a webhook payload will look like:
 
 ```json
 {
@@ -92,7 +36,6 @@ All webhooks share a common structure:
   "created_at": "2024-12-02T15:04:23Z",
   "data": {
     "crawlId": "456e4567-e89b-12d3-a456-426614174100",
-    "domainId": "123e4567-e89b-12d3-a456-426614174000",
     "domain": "example.com",
     "health_score": 78,
     "summary": {
@@ -100,355 +43,36 @@ All webhooks share a common structure:
       "broken_links": 12,
       "redirects": 45,
       "seo_issues": 34
-    },
-    "duration_seconds": 263,
-    "results_url": "https://api.seocrawler.app/v1/crawl/456e4567-e89b-12d3-a456-426614174100/results"
-  }
-}
-```
-
-### Event: crawl.failed
-
-```json
-{
-  "id": "evt_124abc",
-  "event": "crawl.failed",
-  "created_at": "2024-12-02T15:01:23Z",
-  "data": {
-    "crawlId": "456e4567-e89b-12d3-a456-426614174101",
-    "domainId": "123e4567-e89b-12d3-a456-426614174000",
-    "domain": "example.com",
-    "error": {
-      "code": "connection_failed",
-      "message": "Unable to connect to domain. DNS resolution failed."
     }
   }
 }
 ```
 
-### Event: issues.new
+## Security
 
-```json
-{
-  "id": "evt_125abc",
-  "event": "issues.new",
-  "created_at": "2024-12-02T15:04:23Z",
-  "data": {
-    "crawlId": "456e4567-e89b-12d3-a456-426614174100",
-    "domainId": "123e4567-e89b-12d3-a456-426614174000",
-    "domain": "example.com",
-    "new_issues": [
-      {
-        "type": "broken_link",
-        "severity": "high",
-        "url": "https://example.com/deleted-page",
-        "status_code": 404,
-        "found_on": ["https://example.com/", "https://example.com/about"]
-      },
-      {
-        "type": "ssl_expiring",
-        "severity": "critical",
-        "days_remaining": 7,
-        "expires_at": "2024-12-09T00:00:00Z"
-      }
-    ],
-    "total_new": 2
-  }
-}
-```
-
-### Event: ssl.expiring
-
-```json
-{
-  "id": "evt_126abc",
-  "event": "ssl.expiring",
-  "created_at": "2024-12-02T00:00:00Z",
-  "data": {
-    "domainId": "123e4567-e89b-12d3-a456-426614174000",
-    "domain": "example.com",
-    "certificate": {
-      "issuer": "Let's Encrypt",
-      "expires_at": "2024-12-09T00:00:00Z",
-      "days_remaining": 7
-    },
-    "warning_level": "critical"
-  }
-}
-```
-
-## Verifying Webhooks
-
-All webhook requests include a signature header for verification:
+All webhook requests will include a signature header for verification:
 
 ```
 X-SEO-Signature: sha256=abc123...
 ```
 
-### Signature Verification
+## Availability
 
-<Tabs>
-  <Tab title="Node.js">
-    ```javascript
-    const crypto = require('crypto');
-    
-    function verifyWebhook(payload, signature, secret) {
-      const expectedSignature = 'sha256=' + crypto
-        .createHmac('sha256', secret)
-        .update(payload, 'utf8')
-        .digest('hex');
-      
-      return crypto.timingSafeEqual(
-        Buffer.from(signature),
-        Buffer.from(expectedSignature)
-      );
-    }
-    
-    // Express middleware
-    app.post('/webhooks/seocrawler', express.raw({type: 'application/json'}), (req, res) => {
-      const signature = req.headers['x-seo-signature'];
-      const payload = req.body.toString();
-      
-      if (!verifyWebhook(payload, signature, process.env.WEBHOOK_SECRET)) {
-        return res.status(401).send('Invalid signature');
-      }
-      
-      const event = JSON.parse(payload);
-      
-      // Process event...
-      
-      res.status(200).send('OK');
-    });
-    ```
-  </Tab>
-  
-  <Tab title="Python">
-    ```python
-    import hmac
-    import hashlib
-    from flask import Flask, request
-    
-    app = Flask(__name__)
-    
-    def verify_webhook(payload, signature, secret):
-        expected = 'sha256=' + hmac.new(
-            secret.encode(),
-            payload,
-            hashlib.sha256
-        ).hexdigest()
-        
-        return hmac.compare_digest(signature, expected)
-    
-    @app.route('/webhooks/seocrawler', methods=['POST'])
-    def handle_webhook():
-        signature = request.headers.get('X-SEO-Signature')
-        payload = request.data
-        
-        if not verify_webhook(payload, signature, os.environ['WEBHOOK_SECRET']):
-            return 'Invalid signature', 401
-        
-        event = request.json
-        
-        # Process event...
-        
-        return 'OK', 200
-    ```
-  </Tab>
-  
-  <Tab title="PHP">
-    ```php
-    <?php
-    function verifyWebhook($payload, $signature, $secret) {
-        $expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);
-        return hash_equals($expected, $signature);
-    }
-    
-    $payload = file_get_contents('php://input');
-    $signature = $_SERVER['HTTP_X_SEO_SIGNATURE'] ?? '';
-    $secret = getenv('WEBHOOK_SECRET');
-    
-    if (!verifyWebhook($payload, $signature, $secret)) {
-        http_response_code(401);
-        die('Invalid signature');
-    }
-    
-    $event = json_decode($payload, true);
-    
-    // Process event...
-    
-    http_response_code(200);
-    echo 'OK';
-    ```
-  </Tab>
-</Tabs>
-
-## Retry Policy
-
-If your endpoint fails to respond with a 2xx status, we retry:
-
-| Attempt | Delay |
-|---------|-------|
-| 1st retry | 1 minute |
-| 2nd retry | 5 minutes |
-| 3rd retry | 30 minutes |
-| 4th retry | 2 hours |
-| 5th retry | 24 hours |
-
-After 5 failed attempts, the webhook is marked as failed and we send an email notification.
-
-### Monitoring Failures
-
-View webhook delivery status in **Settings** → **Webhooks** → **Delivery Logs**:
-
-```
-Webhook Delivery Log
-═══════════════════════════════════════════════════════════
-Event               Status      Response    Time
-─────────────────────────────────────────────────────────────
-crawl.completed     ✓ Success   200         45ms
-crawl.completed     ✓ Success   200         52ms
-issues.new          ⚠ Retry 1   500         timeout
-issues.new          ✓ Success   200         38ms
-```
-
-## Best Practices
+Webhooks will be available on **Pro** and **Agency** plans.
 
 <CardGroup cols={2}>
-  <Card title="Respond Quickly" icon="bolt">
-    Return 200 immediately, then process async. Timeouts occur after 30 seconds.
+  <Card
+    title="Join API Waitlist"
+    icon="bell"
+    href="https://seocrawler.app/api-waitlist"
+  >
+    Get notified when webhooks are available.
   </Card>
-  <Card title="Verify Signatures" icon="shield-check">
-    Always verify webhook signatures to ensure authenticity.
-  </Card>
-  <Card title="Handle Duplicates" icon="copy">
-    Store event IDs and ignore duplicates (rare but possible during retries).
-  </Card>
-  <Card title="Use HTTPS" icon="lock">
-    Webhook URLs must use HTTPS for security.
-  </Card>
-</CardGroup>
-
-### Idempotent Processing
-
-```javascript
-const processedEvents = new Set();
-
-app.post('/webhooks/seocrawler', async (req, res) => {
-  const event = req.body;
-  
-  // Check if already processed
-  if (processedEvents.has(event.id)) {
-    return res.status(200).send('Already processed');
-  }
-  
-  // Mark as processed before doing work
-  processedEvents.add(event.id);
-  
-  // Respond immediately
-  res.status(200).send('OK');
-  
-  // Process asynchronously
-  processWebhookAsync(event);
-});
-```
-
-## Managing Webhooks
-
-### List Webhooks
-
-```bash
-curl -X GET \
-  "https://api.seocrawler.app/v1/webhooks" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
-
-### Update Webhook
-
-```bash
-curl -X PATCH \
-  "https://api.seocrawler.app/v1/webhooks/wh_123" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "events": ["crawl.completed", "crawl.failed", "issues.new"]
-  }'
-```
-
-### Delete Webhook
-
-```bash
-curl -X DELETE \
-  "https://api.seocrawler.app/v1/webhooks/wh_123" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
-
-## Testing Webhooks
-
-### Send Test Event
-
-```bash
-curl -X POST \
-  "https://api.seocrawler.app/v1/webhooks/wh_123/test" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "event": "crawl.completed"
-  }'
-```
-
-### Local Development
-
-Use tools like [ngrok](https://ngrok.com) to expose local endpoints:
-
-```bash
-# Start ngrok
-ngrok http 3000
-
-# Use the ngrok URL as your webhook endpoint
-# https://abc123.ngrok.io/webhooks/seocrawler
-```
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="Webhooks not being received">
-    1. Check webhook is enabled in settings
-    2. Verify URL is correct and accessible
-    3. Ensure your server returns 200 status
-    4. Check firewall allows incoming requests
-    5. Review delivery logs for errors
-  </Accordion>
-  
-  <Accordion title="Signature verification failing">
-    1. Ensure you're using the correct secret
-    2. Verify you're hashing the raw body (not parsed JSON)
-    3. Check for encoding issues (UTF-8)
-    4. Ensure no middleware modifies the body before verification
-  </Accordion>
-  
-  <Accordion title="Missing events">
-    1. Confirm the event type is selected for this webhook
-    2. Check if webhook is filtered by domain
-    3. Review retry logs for failed deliveries
-  </Accordion>
-</AccordionGroup>
-
-## Next Steps
-
-<CardGroup cols={2}>
   <Card
     title="Email Notifications"
     icon="envelope"
     href="/integrations/email-notifications"
   >
-    Configure email alerts for events.
-  </Card>
-  <Card
-    title="API Reference"
-    icon="code"
-    href="/api-reference/authentication"
-  >
-    Build custom integrations with our API.
+    Use email notifications in the meantime.
   </Card>
 </CardGroup>
-

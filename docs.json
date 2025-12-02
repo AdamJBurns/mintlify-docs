@@ -46,6 +46,7 @@
             "pages": [
               "crawling/starting-crawls",
               "crawling/scan-options",
+              "crawling/crawler-whitelist",
               "crawling/crawl-results",
               "crawling/sharing-results"
             ]
@@ -79,30 +80,9 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Overview",
+            "group": "API",
             "pages": [
-              "api-reference/authentication"
-            ]
-          },
-          {
-            "group": "Domains",
-            "pages": [
-              "api-reference/domains"
-            ]
-          },
-          {
-            "group": "Crawling",
-            "pages": [
-              "api-reference/crawl-start",
-              "api-reference/crawl-progress",
-              "api-reference/crawl-results"
-            ]
-          },
-          {
-            "group": "Analysis",
-            "pages": [
-              "api-reference/ai-review",
-              "api-reference/reports"
+              "api-reference/index"
             ]
           }
         ]

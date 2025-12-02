@@ -1,0 +1,354 @@
+---
+title: 'Crawler Whitelist'
+description: 'Whitelist SEO Crawler to avoid false 403/429 errors in your results'
+icon: 'shield-check'
+---
+
+## Overview
+
+<Note>
+  **This step is optional.** If your website uses a WAF, CDN protection, or rate limiting, you may see some 403 or 429 errors in your crawl results. For more accurate results, you can whitelist our crawler using one of the methods below.
+</Note>
+
+## Identification Methods
+
+Our crawler can be identified using two methods:
+
+### User-Agent String
+
+```
+SEOCrawler/1.0 (https://seocrawler.app)
+```
+
+### Verification Header (Recommended)
+
+Our crawler sends this unique header with every request to your site:
+
+```
+X-SEOCrawler-Verify: c0cf648c-fb8b-41f0-b25e-1c99646701e3
+```
+
+<Tip>
+  Using the verification header is more secure than User-Agent alone, as the token is unique to your domain and cannot be easily spoofed.
+</Tip>
+
+---
+
+## Platform-Specific Instructions
+
+<Tabs>
+  <Tab title="Cloudflare">
+    ## Cloudflare WAF
+    
+    Create a Cloudflare WAF rule to allow our crawler:
+    
+    <Steps>
+      <Step title="Open WAF Settings">
+        Go to **Security** → **WAF** → **Custom Rules**
+      </Step>
+      
+      <Step title="Create New Rule">
+        Click **Create rule** and enter a name like "Allow SEO Crawler"
+      </Step>
+      
+      <Step title="Add Expression">
+        Use this expression to match our verification header:
+        
+        ```
+        (http.request.headers["x-seocrawler-verify"] eq "c0cf648c-fb8b-41f0-b25e-1c99646701e3")
+        ```
+      </Step>
+      
+      <Step title="Set Action">
+        Set the action to **Skip** and check all security features you want to bypass.
+      </Step>
+      
+      <Step title="Deploy">
+        Click **Deploy** to activate the rule.
+      </Step>
+    </Steps>
+    
+    ### Alternative: User-Agent Matching
+    
+    You can also use User-Agent matching if you prefer:
+    
+    ```
+    (http.user_agent contains "SEOCrawler")
+    ```
+    
+    <Warning>
+      User-Agent matching is less secure as it can be spoofed. We recommend using the verification header when possible.
+    </Warning>
+  </Tab>
+  
+  <Tab title="AWS WAF">
+    ## AWS WAF
+    
+    Create an AWS WAF rule to allow our crawler:
+    
+    <Steps>
+      <Step title="Open Web ACL">
+        Go to **AWS WAF** → **Web ACLs** → Select your ACL → **Rules**
+      </Step>
+      
+      <Step title="Add Rule">
+        Click **Add rules** → **Add my own rules and rule groups**
+      </Step>
+      
+      <Step title="Configure Rule">
+        Set up the rule with these settings:
+        
+        | Setting | Value |
+        |---------|-------|
+        | **Rule type** | Regular rule |
+        | **Inspect** | Single header |
+        | **Header field name** | `X-SEOCrawler-Verify` |
+        | **Match type** | Exactly matches string |
+        | **String to match** | `c0cf648c-fb8b-41f0-b25e-1c99646701e3` |
+        | **Action** | Allow |
+      </Step>
+      
+      <Step title="Set Priority">
+        Place this rule **before** your blocking rules to ensure it takes precedence.
+      </Step>
+      
+      <Step title="Save">
+        Click **Add rule** and then **Save** on the Web ACL.
+      </Step>
+    </Steps>
+    
+    <Tip>
+      Make sure the rule priority is set so this allow rule is evaluated before any deny rules.
+    </Tip>
+  </Tab>
+  
+  <Tab title="Nginx">
+    ## Nginx Rate Limiting
+    
+    Add this to your Nginx configuration to exempt our crawler from rate limiting:
+    
+    ### nginx.conf
+    
+    Add this in your `http` or `server` block:
+    
+    ```nginx
+    # Create a map to detect SEO Crawler
+    map $http_x_seocrawler_verify $is_seocrawler {
+        "c0cf648c-fb8b-41f0-b25e-1c99646701e3" 1;
+        default 0;
+    }
+    
+    # Define rate limiting zone
+    limit_req_zone $binary_remote_addr zone=general:10m rate=10r/s;
+    
+    server {
+        location / {
+            # Skip rate limit for SEO Crawler
+            if ($is_seocrawler) {
+                set $limit_rate 0;
+            }
+            
+            limit_req zone=general burst=20 nodelay;
+            
+            # ... your other config
+        }
+    }
+    ```
+    
+    ### Test Configuration
+    
+    After making changes, test and reload:
+    
+    ```bash
+    # Test configuration
+    nginx -t
+    
+    # Reload if test passes
+    systemctl reload nginx
+    ```
+  </Tab>
+  
+  <Tab title="Apache">
+    ## Apache / .htaccess
+    
+    Add this to your Apache configuration or `.htaccess` file:
+    
+    ### .htaccess or Apache config
+    
+    ```apache
+    # Allow SEO Crawler
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        
+        # Skip blocking rules for SEO Crawler
+        RewriteCond %{HTTP:X-SEOCrawler-Verify} "^c0cf648c-fb8b-41f0-b25e-1c99646701e3$"
+        RewriteRule .* - [E=SEOCRAWLER:1]
+    </IfModule>
+    
+    # If using mod_security, add this rule
+    <IfModule mod_security2.c>
+        SecRule REQUEST_HEADERS:X-SEOCrawler-Verify "@streq c0cf648c-fb8b-41f0-b25e-1c99646701e3" \
+            "id:1000001,phase:1,allow,nolog,msg:'Allow SEO Crawler'"
+    </IfModule>
+    ```
+    
+    ### Restart Apache
+    
+    After making changes:
+    
+    ```bash
+    # Test configuration
+    apachectl configtest
+    
+    # Restart if test passes
+    systemctl restart apache2
+    # or
+    systemctl restart httpd
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Other Platforms
+
+<AccordionGroup>
+  <Accordion title="Sucuri">
+    In the Sucuri dashboard:
+    
+    1. Go to **Firewall** → **Access Control**
+    2. Under **Whitelisted HTTP Headers**, add:
+       - Header: `X-SEOCrawler-Verify`
+       - Value: `c0cf648c-fb8b-41f0-b25e-1c99646701e3`
+    3. Save changes
+  </Accordion>
+  
+  <Accordion title="Wordfence (WordPress)">
+    In WordPress admin:
+    
+    1. Go to **Wordfence** → **Firewall** → **Blocking**
+    2. Create a new whitelist rule
+    3. Set pattern type to **Custom Pattern**
+    4. Allow requests containing header `X-SEOCrawler-Verify` with value `c0cf648c-fb8b-41f0-b25e-1c99646701e3`
+  </Accordion>
+  
+  <Accordion title="Akamai">
+    In the Akamai Control Center:
+    
+    1. Go to your property configuration
+    2. Add a new rule under **Security**
+    3. Match on header `X-SEOCrawler-Verify` equals `c0cf648c-fb8b-41f0-b25e-1c99646701e3`
+    4. Set action to **Allow**
+    5. Deploy the configuration
+  </Accordion>
+  
+  <Accordion title="Fastly">
+    Add this VCL snippet:
+    
+    ```vcl
+    sub vcl_recv {
+      if (req.http.X-SEOCrawler-Verify == "c0cf648c-fb8b-41f0-b25e-1c99646701e3") {
+        # Skip rate limiting and security checks
+        set req.http.Fastly-Allow = "true";
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Imperva / Incapsula">
+    In the Imperva dashboard:
+    
+    1. Go to **Security** → **WAF** → **Policies**
+    2. Create a new **Whitelist Rule**
+    3. Set condition: Header `X-SEOCrawler-Verify` equals `c0cf648c-fb8b-41f0-b25e-1c99646701e3`
+    4. Apply the rule
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Verifying the Whitelist
+
+After setting up your whitelist, run a new crawl to verify it's working:
+
+<Steps>
+  <Step title="Start a New Crawl">
+    Run a fresh crawl on your domain.
+  </Step>
+  
+  <Step title="Check Results">
+    Look for a reduction in 403 (Forbidden) and 429 (Too Many Requests) errors.
+  </Step>
+  
+  <Step title="Compare">
+    Compare the results to your previous crawl to see the improvement.
+  </Step>
+</Steps>
+
+<Tip>
+  If you're still seeing blocked requests after whitelisting, check that:
+  - The rule is enabled and deployed
+  - The rule has higher priority than blocking rules
+  - There are no other security layers blocking requests
+</Tip>
+
+---
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Still seeing 403 errors">
+    - Verify the whitelist rule is active
+    - Check for multiple security layers (WAF + CDN + origin)
+    - Ensure the header name is exact: `X-SEOCrawler-Verify`
+    - Check rule priority/order
+  </Accordion>
+  
+  <Accordion title="Still seeing 429 errors">
+    - Rate limiting may be configured at multiple levels
+    - Check both CDN and origin server configurations
+    - Verify the whitelist bypasses rate limiting, not just WAF
+  </Accordion>
+  
+  <Accordion title="Can't find verification header">
+    The header `X-SEOCrawler-Verify` is sent with every request from our crawler. If you can't see it in your logs, check that:
+    - Your server logs include request headers
+    - No upstream proxy is stripping headers
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Security Considerations
+
+<Warning>
+  **Keep your verification token secure.** While we provide a unique token for your domain, you should treat it like a secret. Don't share it publicly.
+</Warning>
+
+Our approach is secure because:
+
+1. **Unique tokens**: Each domain has a unique verification token
+2. **Header-based**: Headers are harder to spoof than User-Agent strings
+3. **Server-side verification**: The check happens at your server/WAF level
+
+---
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card
+    title="Contact Support"
+    icon="headset"
+    href="mailto:support@seocrawler.app"
+  >
+    Our team can help you configure whitelisting.
+  </Card>
+  <Card
+    title="Scan Options"
+    icon="sliders"
+    href="/crawling/scan-options"
+  >
+    Adjust crawl rate to reduce server load.
+  </Card>
+</CardGroup>
+
