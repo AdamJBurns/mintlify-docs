@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: "Link Health Monitor is a powerful SaaS platform for detecting broken links, monitoring website health, and optimizing SEO performance."
+description: "Link Health Monitor helps you keep your website healthy by finding broken links and highlighting issues that need attention."
 ---
 
 <img
@@ -16,7 +16,9 @@ description: "Link Health Monitor is a powerful SaaS platform for detecting brok
 
 ## What is Link Health Monitor?
 
-Link Health Monitor is a production-grade SaaS application designed to help website owners, SEO professionals, and agencies maintain healthy, high-performing websites. Our platform automatically crawls your domains to detect broken links, track response times, analyze SEO signals, and alert you to issues before they impact your users or search rankings.
+Link Health Monitor is a simple tool that helps you keep your website running smoothly. It checks your site for broken links, slow pages, and other common problems so you can fix them before they affect your visitors.
+
+It’s easy to use, quick to set up, and gives you a clear overview of your website’s overall health.
 
 <CardGroup cols={2}>
   <Card
@@ -24,28 +26,28 @@ Link Health Monitor is a production-grade SaaS application designed to help webs
     icon="rocket"
     href="/quickstart"
   >
-    Get up and running in under 5 minutes
+    Get started in a few minutes
   </Card>
   <Card
     title="Add Your First Domain"
     icon="globe"
     href="/domains/adding-domains"
   >
-    Learn how to verify and add domains
+    Learn how to add your website
   </Card>
   <Card
     title="Understanding Crawls"
     icon="spider"
     href="/crawling/how-crawls-work"
   >
-    Deep dive into the crawling engine
+    See how our checks work
   </Card>
   <Card
     title="Pricing Plans"
     icon="credit-card"
     href="/pricing"
   >
-    Choose the right plan for your needs
+    Find the plan that's right for you
   </Card>
 </CardGroup>
 
@@ -53,91 +55,59 @@ Link Health Monitor is a production-grade SaaS application designed to help webs
 
 ### Broken Link Detection
 
-Automatically discover broken links across your entire website. Our crawler follows every internal link and checks both internal and external URLs to identify:
+We scan your website and highlight any links that don’t work, including:
 
-- **404 errors** – Pages that no longer exist
-- **Server errors (5xx)** – Backend issues affecting your site
-- **Timeout issues** – Slow or unresponsive pages
-- **Connection failures** – Unreachable external resources
+- Pages that can’t be found  
+- Pages that won’t load  
+- Unresponsive or slow links  
+- Links to websites that no longer work  
 
 ### Response Time Monitoring
 
-Track how quickly your pages load and identify performance bottlenecks. We measure response times for every link checked and provide:
+See which pages load slowly so you can improve your site’s overall speed and experience.
 
-- Historical trend analysis
-- Slow page identification
-- Performance regression alerts
+### Redirect Checks
 
-### Redirect Chain Analysis
-
-Redirect chains hurt SEO and slow down user experience. We detect and report:
-
-- Redirect chains (301/302 sequences)
-- Redirect loops
-- Mixed protocol redirects (HTTP → HTTPS)
+We show you when links bounce through too many redirects or get stuck in loops.
 
 ### SSL Certificate Monitoring
 
-Stay ahead of SSL expiration and security issues:
+We remind you when your site’s certificate is close to expiring, helping you avoid downtime or security warnings.
 
-- Certificate expiry warnings
-- SSL configuration analysis
-- Mixed content detection
+### SEO Checks
 
-### SEO Analysis
+We look at simple on-page elements like titles, descriptions and headings to help you keep your pages tidy and easy to understand for both visitors and search engines.
 
-Beyond broken links, we analyze critical SEO signals on every page:
+### AI-Powered Reviews  
+*Pro and Agency plans*
 
-- **Meta tags** – Title, description, and Open Graph validation
-- **Heading structure** – H1-H6 hierarchy analysis
-- **Image optimization** – Alt text and file size checks
-- **Internal linking** – Anchor text quality and distribution
-- **Content quality** – Duplicate content and thin page detection
-
-### AI-Powered Reviews
-
-*Available on Pro and Agency plans*
-
-Get intelligent insights powered by AI that analyze your crawl results and provide:
-
-- Prioritized action items
-- SEO improvement recommendations
-- Technical debt identification
+AI gives you friendly suggestions on what to improve first based on your scan results.
 
 ### Email Notifications
 
-Never miss a critical issue. Receive automated email alerts when:
-
-- Broken links are discovered
-- Response times degrade
-- SSL certificates are expiring
-- Scheduled crawls complete
+Get alerts when new issues appear or when scheduled checks finish.
 
 ### Shareable Reports
 
-Generate shareable links to your crawl results for:
-
-- Client reporting
-- Team collaboration
-- Stakeholder updates
+Share your results with clients, teammates or stakeholders in a clean, easy format.
 
 ## How It Works
 
 <Steps>
   <Step title="Add Your Domain">
-    Enter your domain URL and we'll generate a unique DNS TXT record for verification. This ensures you own the domain before we crawl it.
+    Enter your website address to get started.
   </Step>
   <Step title="Verify Ownership">
-    Add the TXT record to your DNS settings. Verification typically propagates within minutes, but can take up to 48 hours depending on your DNS provider.
+    Add a small verification record to your domain so we know it’s yours.
   </Step>
   <Step title="Start Crawling">
-    Once verified, initiate your first crawl. Our engine will systematically check every link on your site, respecting your plan's URL limits and crawl depth settings.
+    Run your first scan and let Link Health Monitor check your site.
   </Step>
   <Step title="Review Results">
-    Access detailed reports showing broken links, response times, SEO issues, and more. Filter by status code, page, or issue type to prioritize fixes.
+    Look through the issues we’ve found and decide what to fix first.
   </Step>
   <Step title="Set Up Automation">
-    Configure scheduled crawls based on your plan (weekly, daily, or hourly) and enable email notifications to stay informed automatically.
+    Turn on scheduled scans and email alerts to stay updated automatically.
   </Step>
 </Steps>
 
@@ -160,38 +130,7 @@ Choose the plan that fits your needs:
 
 ## Security & Privacy
 
-We take security seriously:
-
-- **Domain Verification** – DNS TXT record verification ensures only domain owners can crawl their sites
-- **Row-Level Security** – Database-level isolation ensures your data is private
-- **Secure Authentication** – Industry-standard authentication with Supabase Auth
-- **Encrypted Communications** – All data transmitted over HTTPS
-- **Webhook Validation** – Stripe webhook signatures verified on every payment event
-
-## Built With Modern Technology
-
-Link Health Monitor is built on a robust, scalable tech stack:
-
-<CardGroup cols={3}>
-  <Card title="Next.js 14+" icon="react">
-    App Router with React Server Components
-  </Card>
-  <Card title="TypeScript" icon="code">
-    End-to-end type safety
-  </Card>
-  <Card title="Supabase" icon="database">
-    PostgreSQL database with real-time subscriptions
-  </Card>
-  <Card title="Stripe" icon="credit-card">
-    Secure payment processing
-  </Card>
-  <Card title="Inngest" icon="clock">
-    Reliable background job processing
-  </Card>
-  <Card title="Resend" icon="envelope">
-    Transactional email delivery
-  </Card>
-</CardGroup>
+Your data is protected, private, and only accessible to you. All communication is encrypted, and only verified domain owners can run scans.
 
 ## Getting Help
 
@@ -201,7 +140,7 @@ Link Health Monitor is built on a robust, scalable tech stack:
     icon="book"
     href="/guides"
   >
-    Comprehensive guides and tutorials
+    Step-by-step guides
   </Card>
   <Card
     title="Support"
@@ -215,4 +154,3 @@ Link Health Monitor is built on a robust, scalable tech stack:
 ---
 
 Ready to get started? [Create your free account](/sign-up) and add your first domain in minutes.
-
