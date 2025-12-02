@@ -1,11 +1,45 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "quill",
   "name": "SEO Crawler",
   "colors": {
-    "primary": "#6366f1",
-    "light": "#818cf8",
-    "dark": "#4f46e5"
+    "primary": "#000000",
+    "light": "#666666",
+    "dark": "#ffffff",
+    "background": {
+      "light": "#fafafa",
+      "dark": "#000000"
+    }
+  },
+  "font": {
+    "headings": {
+      "family": "Geist",
+      "weight": 600
+    },
+    "body": {
+      "family": "Geist",
+      "weight": 400
+    },
+    "code": {
+      "family": "Geist Mono"
+    }
+  },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "rounded": "default",
+  "modeToggle": {
+    "default": "dark"
+  },
+  "codeBlock": {
+    "mode": "auto"
+  },
+  "sidebar": {
+    "lines": "container"
+  },
+  "search": {
+    "prompt": "Search documentation..."
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -126,10 +160,13 @@
       }
     ],
     "primary": {
-      "type": "button",
-      "label": "Get Started",
+      "type": "ghost",
+      "label": "Get Started →",
       "href": "https://app.seocrawler.app/signup"
     }
+  },
+  "topbar": {
+    "style": "gradient"
   },
   "contextual": {
     "options": [
@@ -139,6 +176,10 @@
       "claude",
       "cursor"
     ]
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true
   },
   "footer": {
     "socials": {
