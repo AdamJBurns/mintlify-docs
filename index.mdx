@@ -1,97 +1,218 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: Introduction
+description: "Link Health Monitor is a powerful SaaS platform for detecting broken links, monitoring website health, and optimizing SEO performance."
 ---
 
-## Setting up
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.png"
+  alt="Link Health Monitor"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.png"
+  alt="Link Health Monitor"
+/>
 
-Get your documentation site up and running in minutes.
+## What is Link Health Monitor?
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+Link Health Monitor is a production-grade SaaS application designed to help website owners, SEO professionals, and agencies maintain healthy, high-performing websites. Our platform automatically crawls your domains to detect broken links, track response times, analyze SEO signals, and alert you to issues before they impact your users or search rankings.
 
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Quick Start"
+    icon="rocket"
+    href="/quickstart"
   >
-    Edit your docs locally and preview them in real time.
+    Get up and running in under 5 minutes
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Add Your First Domain"
+    icon="globe"
+    href="/domains/adding-domains"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Learn how to verify and add domains
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Understanding Crawls"
+    icon="spider"
+    href="/crawling/how-crawls-work"
   >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+    Deep dive into the crawling engine
   </Card>
   <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
+    title="Pricing Plans"
+    icon="credit-card"
+    href="/pricing"
   >
-    Add sample code to demonstrate how to use your product.
+    Choose the right plan for your needs
+  </Card>
+</CardGroup>
+
+## Key Features
+
+### Broken Link Detection
+
+Automatically discover broken links across your entire website. Our crawler follows every internal link and checks both internal and external URLs to identify:
+
+- **404 errors** – Pages that no longer exist
+- **Server errors (5xx)** – Backend issues affecting your site
+- **Timeout issues** – Slow or unresponsive pages
+- **Connection failures** – Unreachable external resources
+
+### Response Time Monitoring
+
+Track how quickly your pages load and identify performance bottlenecks. We measure response times for every link checked and provide:
+
+- Historical trend analysis
+- Slow page identification
+- Performance regression alerts
+
+### Redirect Chain Analysis
+
+Redirect chains hurt SEO and slow down user experience. We detect and report:
+
+- Redirect chains (301/302 sequences)
+- Redirect loops
+- Mixed protocol redirects (HTTP → HTTPS)
+
+### SSL Certificate Monitoring
+
+Stay ahead of SSL expiration and security issues:
+
+- Certificate expiry warnings
+- SSL configuration analysis
+- Mixed content detection
+
+### SEO Analysis
+
+Beyond broken links, we analyze critical SEO signals on every page:
+
+- **Meta tags** – Title, description, and Open Graph validation
+- **Heading structure** – H1-H6 hierarchy analysis
+- **Image optimization** – Alt text and file size checks
+- **Internal linking** – Anchor text quality and distribution
+- **Content quality** – Duplicate content and thin page detection
+
+### AI-Powered Reviews
+
+*Available on Pro and Agency plans*
+
+Get intelligent insights powered by AI that analyze your crawl results and provide:
+
+- Prioritized action items
+- SEO improvement recommendations
+- Technical debt identification
+
+### Email Notifications
+
+Never miss a critical issue. Receive automated email alerts when:
+
+- Broken links are discovered
+- Response times degrade
+- SSL certificates are expiring
+- Scheduled crawls complete
+
+### Shareable Reports
+
+Generate shareable links to your crawl results for:
+
+- Client reporting
+- Team collaboration
+- Stakeholder updates
+
+## How It Works
+
+<Steps>
+  <Step title="Add Your Domain">
+    Enter your domain URL and we'll generate a unique DNS TXT record for verification. This ensures you own the domain before we crawl it.
+  </Step>
+  <Step title="Verify Ownership">
+    Add the TXT record to your DNS settings. Verification typically propagates within minutes, but can take up to 48 hours depending on your DNS provider.
+  </Step>
+  <Step title="Start Crawling">
+    Once verified, initiate your first crawl. Our engine will systematically check every link on your site, respecting your plan's URL limits and crawl depth settings.
+  </Step>
+  <Step title="Review Results">
+    Access detailed reports showing broken links, response times, SEO issues, and more. Filter by status code, page, or issue type to prioritize fixes.
+  </Step>
+  <Step title="Set Up Automation">
+    Configure scheduled crawls based on your plan (weekly, daily, or hourly) and enable email notifications to stay informed automatically.
+  </Step>
+</Steps>
+
+## Plans & Pricing
+
+Choose the plan that fits your needs:
+
+| Feature | Free | Solo | Pro | Agency |
+|---------|------|------|-----|--------|
+| **Domains** | 1 | 3 | 10 | Unlimited |
+| **URLs per Crawl** | 100 | 1,000 | 10,000 | Unlimited |
+| **Crawl Frequency** | Manual | Weekly | Daily | Hourly |
+| **Max Crawl Depth** | 2 | 5 | 10 | Unlimited |
+| **AI Reviews** | – | – | 5/month | 10/month |
+| **Price** | Free | $19/mo | $49/mo | $149/mo |
+
+<Note>
+  All paid plans include email notifications, shareable reports, and priority support.
+</Note>
+
+## Security & Privacy
+
+We take security seriously:
+
+- **Domain Verification** – DNS TXT record verification ensures only domain owners can crawl their sites
+- **Row-Level Security** – Database-level isolation ensures your data is private
+- **Secure Authentication** – Industry-standard authentication with Supabase Auth
+- **Encrypted Communications** – All data transmitted over HTTPS
+- **Webhook Validation** – Stripe webhook signatures verified on every payment event
+
+## Built With Modern Technology
+
+Link Health Monitor is built on a robust, scalable tech stack:
+
+<CardGroup cols={3}>
+  <Card title="Next.js 14+" icon="react">
+    App Router with React Server Components
+  </Card>
+  <Card title="TypeScript" icon="code">
+    End-to-end type safety
+  </Card>
+  <Card title="Supabase" icon="database">
+    PostgreSQL database with real-time subscriptions
+  </Card>
+  <Card title="Stripe" icon="credit-card">
+    Secure payment processing
+  </Card>
+  <Card title="Inngest" icon="clock">
+    Reliable background job processing
+  </Card>
+  <Card title="Resend" icon="envelope">
+    Transactional email delivery
+  </Card>
+</CardGroup>
+
+## Getting Help
+
+<CardGroup cols={2}>
+  <Card
+    title="Documentation"
+    icon="book"
+    href="/guides"
+  >
+    Comprehensive guides and tutorials
   </Card>
   <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
+    title="Support"
+    icon="headset"
+    href="/support"
   >
-    Display images and other media.
+    Contact our support team
   </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+</CardGroup>
 
-## Need inspiration?
+---
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+Ready to get started? [Create your free account](/sign-up) and add your first domain in minutes.
+
