@@ -5,11 +5,7 @@
   "colors": {
     "primary": "#000000",
     "light": "#666666",
-    "dark": "#ffffff",
-    "background": {
-      "light": "#fafafa",
-      "dark": "#000000"
-    }
+    "dark": "#ffffff"
   },
   "font": {
     "headings": {
@@ -160,8 +156,8 @@
       }
     ],
     "primary": {
-      "type": "ghost",
-      "label": "Get Started →",
+      "type": "button",
+      "label": "Get Started",
       "href": "https://app.seocrawler.app/signup"
     }
   },
