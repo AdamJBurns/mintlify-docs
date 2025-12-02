@@ -1,0 +1,369 @@
+---
+title: 'Custom Domains'
+description: 'Use your own domain for shared reports and client access'
+icon: 'globe'
+---
+
+## Overview
+
+Custom domains let you serve shared reports from your own subdomain (e.g., `reports.youragency.com`) instead of the default Link Health Monitor domain. This provides a seamless branded experience for your clients.
+
+<Info>
+  **Available on**: Agency plan only
+</Info>
+
+## Benefits
+
+<CardGroup cols={2}>
+  <Card title="Professional Branding" icon="briefcase">
+    Clients see your domain, reinforcing your brand.
+  </Card>
+  <Card title="Trust & Credibility" icon="shield-check">
+    Clients trust links from domains they recognize.
+  </Card>
+  <Card title="White-Label Complete" icon="eye-slash">
+    No visible connection to Link Health Monitor.
+  </Card>
+  <Card title="Custom Email Sender" icon="envelope">
+    Send reports from your own email domain.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+```
+Without Custom Domain:
+─────────────────────────────────────────
+Share URL: app.linkhealthmonitor.com/share/abc123
+Email From: reports@linkhealthmonitor.com
+
+With Custom Domain:
+─────────────────────────────────────────
+Share URL: reports.youragency.com/share/abc123
+Email From: reports@youragency.com
+```
+
+## Setting Up a Custom Domain
+
+<Steps>
+  <Step title="Choose Your Subdomain">
+    Select a subdomain for your reports:
+    
+    Common choices:
+    - `reports.youragency.com`
+    - `insights.youragency.com`
+    - `seo.youragency.com`
+    - `audit.youragency.com`
+    
+    <Note>
+      You must use a subdomain, not your root domain. This is required for proper SSL and routing.
+    </Note>
+  </Step>
+  
+  <Step title="Add Domain in Settings">
+    1. Go to **Settings** → **Custom Domain**
+    2. Enter your chosen subdomain
+    3. Click **Add Domain**
+    
+    You'll receive DNS configuration instructions.
+  </Step>
+  
+  <Step title="Configure DNS">
+    Add a CNAME record pointing to our servers:
+    
+    | Field | Value |
+    |-------|-------|
+    | **Type** | `CNAME` |
+    | **Name/Host** | `reports` (or your chosen subdomain) |
+    | **Target/Value** | `custom.linkhealthmonitor.com` |
+    | **TTL** | 300 (or Auto) |
+  </Step>
+  
+  <Step title="Verify Domain">
+    Click **Verify Domain** after adding the CNAME record.
+    
+    <Info>
+      DNS changes can take up to 48 hours to propagate, though most complete within 15 minutes.
+    </Info>
+  </Step>
+  
+  <Step title="SSL Provisioning">
+    We automatically provision an SSL certificate for your custom domain. This may take up to 10 minutes after verification.
+  </Step>
+</Steps>
+
+## DNS Configuration by Provider
+
+<Tabs>
+  <Tab title="Cloudflare">
+    <Steps>
+      <Step title="Open DNS Settings">
+        Go to your domain → **DNS** → **Records**
+      </Step>
+      
+      <Step title="Add CNAME Record">
+        | Field | Value |
+        |-------|-------|
+        | Type | `CNAME` |
+        | Name | `reports` |
+        | Target | `custom.linkhealthmonitor.com` |
+        | Proxy status | **DNS only** (gray cloud) |
+        
+        <Warning>
+          Disable Cloudflare proxy (orange cloud) for this record. Our SSL requires direct connection.
+        </Warning>
+      </Step>
+      
+      <Step title="Save">
+        Click **Save** to create the record.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="GoDaddy">
+    <Steps>
+      <Step title="Open DNS Management">
+        Go to **My Products** → Your domain → **DNS**
+      </Step>
+      
+      <Step title="Add CNAME Record">
+        Click **Add** in the Records section:
+        
+        | Field | Value |
+        |-------|-------|
+        | Type | `CNAME` |
+        | Name | `reports` |
+        | Value | `custom.linkhealthmonitor.com` |
+        | TTL | 1 Hour |
+      </Step>
+      
+      <Step title="Save">
+        Click **Save** to create the record.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="Namecheap">
+    <Steps>
+      <Step title="Open Advanced DNS">
+        Go to **Domain List** → **Manage** → **Advanced DNS**
+      </Step>
+      
+      <Step title="Add CNAME Record">
+        Click **Add New Record**:
+        
+        | Field | Value |
+        |-------|-------|
+        | Type | `CNAME Record` |
+        | Host | `reports` |
+        | Value | `custom.linkhealthmonitor.com` |
+        | TTL | Automatic |
+      </Step>
+      
+      <Step title="Save">
+        Click the checkmark to save.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="AWS Route 53">
+    <Steps>
+      <Step title="Open Hosted Zone">
+        Go to Route 53 → **Hosted zones** → Select your domain
+      </Step>
+      
+      <Step title="Create Record">
+        Click **Create record**:
+        
+        | Field | Value |
+        |-------|-------|
+        | Record name | `reports` |
+        | Record type | `CNAME` |
+        | Value | `custom.linkhealthmonitor.com` |
+        | TTL | 300 |
+      </Step>
+      
+      <Step title="Create">
+        Click **Create records**
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Verifying Your Setup
+
+### Check DNS Propagation
+
+Verify your CNAME record is active:
+
+```bash
+# macOS/Linux
+dig CNAME reports.youragency.com +short
+
+# Expected output:
+custom.linkhealthmonitor.com.
+```
+
+```powershell
+# Windows
+nslookup -type=CNAME reports.youragency.com
+
+# Expected output:
+reports.youragency.com    canonical name = custom.linkhealthmonitor.com
+```
+
+### Check SSL Certificate
+
+After verification, test SSL:
+
+```bash
+curl -I https://reports.youragency.com
+```
+
+You should see `HTTP/2 200` and valid SSL headers.
+
+## Custom Email Domain
+
+To send emails from your domain (e.g., `reports@youragency.com`):
+
+### Additional DNS Records
+
+Add these records to your DNS:
+
+| Type | Name | Value |
+|------|------|-------|
+| `TXT` | `_dmarc` | `v=DMARC1; p=none; rua=mailto:dmarc@youragency.com` |
+| `TXT` | `lhm._domainkey` | (Provided in settings) |
+| `TXT` | `@` or root | `v=spf1 include:_spf.linkhealthmonitor.com ~all` |
+
+### Verifying Email Setup
+
+1. Go to **Settings** → **Custom Domain** → **Email Settings**
+2. Click **Verify Email DNS**
+3. Green checkmarks indicate successful configuration
+
+```
+Email DNS Status
+─────────────────────────────────────────
+SPF Record:     ✓ Verified
+DKIM Record:    ✓ Verified  
+DMARC Record:   ✓ Verified
+
+Email sending enabled from: reports@youragency.com
+```
+
+## Managing Custom Domains
+
+### Changing Your Domain
+
+To switch to a different custom domain:
+
+1. Go to **Settings** → **Custom Domain**
+2. Click **Remove Current Domain**
+3. Add your new domain
+4. Update DNS records
+5. Re-verify
+
+<Warning>
+  Existing share links using the old domain will stop working. Update any shared links before removing.
+</Warning>
+
+### Multiple Custom Domains
+
+Agency plans support one custom domain. Need multiple?
+
+- Contact sales for Enterprise pricing
+- Use subdomain paths for different clients: `reports.youragency.com/client-a/`
+
+### Removing a Custom Domain
+
+To revert to the default LHM domain:
+
+1. Go to **Settings** → **Custom Domain**
+2. Click **Remove Custom Domain**
+3. Confirm removal
+
+Share links will revert to using the default domain.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Domain verification failing">
+    **Check these common issues:**
+    
+    1. **CNAME not propagated**: Wait 15-30 minutes and retry
+    2. **Wrong target**: Ensure CNAME points to `custom.linkhealthmonitor.com` exactly
+    3. **Cloudflare proxy enabled**: Disable orange cloud (use DNS only)
+    4. **Conflicting records**: Remove any A records for the same subdomain
+    
+    **Debug command:**
+    ```bash
+    dig CNAME reports.youragency.com +trace
+    ```
+  </Accordion>
+  
+  <Accordion title="SSL certificate errors">
+    SSL provisioning can take up to 10 minutes. If issues persist:
+    
+    1. Verify CNAME is correct with `dig`
+    2. Ensure no Cloudflare/CDN proxy is interfering
+    3. Wait 30 minutes for certificate propagation
+    4. Contact support if issues continue
+  </Accordion>
+  
+  <Accordion title="Emails going to spam">
+    Ensure all email DNS records are properly configured:
+    
+    1. SPF record must include our servers
+    2. DKIM record must be present
+    3. DMARC record should be configured
+    
+    Test with [Mail Tester](https://www.mail-tester.com/).
+  </Accordion>
+  
+  <Accordion title="Share links not working">
+    If custom domain share links return errors:
+    
+    1. Verify domain is still verified in settings
+    2. Check SSL certificate is valid
+    3. Ensure CNAME hasn't been changed or removed
+    4. Try accessing via default domain to isolate issue
+  </Accordion>
+</AccordionGroup>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Use a Dedicated Subdomain" icon="sitemap">
+    Don't use subdomains that might conflict with existing services.
+  </Card>
+  <Card title="Set Up Email DNS" icon="envelope">
+    Complete email configuration for full white-label experience.
+  </Card>
+  <Card title="Test Before Sharing" icon="vial">
+    Always test new share links before sending to clients.
+  </Card>
+  <Card title="Monitor SSL Expiry" icon="calendar-check">
+    We auto-renew, but monitor for any certificate issues.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="White-Labeling"
+    icon="palette"
+    href="/agency/white-labeling"
+  >
+    Complete your branding setup.
+  </Card>
+  <Card
+    title="Client Management"
+    icon="users"
+    href="/agency/client-management"
+  >
+    Organize domains by client.
+  </Card>
+</CardGroup>
+

@@ -1,0 +1,332 @@
+---
+title: 'Crawl Results'
+description: 'Understand and act on your crawl data'
+icon: 'chart-simple'
+---
+
+## Overview
+
+After a crawl completes, you'll have comprehensive data about your domain's link health, SEO status, and performance. This guide explains how to interpret results and prioritize fixes.
+
+## Results Dashboard
+
+The results dashboard provides an at-a-glance summary:
+
+```
+Crawl Results: example.com
+═══════════════════════════════════════════════════════════
+Completed: Dec 2, 2024 at 2:34 PM
+Duration: 4m 23s
+Pages: 847 discovered, 847 checked
+
+┌─────────────────┬─────────────────┬─────────────────┐
+│  HEALTH SCORE   │  BROKEN LINKS   │   SEO ISSUES    │
+│      78/100     │       12        │       34        │
+│     Good        │    Critical     │    Warnings     │
+└─────────────────┴─────────────────┴─────────────────┘
+```
+
+## Summary Metrics
+
+| Metric | Description |
+|--------|-------------|
+| **Health Score** | Overall site health (0-100) |
+| **Pages Discovered** | Total unique URLs found |
+| **Pages Checked** | URLs successfully analyzed |
+| **Broken Links** | 4xx/5xx errors found |
+| **Redirects** | Redirect chains detected |
+| **SEO Issues** | On-page SEO problems |
+| **Crawl Duration** | How long the crawl took |
+
+## Navigating Results
+
+Results are organized into tabs:
+
+<Tabs>
+  <Tab title="Overview">
+    High-level summary with:
+    - Health score trend
+    - Issue breakdown by category
+    - Quick stats
+    - Action items
+  </Tab>
+  
+  <Tab title="Broken Links">
+    All broken links with:
+    - Status codes (404, 500, etc.)
+    - Source pages (where the link appears)
+    - Link type (internal/external)
+    - Anchor text
+    - First discovered date
+  </Tab>
+  
+  <Tab title="Redirects">
+    Redirect information including:
+    - Redirect chains
+    - Chain length
+    - Redirect types (301, 302)
+    - Loops detected
+  </Tab>
+  
+  <Tab title="SEO">
+    SEO analysis results:
+    - Missing titles/descriptions
+    - H1 issues
+    - Image alt problems
+    - Technical SEO issues
+  </Tab>
+  
+  <Tab title="All URLs">
+    Complete list of discovered URLs:
+    - Status for each URL
+    - Response time
+    - Page type
+    - Last checked
+  </Tab>
+</Tabs>
+
+## Understanding Status Codes
+
+### Success (2xx)
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 200 | OK | None needed |
+| 201 | Created | None needed |
+| 204 | No Content | Verify intentional |
+
+### Redirects (3xx)
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 301 | Permanent Redirect | Update links to final URL |
+| 302 | Temporary Redirect | Verify temporary status |
+| 307 | Temporary (strict) | Verify temporary status |
+| 308 | Permanent (strict) | Update links to final URL |
+
+### Client Errors (4xx)
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 400 | Bad Request | Fix malformed URL |
+| 401 | Unauthorized | Expected for protected pages |
+| 403 | Forbidden | Check permissions |
+| 404 | Not Found | Remove or redirect |
+| 410 | Gone | Remove links |
+| 429 | Rate Limited | May be false positive |
+
+### Server Errors (5xx)
+
+| Code | Meaning | Action |
+|------|---------|--------|
+| 500 | Internal Error | Investigate server logs |
+| 502 | Bad Gateway | Check upstream servers |
+| 503 | Unavailable | Temporary; recheck |
+| 504 | Gateway Timeout | Performance issue |
+
+## Filtering Results
+
+Use filters to focus on specific issues:
+
+### Filter Options
+
+| Filter | Options |
+|--------|---------|
+| **Status** | Success, Redirect, Error, Timeout |
+| **Status Code** | Specific code (404, 500, etc.) |
+| **Link Type** | Internal, External |
+| **Issue Type** | SEO category |
+| **Page** | Specific source URL |
+
+### Example Filters
+
+```
+Find all 404 errors on internal links:
+  Status Code: 404
+  Link Type: Internal
+  
+Find SEO issues on blog pages:
+  Issue Type: Any
+  Page: /blog/*
+  
+Find external broken links:
+  Status: Error
+  Link Type: External
+```
+
+## Prioritizing Fixes
+
+Not all issues are equally important. Prioritize by:
+
+### Impact Priority
+
+| Priority | Issues | Why |
+|----------|--------|-----|
+| 🔴 Critical | Server errors, SSL expired | Affects all visitors |
+| 🟠 High | Internal 404s, missing H1 | Direct SEO/UX impact |
+| 🟡 Medium | External 404s, long chains | Indirect impact |
+| 🟢 Low | Short descriptions, generic anchors | Optimization |
+
+### Reach Priority
+
+Fix issues that affect more pages first:
+
+```
+Broken Link Analysis
+─────────────────────────────────────────
+/old-product-page (404)
+  Found on: 47 pages
+  Impact: HIGH ← Fix this first
+  
+/typo-link (404)
+  Found on: 1 page
+  Impact: LOW ← Fix later
+```
+
+<Tip>
+  A single broken link in your navigation might appear on every page. Fixing one link can resolve hundreds of issues.
+</Tip>
+
+## Exporting Results
+
+Export data for team collaboration or analysis:
+
+### Export Formats
+
+| Format | Best For |
+|--------|----------|
+| **CSV** | Spreadsheet analysis, bulk fixing |
+| **PDF** | Client presentations, stakeholders |
+| **JSON** | API integration, custom tools |
+
+### Export Options
+
+```
+Export Settings
+─────────────────────────────────────────
+Format: CSV ▼
+
+Include:
+  ☑ All URLs
+  ☑ Broken links
+  ☑ Redirects
+  ☑ SEO issues
+  ☐ Response times (large file)
+
+Filters:
+  ☑ Apply current filters
+  ☐ Export all data
+```
+
+## Comparing Crawls
+
+Track progress by comparing crawls:
+
+<Steps>
+  <Step title="Select Crawls">
+    Choose two crawls to compare from the history.
+  </Step>
+  
+  <Step title="View Diff">
+    See what changed:
+    - New issues (appeared)
+    - Fixed issues (resolved)
+    - Unchanged (persistent)
+  </Step>
+  
+  <Step title="Analyze Trends">
+    Track metrics over time:
+    - Health score trend
+    - Issue count trend
+    - New vs resolved rate
+  </Step>
+</Steps>
+
+### Comparison View
+
+```
+Crawl Comparison: Dec 1 vs Dec 2
+═══════════════════════════════════════════════════════════
+                    Dec 1        Dec 2        Change
+─────────────────────────────────────────────────────────
+Health Score         73          78           +5 ▲
+Broken Links         18          12           -6 ▼
+SEO Issues           42          34           -8 ▼
+Pages Crawled       832         847          +15 ▲
+
+New Issues (3):
+  • /new-page missing H1
+  • /products/widget 404
+  • /about missing meta description
+
+Fixed Issues (9):
+  • /old-link redirected
+  • /blog/post H1 added
+  • ... 7 more
+```
+
+## Acting on Results
+
+### Quick Actions
+
+From any result, take quick actions:
+
+| Action | Effect |
+|--------|--------|
+| **Ignore** | Hide from future reports |
+| **Mark Fixed** | Track as resolved |
+| **Export** | Download single issue details |
+| **View Source** | See page containing the link |
+
+### Bulk Actions
+
+Select multiple issues for bulk operations:
+
+- **Bulk Ignore**: Hide multiple known issues
+- **Bulk Export**: Download selected items
+- **Generate Redirect List**: Create redirect rules
+
+## Historical Data
+
+### Retention Periods
+
+| Plan | History Retained |
+|------|-----------------|
+| Free | 30 days |
+| Solo | 90 days |
+| Pro | 1 year |
+| Agency | Unlimited |
+
+### Accessing History
+
+View past crawls from the domain dashboard:
+
+```
+Crawl History
+─────────────────────────────────────────
+Dec 2, 2024    78/100    847 pages    ← Current
+Dec 1, 2024    73/100    832 pages
+Nov 24, 2024   71/100    820 pages
+Nov 17, 2024   68/100    815 pages
+...
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Share Results"
+    icon="share-nodes"
+    href="/crawling/sharing-results"
+  >
+    Share reports with teams and clients.
+  </Card>
+  <Card
+    title="AI Review"
+    icon="sparkles"
+    href="/features/ai-review"
+  >
+    Get AI-powered analysis of your results.
+  </Card>
+</CardGroup>
+

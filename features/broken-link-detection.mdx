@@ -1,0 +1,236 @@
+---
+title: 'Broken Link Detection'
+description: 'Automatically find and fix broken links across your entire domain'
+icon: 'link-slash'
+---
+
+## Overview
+
+Broken links are one of the most common and damaging website issues. They frustrate users, waste search engine crawl budget, and signal poor site maintenance to both visitors and search engines. Link Health Monitor automatically discovers and reports every broken link on your domain.
+
+<Info>
+  **Available on**: All plans (Free, Solo, Pro, Agency)
+</Info>
+
+## What We Detect
+
+Our crawler identifies links that return error status codes, indicating they're broken or inaccessible.
+
+### Client Errors (4xx)
+
+| Status Code | Name | Common Cause |
+|-------------|------|--------------|
+| **400** | Bad Request | Malformed URL or invalid characters |
+| **401** | Unauthorized | Protected content requiring authentication |
+| **403** | Forbidden | Server denies access to the resource |
+| **404** | Not Found | Page was deleted or URL was changed |
+| **405** | Method Not Allowed | Wrong HTTP method for the endpoint |
+| **410** | Gone | Page was intentionally removed |
+| **429** | Too Many Requests | Rate limiting from target server |
+
+### Server Errors (5xx)
+
+| Status Code | Name | Common Cause |
+|-------------|------|--------------|
+| **500** | Internal Server Error | Server-side code error |
+| **502** | Bad Gateway | Upstream server communication failure |
+| **503** | Service Unavailable | Server overloaded or in maintenance |
+| **504** | Gateway Timeout | Upstream server took too long |
+
+### Other Failures
+
+| Type | Description |
+|------|-------------|
+| **Timeout** | Server didn't respond within 30 seconds |
+| **DNS Failure** | Domain name couldn't be resolved |
+| **Connection Refused** | Server actively rejected the connection |
+| **SSL Error** | Certificate validation failed |
+
+## Why Broken Links Matter
+
+### SEO Impact
+
+<Warning>
+  Google's crawlers encounter the same broken links as your users. Excessive 404 errors can hurt your search rankings.
+</Warning>
+
+- **Wasted Crawl Budget**: Search engines have limited resources to crawl your site. Every broken link is a wasted request.
+- **Lost PageRank**: Internal links pass authority. Broken links leak that authority into nothing.
+- **Indexing Issues**: Broken links can prevent search engines from discovering new content.
+
+### User Experience Impact
+
+- **Increased Bounce Rate**: Users who hit 404 pages often leave immediately
+- **Lost Conversions**: Broken links in conversion funnels directly cost revenue
+- **Damaged Trust**: Broken links make your site appear unmaintained or unreliable
+
+## How It Works
+
+<Steps>
+  <Step title="Discovery">
+    Our crawler starts from your homepage and follows every link, building a complete map of your site's link structure.
+  </Step>
+  <Step title="Validation">
+    Each discovered URL receives an HTTP HEAD request to check its status code. If HEAD isn't supported, we fall back to GET.
+  </Step>
+  <Step title="Classification">
+    Links are categorized by type (internal/external) and status code, with errors flagged for review.
+  </Step>
+  <Step title="Source Tracking">
+    For every broken link, we record which pages contain it so you know exactly where to make fixes.
+  </Step>
+</Steps>
+
+## Reading Your Results
+
+After a crawl completes, broken links appear in the **Issues** tab sorted by severity.
+
+### Result Fields
+
+| Field | Description |
+|-------|-------------|
+| **URL** | The broken link URL |
+| **Status** | HTTP status code or error type |
+| **Type** | Internal or External |
+| **Found On** | Pages containing this link |
+| **First Seen** | When the link was first detected as broken |
+| **Anchor Text** | The visible link text |
+
+<Tip>
+  Click any broken link to see all pages where it appears. This makes bulk fixes easier—you might find the same broken link on 50 pages due to navigation or footer links.
+</Tip>
+
+## Common Fixes
+
+### 404 Not Found (Internal Links)
+
+<Tabs>
+  <Tab title="Page Was Deleted">
+    If you intentionally removed the page:
+    1. Set up a 301 redirect to the most relevant existing page
+    2. Update all internal links to point to the new destination
+    3. Submit updated sitemap to search engines
+    
+    ```htaccess
+    # .htaccess redirect example
+    Redirect 301 /old-page /new-page
+    ```
+  </Tab>
+  <Tab title="URL Changed">
+    If the page exists at a different URL:
+    1. Implement a 301 redirect from old URL to new URL
+    2. Update internal links to use the new URL directly
+    
+    ```nginx
+    # nginx redirect example
+    location /old-url {
+        return 301 /new-url;
+    }
+    ```
+  </Tab>
+  <Tab title="Typo in Link">
+    If the link URL contains a typo:
+    1. Find all pages containing the broken link
+    2. Update the href to the correct URL
+    3. Re-crawl to verify the fix
+  </Tab>
+</Tabs>
+
+### 404 Not Found (External Links)
+
+<Tabs>
+  <Tab title="Page Moved">
+    Check if the content exists at a new URL:
+    1. Search the target site for similar content
+    2. Check [Wayback Machine](https://web.archive.org) for historical versions
+    3. Update your link to the new URL or a suitable alternative
+  </Tab>
+  <Tab title="Site No Longer Exists">
+    If the external site is gone:
+    1. Find an alternative resource covering the same topic
+    2. Consider linking to archived version via Wayback Machine
+    3. Or remove the link entirely if no alternative exists
+  </Tab>
+</Tabs>
+
+### 403 Forbidden
+
+```mdx
+<Note>
+  403 errors on external links may be false positives. Some servers block 
+  automated requests but work fine for real users. Check manually before 
+  taking action.
+</Note>
+```
+
+For internal 403 errors:
+- Check server permissions on the file/directory
+- Verify .htaccess rules aren't blocking access
+- Ensure directory indexes are enabled if linking to folders
+
+### 500 Server Errors
+
+Internal server errors indicate code problems:
+- Check server error logs for stack traces
+- Review recent code deployments
+- Test the page directly in a browser
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Regular Crawls" icon="calendar-check">
+    Schedule weekly crawls to catch broken links quickly. The longer a link is broken, the more damage it causes.
+  </Card>
+  <Card title="Fix Internal First" icon="house">
+    Prioritize internal broken links—you have full control over these and they directly impact your site structure.
+  </Card>
+  <Card title="Use Redirects" icon="arrow-right">
+    When removing pages, always set up 301 redirects. This preserves any SEO value and helps users find relevant content.
+  </Card>
+  <Card title="Monitor External Links" icon="arrow-up-right-from-square">
+    External sites can break anytime. Regular monitoring catches these before users report them.
+  </Card>
+</CardGroup>
+
+## Filtering Results
+
+Use filters to focus on specific issues:
+
+| Filter | Options |
+|--------|---------|
+| **Status Code** | Filter by specific codes (404, 500, etc.) |
+| **Link Type** | Internal only, External only, or Both |
+| **Source Page** | Show only links from specific pages |
+| **First Seen** | New issues vs. persistent problems |
+
+## Exporting Data
+
+Export broken link data for team collaboration or client reporting:
+
+- **CSV**: Full data export for spreadsheet analysis
+- **PDF Report**: Formatted report with charts and summaries
+- **API**: Programmatic access to all crawl data
+
+<Note>
+  Pro and Agency plans include white-label PDF exports for client-facing reports.
+</Note>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="Redirect Chain Analysis"
+    icon="arrow-right-arrow-left"
+    href="/features/redirect-chain-analysis"
+  >
+    Detect redirect loops and excessive chain lengths.
+  </Card>
+  <Card
+    title="Response Time Tracking"
+    icon="gauge-high"
+    href="/features/response-time-tracking"
+  >
+    Monitor page performance alongside link health.
+  </Card>
+</CardGroup>
+

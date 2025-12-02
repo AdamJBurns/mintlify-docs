@@ -1,0 +1,319 @@
+---
+title: 'Verification Troubleshooting'
+description: 'Solve common DNS verification issues'
+icon: 'wrench'
+---
+
+## Overview
+
+Domain verification is straightforward, but DNS can be tricky. This guide covers the most common verification issues and how to resolve them.
+
+## Common Issues
+
+### "TXT record not found"
+
+<Accordion title="The DNS record hasn't propagated yet">
+  **Solution**: Wait 15-30 minutes and try again.
+  
+  DNS changes take time to propagate. While some providers update in minutes, others can take longer. Use an online DNS checker to verify the record exists before retrying.
+  
+  ```bash
+  # Check if record exists
+  dig TXT _lhm-verify.example.com +short
+  ```
+</Accordion>
+
+<Accordion title="Record was added to wrong location">
+  **Symptoms**: 
+  - Record exists but verification fails
+  - Dig returns empty or wrong value
+  
+  **Common mistakes**:
+  
+  | Mistake | Entered | Should Be |
+  |---------|---------|-----------|
+  | Wrong host | `_lhm-verify.example.com` | `_lhm-verify` |
+  | Added to www | `_lhm-verify.www` | `_lhm-verify` |
+  | Full URL | `_lhm-verify.example.com.` | `_lhm-verify` |
+  
+  **Solution**: Delete the incorrect record and create a new one with just `_lhm-verify` as the host/name.
+</Accordion>
+
+<Accordion title="DNS zone is not active">
+  **Symptoms**:
+  - All DNS lookups for your domain fail
+  - Website isn't accessible
+  
+  **Causes**:
+  - Domain nameservers not configured
+  - DNS hosting expired
+  - Domain not pointing to correct DNS provider
+  
+  **Solution**: 
+  1. Verify your domain's nameservers are correct
+  2. Ensure your DNS hosting is active
+  3. Check that DNS zone exists with your provider
+</Accordion>
+
+### "Invalid verification token"
+
+<Accordion title="Token was copy/pasted incorrectly">
+  **Symptoms**: Record exists but token doesn't match
+  
+  **Common issues**:
+  - Extra spaces before or after token
+  - Missing part of the token
+  - Wrong token from different domain
+  
+  **Solution**:
+  1. Go back to the verification page
+  2. Click the **Copy** button to copy the exact token
+  3. Update the TXT record value
+  
+  The correct format is:
+  ```
+  lhm-site-verification=abc123xyz789
+  ```
+  
+  Not:
+  ```
+  lhm-site-verification= abc123xyz789    (extra space)
+  lhm-site-verification=abc123           (incomplete)
+  abc123xyz789                           (missing prefix)
+  ```
+</Accordion>
+
+<Accordion title="Token has quotes issue">
+  **Symptoms**: Works in some DNS tools but not others
+  
+  Some DNS providers require quotes around TXT values, others don't:
+  
+  | Provider | Quotes Required |
+  |----------|-----------------|
+  | Route 53 | Yes (add them) |
+  | Cloudflare | No (automatic) |
+  | GoDaddy | No |
+  | Namecheap | No |
+  
+  If your provider auto-adds quotes, don't add extra ones:
+  
+  ❌ `""lhm-site-verification=abc123""`  
+  ✅ `lhm-site-verification=abc123`
+</Accordion>
+
+### "Verification timed out"
+
+<Accordion title="DNS server is slow or unreliable">
+  **Symptoms**: Verification works sometimes but not consistently
+  
+  **Solution**:
+  1. Wait a few minutes and try again
+  2. If persistent, check with your DNS provider for issues
+  3. Try lowering the TTL on the record
+</Accordion>
+
+<Accordion title="Firewall blocking DNS queries">
+  **Symptoms**: Local dig works but verification fails
+  
+  **Possible cause**: Your DNS provider may be blocking queries from certain IPs.
+  
+  **Solution**: 
+  - Check DNS provider firewall settings
+  - Ensure no geographic restrictions on DNS queries
+  - Try a different DNS provider if issues persist
+</Accordion>
+
+## Debugging Steps
+
+### Step 1: Verify Record Exists
+
+Check that your TXT record is queryable:
+
+<Tabs>
+  <Tab title="Using dig (recommended)">
+    ```bash
+    # Basic lookup
+    dig TXT _lhm-verify.example.com +short
+    
+    # With specific DNS server
+    dig TXT _lhm-verify.example.com @8.8.8.8 +short
+    
+    # Verbose output for debugging
+    dig TXT _lhm-verify.example.com +noall +answer
+    ```
+    
+    **Expected output**:
+    ```
+    "lhm-site-verification=abc123xyz789"
+    ```
+  </Tab>
+  
+  <Tab title="Using nslookup (Windows)">
+    ```powershell
+    nslookup -type=TXT _lhm-verify.example.com
+    
+    # Using Google's DNS
+    nslookup -type=TXT _lhm-verify.example.com 8.8.8.8
+    ```
+  </Tab>
+  
+  <Tab title="Online tools">
+    Use these if you can't run commands locally:
+    
+    1. Go to [WhatsMyDNS](https://www.whatsmydns.net/)
+    2. Enter: `_lhm-verify.example.com`
+    3. Select: `TXT`
+    4. Click: Search
+    
+    This shows results from DNS servers worldwide.
+  </Tab>
+</Tabs>
+
+### Step 2: Compare Token Values
+
+If the record exists, verify the value matches:
+
+1. Copy the value from your DNS provider
+2. Copy the expected value from Link Health Monitor
+3. Compare character by character
+
+Use a diff tool or this command:
+
+```bash
+# Compare strings (should output nothing if identical)
+diff <(echo "copied-from-dns") <(echo "copied-from-lhm")
+```
+
+### Step 3: Check DNS Provider Settings
+
+Verify your DNS configuration:
+
+| Check | What to Look For |
+|-------|------------------|
+| **Nameservers** | Domain points to correct DNS provider |
+| **Zone exists** | DNS zone is active for your domain |
+| **Record saved** | TXT record shows in your DNS dashboard |
+| **No conflicts** | No duplicate or conflicting TXT records |
+
+### Step 4: Test from Multiple Locations
+
+DNS can propagate at different speeds globally:
+
+```bash
+# Test from different DNS servers
+dig TXT _lhm-verify.example.com @8.8.8.8 +short      # Google
+dig TXT _lhm-verify.example.com @1.1.1.1 +short      # Cloudflare
+dig TXT _lhm-verify.example.com @9.9.9.9 +short      # Quad9
+dig TXT _lhm-verify.example.com @208.67.222.222 +short # OpenDNS
+```
+
+If some return the record and others don't, propagation is still in progress.
+
+## Provider-Specific Issues
+
+<AccordionGroup>
+  <Accordion title="Cloudflare: Proxy mode issues">
+    TXT records shouldn't be proxied (orange cloud). If you see proxy options:
+    
+    1. Set to **DNS only** (gray cloud)
+    2. TXT records are informational and don't need proxying
+  </Accordion>
+  
+  <Accordion title="GoDaddy: Record not saving">
+    GoDaddy sometimes has UI issues:
+    
+    1. Clear browser cache and retry
+    2. Try a different browser
+    3. Wait 5 minutes before checking if record saved
+    4. Contact GoDaddy support if issues persist
+  </Accordion>
+  
+  <Accordion title="Namecheap: BasicDNS limitations">
+    If using Namecheap's BasicDNS:
+    
+    1. Some advanced records may not be supported
+    2. Consider using Namecheap's PremiumDNS or third-party DNS
+    3. Ensure you're editing the correct domain
+  </Accordion>
+  
+  <Accordion title="Route 53: Quotes and formatting">
+    Route 53 requires specific formatting:
+    
+    - TXT values must be in quotes
+    - Multiple strings need separate quotes
+    - Don't escape internal characters
+    
+    **Correct**: `"lhm-site-verification=abc123"`  
+    **Wrong**: `lhm-site-verification=abc123`
+  </Accordion>
+  
+  <Accordion title="cPanel: Finding DNS settings">
+    In cPanel hosting:
+    
+    1. Look for **Zone Editor** or **DNS Zone Editor**
+    2. Not to be confused with **Simple DNS Zone Editor** (may lack TXT support)
+    3. If neither works, contact your host about DNS access
+  </Accordion>
+</AccordionGroup>
+
+## Alternative Verification Methods
+
+If DNS verification isn't working, contact support for alternative options:
+
+<CardGroup cols={2}>
+  <Card title="HTML File Upload" icon="file-code">
+    Upload a verification file to your domain root.
+  </Card>
+  <Card title="Meta Tag" icon="code">
+    Add a meta tag to your homepage HTML.
+  </Card>
+</CardGroup>
+
+<Note>
+  Alternative methods require contacting support. DNS verification is preferred and most secure.
+</Note>
+
+## Still Having Issues?
+
+If you've tried everything above:
+
+<Steps>
+  <Step title="Gather Information">
+    Collect:
+    - Your domain name
+    - Screenshot of your DNS settings
+    - Output of `dig TXT _lhm-verify.yourdomain.com`
+    - Your DNS provider name
+  </Step>
+  
+  <Step title="Contact Support">
+    Email [support@linkhealthmonitor.com](mailto:support@linkhealthmonitor.com) with:
+    - Subject: "DNS Verification Issue - [your domain]"
+    - Information gathered above
+    - Steps you've already tried
+  </Step>
+  
+  <Step title="Expect Response">
+    Our team typically responds within 2 hours during business hours.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="DNS Verification Guide"
+    icon="shield-check"
+    href="/domains/dns-verification"
+  >
+    Review the step-by-step verification process.
+  </Card>
+  <Card
+    title="Start Crawling"
+    icon="spider-web"
+    href="/crawling/starting-crawls"
+  >
+    Successfully verified? Start your first crawl!
+  </Card>
+</CardGroup>
+

@@ -1,0 +1,279 @@
+---
+title: 'Starting Crawls'
+description: 'Run manual and scheduled crawls on your domains'
+icon: 'spider-web'
+---
+
+## Overview
+
+Crawls are automated scans that discover and analyze every link on your domain. Start crawls manually when you need immediate results, or schedule them to run automatically.
+
+## Starting a Manual Crawl
+
+<Steps>
+  <Step title="Select Domain">
+    From your dashboard, click on the domain you want to crawl.
+  </Step>
+  
+  <Step title="Click Start Crawl">
+    Click the **Start Crawl** button in the domain overview.
+  </Step>
+  
+  <Step title="Configure Options">
+    Select your [scan options](/crawling/scan-options):
+    
+    - SSL Check
+    - SEO Analysis
+    - Anchor Text Analysis
+    - Response Trends
+  </Step>
+  
+  <Step title="Start">
+    Click **Start Crawl** to begin. You'll see real-time progress.
+  </Step>
+</Steps>
+
+## Crawl Progress
+
+While a crawl is running, the progress view shows:
+
+| Metric | Description |
+|--------|-------------|
+| **URLs Discovered** | Total unique URLs found |
+| **URLs Checked** | URLs fully processed |
+| **Queue Size** | URLs waiting to be checked |
+| **Errors Found** | Broken links detected so far |
+| **Elapsed Time** | How long the crawl has been running |
+
+```
+Crawl Progress
+═══════════════════════════════════════════════════════════
+■■■■■■■■■■■■■■■■■■■□□□□□□□□□□□  63%
+
+URLs Discovered:  847
+URLs Checked:     534
+Queue Remaining:  313
+Errors Found:     12
+Elapsed Time:     2m 34s
+
+Estimated completion: ~1 minute
+```
+
+### Live Feed
+
+The activity feed shows URLs being processed in real-time:
+
+```
+[14:23:45] ✓ 200 /about
+[14:23:45] ✓ 200 /products
+[14:23:46] ✗ 404 /old-page
+[14:23:46] → 301 /blog → /articles
+[14:23:47] ✓ 200 /contact
+```
+
+## Scheduling Crawls
+
+Automated crawls run on a schedule without manual intervention.
+
+### Setting Up a Schedule
+
+<Steps>
+  <Step title="Open Domain Settings">
+    Navigate to your domain and click **Settings** → **Schedule**.
+  </Step>
+  
+  <Step title="Enable Scheduling">
+    Toggle **Scheduled Crawls** to ON.
+  </Step>
+  
+  <Step title="Select Frequency">
+    Choose how often to run crawls:
+    
+    | Plan | Available Frequencies |
+    |------|----------------------|
+    | Free | Manual only |
+    | Solo | Weekly |
+    | Pro | Daily, Weekly |
+    | Agency | Hourly, Daily, Weekly |
+  </Step>
+  
+  <Step title="Configure Time">
+    Select when crawls should run:
+    
+    - **Time**: Hour of day (in your timezone)
+    - **Day**: Day of week (for weekly)
+  </Step>
+  
+  <Step title="Save">
+    Click **Save Schedule** to activate.
+  </Step>
+</Steps>
+
+### Schedule Options
+
+| Setting | Description |
+|---------|-------------|
+| **Frequency** | How often crawls run |
+| **Time** | Preferred hour to start |
+| **Day** | For weekly: which day |
+| **Notify on Complete** | Email when crawl finishes |
+| **Notify on New Issues** | Email only if new problems found |
+
+<Tip>
+  Schedule crawls during low-traffic hours to minimize impact on your server.
+</Tip>
+
+## Daily Crawl Limits
+
+Each plan has limits on how many crawls you can run per day:
+
+| Plan | Daily Crawl Limit |
+|------|-------------------|
+| Free | 2 crawls |
+| Solo | 5 crawls |
+| Pro | 10 crawls |
+| Agency | 25 crawls |
+
+<Note>
+  Scheduled crawls count toward your daily limit. Plan schedules accordingly.
+</Note>
+
+## Crawl Depth
+
+Crawl depth determines how many "links away" from the start URL the crawler will go:
+
+| Depth | Description | Example |
+|-------|-------------|---------|
+| 1 | Start page only | Homepage |
+| 2 | Start + direct links | Homepage + linked pages |
+| 3 | Two levels of following | Most small sites |
+| 5 | Medium depth | Medium sites |
+| 10 | Deep crawl | Large sites |
+| Unlimited | Follow all links | Complete site audit |
+
+### Depth by Plan
+
+| Plan | Maximum Depth |
+|------|---------------|
+| Free | 2 levels |
+| Solo | 5 levels |
+| Pro | 10 levels |
+| Agency | Unlimited |
+
+<Warning>
+  Higher depths find more pages but take longer. Start with lower depths to estimate total pages.
+</Warning>
+
+## URL Limits
+
+Each crawl has a maximum number of URLs it will check:
+
+| Plan | Max URLs per Crawl |
+|------|-------------------|
+| Free | 100 |
+| Solo | 1,000 |
+| Pro | 10,000 |
+| Agency | Unlimited |
+
+When the limit is reached:
+- Crawl completes with partial results
+- Dashboard shows "URL limit reached"
+- Results still include all checked URLs
+
+## Canceling a Crawl
+
+To stop a running crawl:
+
+1. Go to the crawl progress page
+2. Click **Cancel Crawl**
+3. Confirm cancellation
+
+Cancellation:
+- Stops immediately
+- Keeps results for URLs already checked
+- Counts toward daily limit
+- Shows status as "Cancelled"
+
+## Crawl Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Start Small" icon="minimize">
+    Begin with limited depth to gauge site size before running deep crawls.
+  </Card>
+  <Card title="Off-Peak Hours" icon="moon">
+    Schedule crawls during low-traffic periods to minimize server impact.
+  </Card>
+  <Card title="Regular Cadence" icon="calendar">
+    Weekly crawls catch issues quickly without excessive server load.
+  </Card>
+  <Card title="After Deployments" icon="code-branch">
+    Run a crawl after major changes to catch new broken links.
+  </Card>
+</CardGroup>
+
+## Crawl Queue
+
+When multiple crawls are requested, they queue in order:
+
+```
+Crawl Queue
+═══════════════════════════════════════════════════════════
+1. example.com        Running     (54% complete)
+2. blog.example.com   Queued      (waiting)
+3. shop.example.com   Queued      (waiting)
+```
+
+Queue behavior:
+- One crawl runs at a time per account
+- Queued crawls start automatically when previous completes
+- You can reorder or cancel queued crawls
+
+## Handling Large Sites
+
+For sites with 10,000+ pages:
+
+<AccordionGroup>
+  <Accordion title="Use Section Crawling">
+    Instead of crawling the entire site:
+    
+    1. Set start URL to a section (e.g., `/blog`)
+    2. Crawl each section separately
+    3. Combine results for full picture
+  </Accordion>
+  
+  <Accordion title="Sitemap-Based Crawling">
+    Use your sitemap as the URL source:
+    
+    1. Set start URL to `/sitemap.xml`
+    2. Crawler extracts all URLs from sitemap
+    3. More efficient than discovery-based crawling
+  </Accordion>
+  
+  <Accordion title="Incremental Crawling (Agency)">
+    Only check pages that changed:
+    
+    1. Enable incremental mode in settings
+    2. Crawls check new/changed pages
+    3. Significantly faster for large sites
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Scan Options"
+    icon="sliders"
+    href="/crawling/scan-options"
+  >
+    Configure what analyses to run during crawls.
+  </Card>
+  <Card
+    title="Crawl Results"
+    icon="chart-simple"
+    href="/crawling/crawl-results"
+  >
+    Learn to interpret and act on crawl data.
+  </Card>
+</CardGroup>
+

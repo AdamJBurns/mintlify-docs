@@ -1,0 +1,371 @@
+---
+title: 'Sharing Results'
+description: 'Share crawl reports with teams and clients'
+icon: 'share-nodes'
+---
+
+## Overview
+
+Share crawl results with team members, clients, or stakeholders who don't have direct access to Link Health Monitor. Generate shareable links, export PDFs, or use white-labeled reports for client presentations.
+
+## Sharing Options
+
+### Web Links
+
+Generate a shareable URL for any crawl result:
+
+<Steps>
+  <Step title="Open Crawl Results">
+    Navigate to the crawl you want to share.
+  </Step>
+  
+  <Step title="Click Share">
+    Click the **Share** button in the top right.
+  </Step>
+  
+  <Step title="Configure Access">
+    | Option | Description |
+    |--------|-------------|
+    | **Public** | Anyone with the link can view |
+    | **Password Protected** | Requires password to access |
+    | **Expiring** | Link expires after set time |
+  </Step>
+  
+  <Step title="Copy Link">
+    Copy the generated link to share.
+  </Step>
+</Steps>
+
+**Share Link Format:**
+```
+https://app.linkhealthmonitor.com/share/abc123xyz
+```
+
+### Password Protection
+
+Add a password for sensitive reports:
+
+```
+Share Settings
+─────────────────────────────────────────
+Access: Password Protected ▼
+
+Password: ••••••••
+  (Automatically generated, or set custom)
+
+Share this password separately with recipients.
+```
+
+<Warning>
+  Share passwords through a separate channel (not in the same email as the link) for better security.
+</Warning>
+
+### Expiring Links
+
+Set links to expire automatically:
+
+| Duration | Use Case |
+|----------|----------|
+| 24 hours | Quick review |
+| 7 days | Sprint feedback |
+| 30 days | Monthly reports |
+| 90 days | Quarterly reviews |
+| Never | Permanent reference |
+
+## PDF Export
+
+Generate formatted PDF reports for offline viewing:
+
+### Export Options
+
+```
+PDF Export Settings
+─────────────────────────────────────────
+Include:
+  ☑ Executive Summary
+  ☑ Health Score Chart
+  ☑ Broken Links (with details)
+  ☑ Redirect Analysis
+  ☑ SEO Issues
+  ☐ All URLs (adds many pages)
+
+Format:
+  ○ Summary Report (2-5 pages)
+  ● Detailed Report (10-20 pages)
+  ○ Full Export (all data)
+
+Branding:
+  ○ Link Health Monitor
+  ● Custom (Agency plan)
+```
+
+### PDF Contents
+
+A typical PDF report includes:
+
+1. **Cover Page**: Domain, date, health score
+2. **Executive Summary**: Key findings and recommendations
+3. **Health Score Breakdown**: Score components
+4. **Critical Issues**: High-priority problems
+5. **Detailed Findings**: Full issue list by category
+6. **Appendix**: Technical details and methodology
+
+### Generating PDFs
+
+<Steps>
+  <Step title="Open Crawl Results">
+    Navigate to the crawl to export.
+  </Step>
+  
+  <Step title="Click Export">
+    Click **Export** → **PDF Report**.
+  </Step>
+  
+  <Step title="Configure Options">
+    Select sections and format level.
+  </Step>
+  
+  <Step title="Download">
+    Click **Generate PDF** and download when ready.
+  </Step>
+</Steps>
+
+## CSV Export
+
+Export raw data for spreadsheet analysis:
+
+### CSV Files Available
+
+| File | Contents |
+|------|----------|
+| `all-urls.csv` | Every discovered URL with status |
+| `broken-links.csv` | All broken links with source pages |
+| `redirects.csv` | Redirect chains and details |
+| `seo-issues.csv` | SEO problems by page |
+| `summary.csv` | High-level metrics |
+
+### CSV Format
+
+```csv
+URL,Status,Source Page,Anchor Text,First Seen,Last Checked
+/broken-page,404,/about,Learn more,2024-12-01,2024-12-02
+/old-link,404,/home,Click here,2024-11-15,2024-12-02
+```
+
+## White-Label Reports (Agency)
+
+<Info>
+  White-label reports are available on the **Agency plan**.
+</Info>
+
+Create branded reports for clients:
+
+### Branding Options
+
+| Element | Customizable |
+|---------|--------------|
+| **Logo** | Upload your logo |
+| **Colors** | Primary and accent colors |
+| **Company Name** | Appears in header/footer |
+| **Contact Info** | Your support email/phone |
+| **Domain** | Custom share link domain |
+
+### Setting Up Branding
+
+<Steps>
+  <Step title="Open Agency Settings">
+    Navigate to **Settings** → **White Label**.
+  </Step>
+  
+  <Step title="Upload Logo">
+    Upload your logo in PNG or SVG format (recommended: 200x50px).
+  </Step>
+  
+  <Step title="Set Colors">
+    Choose colors that match your brand:
+    
+    | Setting | Description |
+    |---------|-------------|
+    | Primary | Main accent color |
+    | Secondary | Supporting color |
+    | Background | Report background |
+  </Step>
+  
+  <Step title="Enter Company Details">
+    Add your company name and contact information.
+  </Step>
+  
+  <Step title="Save">
+    Click **Save Branding** to apply to all exports.
+  </Step>
+</Steps>
+
+### White-Label Preview
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  [YOUR LOGO]              Website Health Report         │
+│                                                         │
+│  Client: Acme Corp                                      │
+│  Domain: acmecorp.com                                   │
+│  Report Date: December 2, 2024                          │
+│                                                         │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │           HEALTH SCORE: 78/100                  │   │
+│  │                  Good                            │   │
+│  └─────────────────────────────────────────────────┘   │
+│                                                         │
+│  Prepared by: Your Agency Name                          │
+│  Contact: support@youragency.com                        │
+└─────────────────────────────────────────────────────────┘
+```
+
+## Scheduled Reports
+
+Automatically send reports on a schedule:
+
+### Setting Up Scheduled Reports
+
+<Steps>
+  <Step title="Open Domain Settings">
+    Navigate to domain → **Settings** → **Scheduled Reports**.
+  </Step>
+  
+  <Step title="Enable Reports">
+    Toggle **Scheduled Reports** to ON.
+  </Step>
+  
+  <Step title="Configure Schedule">
+    | Setting | Options |
+    |---------|---------|
+    | Frequency | Daily, Weekly, Monthly |
+    | Day | Day of week/month |
+    | Time | Hour to send |
+  </Step>
+  
+  <Step title="Add Recipients">
+    Enter email addresses to receive reports.
+  </Step>
+  
+  <Step title="Save">
+    Click **Save Schedule**.
+  </Step>
+</Steps>
+
+### Report Email Format
+
+Recipients receive an email with:
+
+```
+Subject: Weekly Health Report - example.com
+
+Hi,
+
+Here's your weekly health report for example.com:
+
+Health Score: 78/100 (+5 from last week)
+Broken Links: 12 (-3)
+SEO Issues: 34 (-8)
+
+View full report: [Link]
+Download PDF: [Attachment]
+
+---
+Generated by Link Health Monitor
+(or your agency branding)
+```
+
+## Team Sharing (Pro/Agency)
+
+Share access with team members:
+
+### Inviting Team Members
+
+<Steps>
+  <Step title="Open Team Settings">
+    Navigate to **Settings** → **Team**.
+  </Step>
+  
+  <Step title="Invite Member">
+    Click **Invite** and enter their email.
+  </Step>
+  
+  <Step title="Set Permissions">
+    | Role | Capabilities |
+    |------|--------------|
+    | Viewer | View reports only |
+    | Editor | Run crawls, view reports |
+    | Admin | Full access including settings |
+  </Step>
+  
+  <Step title="Send Invite">
+    Click **Send Invitation**.
+  </Step>
+</Steps>
+
+### Domain-Level Sharing
+
+Share specific domains with specific people:
+
+```
+Domain Sharing: example.com
+─────────────────────────────────────────
+Team Members:
+  john@company.com     Admin
+  jane@company.com     Editor
+  client@external.com  Viewer
+
+External Shares:
+  Public link: Disabled
+  Password link: Active (expires Dec 31)
+```
+
+## API Access
+
+Access results programmatically:
+
+```bash
+# Get crawl results via API
+curl -X GET \
+  https://api.linkhealthmonitor.com/v1/crawls/{crawl_id}/results \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+See [API Reference](/api-reference/crawl-results) for full documentation.
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Use Password Protection" icon="lock">
+    Always password-protect reports containing sensitive information.
+  </Card>
+  <Card title="Set Expiration" icon="clock">
+    Use expiring links to maintain control over shared data.
+  </Card>
+  <Card title="Brand for Clients" icon="palette">
+    Use white-label reports for professional client presentations.
+  </Card>
+  <Card title="Schedule Regular Reports" icon="calendar">
+    Automate reporting to keep stakeholders informed.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="AI Review"
+    icon="sparkles"
+    href="/features/ai-review"
+  >
+    Add AI-powered analysis to your reports.
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/reports"
+  >
+    Access reports programmatically via API.
+  </Card>
+</CardGroup>
+

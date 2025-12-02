@@ -1,0 +1,293 @@
+---
+title: 'Redirect Chain Analysis'
+description: 'Detect redirect loops, excessive chains, and optimize your redirect strategy'
+icon: 'arrow-right-arrow-left'
+---
+
+## Overview
+
+Redirects are essential for managing URL changes, but poorly implemented redirects can hurt performance and SEO. Link Health Monitor analyzes your redirect chains to identify loops, excessive hops, and suboptimal configurations.
+
+<Info>
+  **Available on**: All plans (Free, Solo, Pro, Agency)
+</Info>
+
+## What We Detect
+
+### Redirect Chains
+
+A redirect chain occurs when a URL redirects to another URL, which then redirects again:
+
+```
+A → B → C → D (3-hop chain)
+```
+
+<Warning>
+  Each redirect hop adds latency and dilutes SEO value. Google recommends a maximum of 2 redirects in any chain.
+</Warning>
+
+### Redirect Loops
+
+A redirect loop occurs when redirects create a circular reference:
+
+```
+A → B → C → A (infinite loop)
+```
+
+Loops prevent pages from loading and cause browsers to display error messages.
+
+### Redirect Types
+
+| Code | Type | SEO Impact |
+|------|------|------------|
+| **301** | Permanent Redirect | Passes full link equity (use for permanent moves) |
+| **302** | Temporary Redirect | May not pass link equity (use for temporary changes) |
+| **303** | See Other | Used after POST requests |
+| **307** | Temporary Redirect | Strict HTTP method preservation |
+| **308** | Permanent Redirect | Strict HTTP method preservation |
+| **Meta Refresh** | HTML-based redirect | Slow, not recommended for SEO |
+| **JavaScript** | Client-side redirect | Not followed by all crawlers |
+
+## Why Redirect Issues Matter
+
+### Performance Impact
+
+Each redirect adds:
+- **DNS Lookup**: ~20-120ms
+- **TCP Connection**: ~20-60ms
+- **SSL Handshake**: ~30-100ms (HTTPS)
+- **Server Response**: ~50-200ms
+
+A 3-hop redirect chain can add 300-500ms+ to page load time.
+
+### SEO Impact
+
+- **PageRank Dilution**: Each redirect loses ~15% of link equity
+- **Crawl Budget Waste**: Search engines follow redirects, using crawl resources
+- **Indexing Confusion**: Too many redirects can prevent proper indexing
+
+<Note>
+  A page behind a 5-hop redirect chain may retain less than 50% of its original link equity.
+</Note>
+
+## Reading Redirect Analysis
+
+After a crawl, the Redirects section shows:
+
+### Chain Summary
+
+| Metric | Description |
+|--------|-------------|
+| **Total Redirects** | Number of URLs that redirect |
+| **Avg Chain Length** | Mean number of hops |
+| **Loops Detected** | Critical: redirect loops found |
+| **Long Chains** | Chains with 3+ hops |
+
+### Detailed Chain View
+
+Click any redirect to see the full chain:
+
+```
+https://example.com/old-page
+  ↓ 301
+https://example.com/newer-page
+  ↓ 301
+https://example.com/newest-page
+  ↓ 301
+https://example.com/final-page ✓
+
+Chain Length: 3 hops
+Total Time: 847ms
+Recommendation: Update original link to point directly to final destination
+```
+
+## Common Issues and Fixes
+
+### Long Redirect Chains
+
+<Tabs>
+  <Tab title="Problem">
+    Multiple URL changes over time have created accumulated redirects:
+    
+    ```
+    /product → /products/item → /shop/products/item → /store/item
+    ```
+  </Tab>
+  <Tab title="Solution">
+    Update all redirects to point directly to the final destination:
+    
+    ```apache
+    # Before (chained)
+    Redirect 301 /product /products/item
+    Redirect 301 /products/item /shop/products/item
+    Redirect 301 /shop/products/item /store/item
+    
+    # After (direct)
+    Redirect 301 /product /store/item
+    Redirect 301 /products/item /store/item
+    Redirect 301 /shop/products/item /store/item
+    ```
+  </Tab>
+</Tabs>
+
+### Redirect Loops
+
+<Tabs>
+  <Tab title="Problem">
+    Conflicting redirect rules create infinite loops:
+    
+    ```
+    /page-a → /page-b → /page-a (loop!)
+    ```
+  </Tab>
+  <Tab title="Solution">
+    1. Map out all redirect rules
+    2. Identify the circular reference
+    3. Decide on the canonical destination
+    4. Update rules to eliminate the loop
+    
+    ```apache
+    # Remove conflicting rule
+    # Redirect 301 /page-b /page-a  ← DELETE THIS
+    
+    # Keep intended direction
+    Redirect 301 /page-a /page-b
+    ```
+  </Tab>
+</Tabs>
+
+### HTTP to HTTPS + www Redirects
+
+<Tabs>
+  <Tab title="Problem">
+    Separate redirects for protocol and subdomain create unnecessary hops:
+    
+    ```
+    http://example.com → https://example.com → https://www.example.com
+    ```
+  </Tab>
+  <Tab title="Solution">
+    Combine into a single redirect:
+    
+    ```nginx
+    # nginx configuration
+    server {
+        listen 80;
+        listen 443 ssl;
+        server_name example.com;
+        return 301 https://www.example.com$request_uri;
+    }
+    ```
+    
+    ```apache
+    # .htaccess configuration
+    RewriteEngine On
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^ https://www.example.com%{REQUEST_URI} [L,R=301]
+    ```
+  </Tab>
+</Tabs>
+
+### 302 vs 301 Misuse
+
+<Tabs>
+  <Tab title="Problem">
+    Using 302 (temporary) for permanent URL changes:
+    
+    ```
+    302 Redirect: /old-url → /new-url
+    ```
+    
+    This tells search engines to keep indexing the old URL.
+  </Tab>
+  <Tab title="Solution">
+    Use 301 for permanent redirects:
+    
+    ```apache
+    # Correct: 301 for permanent moves
+    Redirect 301 /old-url /new-url
+    
+    # Only use 302 for truly temporary redirects
+    # (e.g., A/B testing, maintenance pages)
+    ```
+  </Tab>
+</Tabs>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Limit to 1-2 Hops" icon="minimize">
+    Always redirect directly to the final destination. Never chain redirects.
+  </Card>
+  <Card title="Use 301 for Permanent" icon="lock">
+    Only use 302/307 when the redirect is genuinely temporary.
+  </Card>
+  <Card title="Update Internal Links" icon="link">
+    After setting up a redirect, update internal links to use the new URL directly.
+  </Card>
+  <Card title="Monitor Regularly" icon="eye">
+    Redirect issues accumulate over time. Regular crawls catch problems early.
+  </Card>
+</CardGroup>
+
+## Redirect Audit Workflow
+
+<Steps>
+  <Step title="Run a Full Crawl">
+    Enable redirect analysis to capture all redirect chains.
+  </Step>
+  
+  <Step title="Fix Critical Issues First">
+    Address redirect loops immediately—these completely break page access.
+  </Step>
+  
+  <Step title="Flatten Long Chains">
+    Update redirects to point directly to final destinations.
+  </Step>
+  
+  <Step title="Update Internal Links">
+    Change internal links to point to final URLs, eliminating redirect need.
+  </Step>
+  
+  <Step title="Verify Fixes">
+    Re-crawl to confirm all redirect issues are resolved.
+  </Step>
+</Steps>
+
+## Filtering Options
+
+| Filter | Description |
+|--------|-------------|
+| **Chain Length** | Show chains with N+ hops |
+| **Has Loop** | Only show redirect loops |
+| **Redirect Type** | Filter by 301, 302, etc. |
+| **Source URL** | Filter by URL pattern |
+
+## Export Options
+
+Export redirect data for implementation:
+
+- **CSV**: Full redirect inventory for server configuration
+- **PDF Report**: Visual chain diagrams for stakeholders
+- **Implementation Plan**: Suggested fixes with code snippets
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="Broken Link Detection"
+    icon="link-slash"
+    href="/features/broken-link-detection"
+  >
+    Redirects that lead to 404s are tracked as broken links.
+  </Card>
+  <Card
+    title="Response Time Tracking"
+    icon="gauge-high"
+    href="/features/response-time-tracking"
+  >
+    Redirect chains add measurable latency to page loads.
+  </Card>
+</CardGroup>
+

@@ -1,0 +1,362 @@
+---
+title: 'DNS Verification'
+description: 'Verify domain ownership through DNS TXT records'
+icon: 'shield-check'
+---
+
+## Overview
+
+Domain verification ensures you have permission to crawl a website. This protects site owners from unauthorized scanning and ensures you're the rightful administrator of domains in your account.
+
+<Info>
+  Verification is a one-time process. Once verified, a domain remains verified unless you remove it from your account.
+</Info>
+
+## How DNS Verification Works
+
+DNS verification requires adding a TXT record to your domain's DNS settings:
+
+| Field | Value |
+|-------|-------|
+| **Type** | `TXT` |
+| **Host/Name** | `_lhm-verify` |
+| **Value** | `lhm-site-verification=<your-token>` |
+
+When you click **Verify**, we query your DNS for this record. If found with the correct token, your domain is verified.
+
+## Step-by-Step Instructions
+
+<Steps>
+  <Step title="Get Your Verification Token">
+    From your domain's verification page, copy the full TXT record value:
+    
+    ```
+    lhm-site-verification=abc123xyz789
+    ```
+    
+    <Warning>
+      Each domain has a unique token. Don't reuse tokens between domains.
+    </Warning>
+  </Step>
+  
+  <Step title="Access DNS Settings">
+    Log into your domain registrar or DNS provider's dashboard.
+  </Step>
+  
+  <Step title="Add TXT Record">
+    Create a new TXT record with:
+    - **Name/Host**: `_lhm-verify`
+    - **Value/Content**: Your verification token
+    - **TTL**: 300 or lowest available
+  </Step>
+  
+  <Step title="Wait for Propagation">
+    DNS changes can take up to 48 hours to propagate, though most complete within 15 minutes.
+  </Step>
+  
+  <Step title="Click Verify">
+    Return to Link Health Monitor and click **Verify Domain**.
+  </Step>
+</Steps>
+
+## Provider-Specific Instructions
+
+<Tabs>
+  <Tab title="Cloudflare">
+    <Steps>
+      <Step title="Log into Cloudflare">
+        Go to [dash.cloudflare.com](https://dash.cloudflare.com) and select your domain.
+      </Step>
+      
+      <Step title="Open DNS Settings">
+        Click **DNS** in the sidebar, then **Records**.
+      </Step>
+      
+      <Step title="Add Record">
+        Click **Add record** and configure:
+        
+        | Field | Value |
+        |-------|-------|
+        | Type | `TXT` |
+        | Name | `_lhm-verify` |
+        | Content | `lhm-site-verification=<token>` |
+        | TTL | Auto |
+        
+        <Note>
+          Leave the proxy status as **DNS only** (gray cloud). TXT records aren't proxied.
+        </Note>
+      </Step>
+      
+      <Step title="Save">
+        Click **Save** to create the record.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="GoDaddy">
+    <Steps>
+      <Step title="Log into GoDaddy">
+        Go to [godaddy.com](https://www.godaddy.com) and sign in.
+      </Step>
+      
+      <Step title="Open DNS Management">
+        Navigate to **My Products** → Your domain → **DNS**.
+      </Step>
+      
+      <Step title="Add Record">
+        In the Records section, click **Add**.
+        
+        | Field | Value |
+        |-------|-------|
+        | Type | `TXT` |
+        | Name | `_lhm-verify` |
+        | Value | `lhm-site-verification=<token>` |
+        | TTL | 1 Hour |
+      </Step>
+      
+      <Step title="Save">
+        Click **Save** to create the record.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="Namecheap">
+    <Steps>
+      <Step title="Log into Namecheap">
+        Go to [namecheap.com](https://www.namecheap.com) and sign in.
+      </Step>
+      
+      <Step title="Open DNS Settings">
+        Go to **Domain List** → **Manage** → **Advanced DNS**.
+      </Step>
+      
+      <Step title="Add Record">
+        Click **Add New Record**.
+        
+        | Field | Value |
+        |-------|-------|
+        | Type | `TXT Record` |
+        | Host | `_lhm-verify` |
+        | Value | `lhm-site-verification=<token>` |
+        | TTL | Automatic |
+      </Step>
+      
+      <Step title="Save">
+        Click the checkmark to save the record.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="AWS Route 53">
+    <Steps>
+      <Step title="Open Route 53">
+        Go to the [Route 53 Console](https://console.aws.amazon.com/route53/).
+      </Step>
+      
+      <Step title="Select Hosted Zone">
+        Click **Hosted zones** → Select your domain.
+      </Step>
+      
+      <Step title="Create Record">
+        Click **Create record** and configure:
+        
+        | Field | Value |
+        |-------|-------|
+        | Record name | `_lhm-verify` |
+        | Record type | `TXT` |
+        | Value | `"lhm-site-verification=<token>"` |
+        | TTL | 300 |
+        
+        <Warning>
+          Route 53 requires quotes around TXT values.
+        </Warning>
+      </Step>
+      
+      <Step title="Create">
+        Click **Create records**.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="Google Domains">
+    <Steps>
+      <Step title="Open Google Domains">
+        Go to [domains.google.com](https://domains.google.com).
+      </Step>
+      
+      <Step title="Select Domain">
+        Click your domain → **DNS** in the sidebar.
+      </Step>
+      
+      <Step title="Add Custom Record">
+        Scroll to **Custom records** and click **Manage custom records**.
+        
+        | Field | Value |
+        |-------|-------|
+        | Host name | `_lhm-verify` |
+        | Type | `TXT` |
+        | TTL | 3600 |
+        | Data | `lhm-site-verification=<token>` |
+      </Step>
+      
+      <Step title="Save">
+        Click **Save**.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="DigitalOcean">
+    <Steps>
+      <Step title="Open Networking">
+        Go to **Networking** → **Domains** in your DO dashboard.
+      </Step>
+      
+      <Step title="Select Domain">
+        Click your domain name.
+      </Step>
+      
+      <Step title="Add Record">
+        Select **TXT** from the record type dropdown.
+        
+        | Field | Value |
+        |-------|-------|
+        | Hostname | `_lhm-verify` |
+        | Value | `lhm-site-verification=<token>` |
+        | TTL | 300 |
+      </Step>
+      
+      <Step title="Create">
+        Click **Create Record**.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Verifying Your DNS Record
+
+Before clicking Verify in Link Health Monitor, confirm your DNS record is active:
+
+### Using Command Line
+
+<Tabs>
+  <Tab title="macOS/Linux">
+    ```bash
+    dig TXT _lhm-verify.example.com +short
+    ```
+    
+    Expected output:
+    ```
+    "lhm-site-verification=abc123xyz789"
+    ```
+  </Tab>
+  
+  <Tab title="Windows">
+    ```powershell
+    nslookup -type=TXT _lhm-verify.example.com
+    ```
+    
+    Expected output:
+    ```
+    _lhm-verify.example.com    text = "lhm-site-verification=abc123xyz789"
+    ```
+  </Tab>
+</Tabs>
+
+### Using Online Tools
+
+- [Google Admin Toolbox Dig](https://toolbox.googleapps.com/apps/dig/)
+- [MXToolbox DNS Lookup](https://mxtoolbox.com/DNSLookup.aspx)
+- [WhatsMyDNS](https://www.whatsmydns.net/)
+
+Enter `_lhm-verify.example.com` (with your domain) and select TXT record type.
+
+## DNS Propagation
+
+DNS changes don't take effect instantly. When you create a TXT record:
+
+1. Your DNS provider updates their servers
+2. The change propagates to DNS resolvers worldwide
+3. Cached records at intermediate servers expire
+
+### Typical Propagation Times
+
+| Provider | Typical Time |
+|----------|--------------|
+| Cloudflare | 1-5 minutes |
+| GoDaddy | 15-30 minutes |
+| Namecheap | 15-30 minutes |
+| Route 53 | 5-15 minutes |
+| Google Domains | 5-15 minutes |
+
+<Info>
+  While full global propagation can take up to 48 hours, most verifications succeed within 30 minutes.
+</Info>
+
+### Speeding Up Propagation
+
+- Use the lowest TTL available when creating the record
+- Clear your local DNS cache before testing
+- Use `8.8.8.8` or `1.1.1.1` as DNS resolver for testing
+
+## Why Verification is Required
+
+Domain verification serves important purposes:
+
+<CardGroup cols={2}>
+  <Card title="Security" icon="shield">
+    Prevents unauthorized parties from scanning websites they don't own.
+  </Card>
+  <Card title="Resource Protection" icon="server">
+    Ensures crawl resources are used by legitimate owners.
+  </Card>
+  <Card title="Privacy" icon="lock">
+    Results and reports are only accessible to verified owners.
+  </Card>
+  <Card title="Trust" icon="handshake">
+    Website owners trust that only they can analyze their sites.
+  </Card>
+</CardGroup>
+
+## Subdomain Verification
+
+For subdomains, add the TXT record at the subdomain level:
+
+| Domain | TXT Record Host |
+|--------|-----------------|
+| `example.com` | `_lhm-verify` |
+| `blog.example.com` | `_lhm-verify.blog` |
+| `app.example.com` | `_lhm-verify.app` |
+
+<Tip>
+  If you've verified the root domain, you can optionally enable **Auto-verify subdomains** to skip verification for subdomains.
+</Tip>
+
+## Keeping Verification Active
+
+<Note>
+  You can safely remove the TXT record after verification. We don't re-check DNS after the initial verification.
+</Note>
+
+However, keeping the record provides:
+- Faster re-verification if you remove and re-add the domain
+- Proof of ownership for auditing purposes
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Verification Troubleshooting"
+    icon="wrench"
+    href="/domains/verification-troubleshooting"
+  >
+    Having issues? Check our troubleshooting guide.
+  </Card>
+  <Card
+    title="Start Crawling"
+    icon="spider-web"
+    href="/crawling/starting-crawls"
+  >
+    Your domain is verified—time to crawl!
+  </Card>
+</CardGroup>
+

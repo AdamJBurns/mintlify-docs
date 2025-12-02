@@ -1,0 +1,448 @@
+---
+title: 'Email Notifications'
+description: 'Configure email alerts for crawl events and issues'
+icon: 'envelope'
+---
+
+## Overview
+
+Email notifications keep you informed about your website's health without logging into the dashboard. Configure alerts for completed crawls, new issues, SSL expiration warnings, and more.
+
+## Notification Types
+
+### Crawl Notifications
+
+| Notification | Description | When Sent |
+|--------------|-------------|-----------|
+| **Crawl Complete** | Summary of crawl results | After each crawl finishes |
+| **New Issues Found** | Alert when new problems detected | If crawl finds new issues |
+| **Issues Resolved** | Confirmation when issues fixed | If previously broken links now work |
+| **Crawl Failed** | Alert when crawl encounters error | If crawl cannot complete |
+
+### SSL Notifications
+
+| Notification | Description | When Sent |
+|--------------|-------------|-----------|
+| **30-Day Warning** | Early warning | 30 days before expiration |
+| **14-Day Warning** | Action needed soon | 14 days before expiration |
+| **7-Day Warning** | Critical warning | 7 days before expiration |
+| **Expired Alert** | Certificate has expired | Upon expiration |
+
+### Account Notifications
+
+| Notification | Description | When Sent |
+|--------------|-------------|-----------|
+| **Usage Warning** | Approaching plan limits | At 80% of limits |
+| **Limit Reached** | Plan limit hit | When limit exceeded |
+| **Billing** | Payment receipts, failed payments | On billing events |
+
+## Configuring Notifications
+
+### Account-Level Settings
+
+Configure default notifications for your account:
+
+<Steps>
+  <Step title="Open Notification Settings">
+    Navigate to **Settings** → **Notifications**.
+  </Step>
+  
+  <Step title="Select Notification Types">
+    Choose which notifications to receive:
+    
+    ```
+    Notification Preferences
+    ─────────────────────────────────────────
+    Crawl Notifications
+      ☑ Crawl completed
+      ☑ New issues found
+      ☑ Issues resolved
+      ☑ Crawl failed
+    
+    SSL Notifications
+      ☑ 30-day expiration warning
+      ☑ 14-day expiration warning
+      ☑ 7-day expiration warning (critical)
+      ☑ Certificate expired
+    
+    Account Notifications
+      ☑ Usage warnings
+      ☑ Billing receipts
+    ```
+  </Step>
+  
+  <Step title="Add Recipients">
+    Add additional email addresses to receive notifications:
+    
+    - Primary account email (always receives)
+    - Additional team members
+    - Distribution lists
+  </Step>
+  
+  <Step title="Save">
+    Click **Save Preferences**.
+  </Step>
+</Steps>
+
+### Domain-Level Settings
+
+Override account defaults for specific domains:
+
+<Steps>
+  <Step title="Open Domain Settings">
+    Navigate to the domain → **Settings** → **Notifications**.
+  </Step>
+  
+  <Step title="Enable Override">
+    Toggle **Custom Notifications** to ON.
+  </Step>
+  
+  <Step title="Configure">
+    Set domain-specific preferences:
+    
+    - Different recipients
+    - Different notification types
+    - Custom schedules
+  </Step>
+</Steps>
+
+## Email Formats
+
+### Crawl Complete Email
+
+```
+Subject: ✓ Crawl Complete: example.com - Score: 78/100
+
+─────────────────────────────────────────────────────────
+                    CRAWL COMPLETE
+                    example.com
+─────────────────────────────────────────────────────────
+
+Health Score: 78/100 (Good) ▲ +5 from last crawl
+
+Summary:
+• Pages Checked: 847
+• Broken Links: 12 (3 new)
+• Redirects: 45
+• SEO Issues: 34
+
+Top Issues:
+1. /products/old-widget - 404 Not Found (8 pages affected)
+2. /blog/draft-post - 404 Not Found (5 pages affected)
+3. Missing H1 on /services
+
+[View Full Report] [Start New Crawl]
+
+─────────────────────────────────────────────────────────
+Crawl completed: Dec 2, 2024 at 3:04 PM
+Duration: 4 minutes, 23 seconds
+```
+
+### New Issues Alert
+
+```
+Subject: ⚠ 3 New Issues Found: example.com
+
+─────────────────────────────────────────────────────────
+                    NEW ISSUES DETECTED
+                    example.com
+─────────────────────────────────────────────────────────
+
+3 new issues found during the latest crawl:
+
+🔴 CRITICAL (1)
+• /api/endpoint returning 500 error
+  Found on: /developers page
+  
+🟠 WARNING (2)
+• /team/john-smith - 404 Not Found
+  Found on: /about, /team
+• Missing meta description on /new-product
+
+[View All Issues] [Ignore These]
+
+─────────────────────────────────────────────────────────
+```
+
+### SSL Expiring Warning
+
+```
+Subject: 🔒 SSL Certificate Expiring in 7 Days: example.com
+
+─────────────────────────────────────────────────────────
+                    SSL CERTIFICATE WARNING
+                    example.com
+─────────────────────────────────────────────────────────
+
+Your SSL certificate will expire in 7 days!
+
+Certificate Details:
+• Domain: example.com
+• Issuer: Let's Encrypt
+• Expires: December 9, 2024 at 12:00 AM UTC
+• Days Remaining: 7
+
+⚠ After expiration, visitors will see security warnings 
+  and may be unable to access your site.
+
+Action Required:
+1. Renew your SSL certificate
+2. Install the new certificate on your server
+3. Verify installation with Link Health Monitor
+
+[Check SSL Status] [Renew Guide]
+
+─────────────────────────────────────────────────────────
+```
+
+## Digest Options
+
+Instead of individual emails, receive consolidated digests:
+
+### Daily Digest
+
+Receive a single daily email summarizing all activity:
+
+```
+Daily Digest Settings
+─────────────────────────────────────────
+☑ Enable daily digest
+   Time: 9:00 AM ▼ (in your timezone)
+   
+Include:
+  ☑ Crawl summaries
+  ☑ New issues
+  ☑ Resolved issues
+  ☑ SSL status
+```
+
+### Weekly Report
+
+Comprehensive weekly summary:
+
+```
+Weekly Report Settings
+─────────────────────────────────────────
+☑ Enable weekly report
+   Day: Monday ▼
+   Time: 9:00 AM ▼
+   
+Include:
+  ☑ Health score trends
+  ☑ Issue summary
+  ☑ Top recommendations
+  ☑ Comparison to last week
+```
+
+## Quiet Hours
+
+Prevent non-critical notifications during specified hours:
+
+```
+Quiet Hours
+─────────────────────────────────────────
+☑ Enable quiet hours
+
+Quiet period: 10:00 PM to 7:00 AM ▼
+
+During quiet hours:
+  ● Hold notifications until quiet hours end
+  ○ Send immediately (ignore quiet hours)
+  
+Exception: Always send critical alerts immediately
+  ☑ SSL expired
+  ☑ Site down (5xx errors on homepage)
+```
+
+## Managing Recipients
+
+### Adding Recipients
+
+Add team members to receive notifications:
+
+<Steps>
+  <Step title="Open Recipients">
+    Go to **Settings** → **Notifications** → **Recipients**.
+  </Step>
+  
+  <Step title="Add Email">
+    Enter the email address and select notification types:
+    
+    | Recipient | Notifications |
+    |-----------|---------------|
+    | dev@company.com | Crawl failures, SSL alerts |
+    | seo@company.com | New issues, crawl complete |
+    | ops@company.com | SSL only |
+  </Step>
+  
+  <Step title="Verify">
+    Recipient receives verification email and must confirm.
+  </Step>
+</Steps>
+
+### Per-Domain Recipients
+
+Set different recipients for different domains:
+
+```
+Domain Recipients
+─────────────────────────────────────────
+example.com
+  • john@company.com (all notifications)
+  • dev@company.com (failures only)
+  
+client-site.com
+  • sarah@company.com (all notifications)
+  • client@client.com (weekly digest only)
+```
+
+## Email Delivery
+
+### Delivery Status
+
+Check email delivery in **Settings** → **Notifications** → **Delivery Log**:
+
+```
+Email Delivery Log
+═══════════════════════════════════════════════════════════
+Recipient           Subject                     Status
+─────────────────────────────────────────────────────────────
+john@company.com    Crawl Complete: example.com  ✓ Delivered
+dev@company.com     SSL Warning: example.com     ✓ Delivered
+spam@test.com       Crawl Complete: test.com     ✗ Bounced
+```
+
+### Troubleshooting Delivery
+
+<AccordionGroup>
+  <Accordion title="Not receiving emails">
+    1. Check spam/junk folder
+    2. Add `notifications@linkhealthmonitor.com` to contacts
+    3. Verify email address in settings
+    4. Check delivery log for bounces
+    5. Ensure notification type is enabled
+  </Accordion>
+  
+  <Accordion title="Emails going to spam">
+    1. Mark our emails as "Not Spam"
+    2. Add our domain to safe senders
+    3. Check with your IT about email filtering
+    4. Consider using a personal email for testing
+  </Accordion>
+  
+  <Accordion title="Too many emails">
+    1. Enable daily digest mode
+    2. Reduce notification types
+    3. Set up quiet hours
+    4. Use domain-level filtering
+  </Accordion>
+</AccordionGroup>
+
+## Agency Email Settings
+
+<Info>
+  Agency plan users can customize email branding and sender.
+</Info>
+
+### White-Label Emails
+
+Configure branded emails for client notifications:
+
+| Setting | Description |
+|---------|-------------|
+| **From Name** | Your company name |
+| **From Email** | Requires custom domain setup |
+| **Logo** | Your logo in email header |
+| **Colors** | Match your brand colors |
+| **Footer** | Custom footer text |
+
+See [Custom Domains](/agency/custom-domains) for email domain setup.
+
+### Client Notifications
+
+Send notifications directly to clients:
+
+<Steps>
+  <Step title="Open Client Settings">
+    Go to **Clients** → Select client → **Notifications**.
+  </Step>
+  
+  <Step title="Add Client Recipients">
+    Add client email addresses.
+  </Step>
+  
+  <Step title="Select Notifications">
+    Choose what clients receive:
+    - Weekly reports (recommended)
+    - Crawl summaries
+    - Critical alerts only
+  </Step>
+  
+  <Step title="Enable White-Label">
+    Toggle on white-label branding for these emails.
+  </Step>
+</Steps>
+
+## API Integration
+
+Manage notifications via API:
+
+### Get Notification Settings
+
+```bash
+curl -X GET \
+  "https://api.linkhealthmonitor.com/v1/settings/notifications" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### Update Settings
+
+```bash
+curl -X PATCH \
+  "https://api.linkhealthmonitor.com/v1/settings/notifications" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "crawl_complete": true,
+    "new_issues": true,
+    "ssl_warnings": ["30_day", "14_day", "7_day"],
+    "daily_digest": false
+  }'
+```
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Use Digests" icon="layer-group">
+    Daily digests reduce inbox clutter while keeping you informed.
+  </Card>
+  <Card title="Set Quiet Hours" icon="moon">
+    Avoid notification fatigue by setting quiet hours for non-critical alerts.
+  </Card>
+  <Card title="Route by Type" icon="sitemap">
+    Send different notification types to appropriate team members.
+  </Card>
+  <Card title="Review Regularly" icon="calendar-check">
+    Periodically review and adjust notification settings as needs change.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Webhooks"
+    icon="webhook"
+    href="/integrations/webhooks"
+  >
+    Set up real-time webhook notifications.
+  </Card>
+  <Card
+    title="Scheduled Reports"
+    icon="calendar"
+    href="/crawling/sharing-results"
+  >
+    Configure automated report delivery.
+  </Card>
+</CardGroup>
+

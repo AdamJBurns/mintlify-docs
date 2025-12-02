@@ -1,80 +1,176 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: 'Quickstart'
+description: 'Start monitoring your website links in under 5 minutes'
+icon: 'rocket'
 ---
 
-## Get started in three steps
+## Overview
 
-Get your documentation site running locally and make your first customization.
+This guide walks you through setting up Link Health Monitor from account creation to your first crawl results. By the end, you'll have a complete picture of your website's link health.
 
-### Step 1: Set up your local environment
+<Info>
+  **Time to complete**: ~5 minutes (plus DNS propagation time for domain verification)
+</Info>
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+## Getting Started
+
+<Steps>
+  <Step title="Create Your Account">
+    Visit [app.linkhealthmonitor.com](https://app.linkhealthmonitor.com/signup) and sign up with your email or continue with Google/GitHub authentication.
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    <Tip>
+      Start with our **Free plan** to explore the platform. You can upgrade anytime to unlock more features.
+    </Tip>
+  </Step>
+  
+  <Step title="Add Your First Domain">
+    From your dashboard, click **Add Domain** and enter your website URL.
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    ```
+    example.com
+    ```
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    <Note>
+      Enter just the domain name without `https://` or trailing slashes. We'll automatically detect whether your site uses HTTP or HTTPS.
+    </Note>
+  </Step>
+  
+  <Step title="Verify Domain Ownership">
+    Domain verification ensures you have permission to crawl the domain. Add a DNS TXT record to prove ownership:
+    
+    **Record Type**: `TXT`  
+    **Host/Name**: `_lhm-verify`  
+    **Value**: `lhm-site-verification=<your-token>`
+    
+    <Accordion title="Quick Setup Guides by Provider">
+      <AccordionGroup>
+        <Accordion title="Cloudflare">
+          1. Log in to your Cloudflare dashboard
+          2. Select your domain
+          3. Go to **DNS** → **Records**
+          4. Click **Add record**
+          5. Select Type: `TXT`
+          6. Name: `_lhm-verify`
+          7. Content: Your verification token
+          8. Click **Save**
+        </Accordion>
+        <Accordion title="GoDaddy">
+          1. Sign in to your GoDaddy account
+          2. Go to **My Products** → **DNS**
+          3. Click **Add** under Records
+          4. Select Type: `TXT`
+          5. Name: `_lhm-verify`
+          6. Value: Your verification token
+          7. TTL: 1 Hour
+          8. Click **Save**
+        </Accordion>
+        <Accordion title="Namecheap">
+          1. Log in to Namecheap
+          2. Go to **Domain List** → **Manage**
+          3. Click **Advanced DNS**
+          4. Click **Add New Record**
+          5. Type: `TXT Record`
+          6. Host: `_lhm-verify`
+          7. Value: Your verification token
+          8. Click the checkmark to save
+        </Accordion>
+      </AccordionGroup>
+    </Accordion>
+    
+    <Warning>
+      DNS changes can take up to 48 hours to propagate, though most changes are visible within 15 minutes. Click **Verify** to check status.
+    </Warning>
+  </Step>
+  
+  <Step title="Configure Scan Options">
+    Before starting your crawl, choose which analyses to run:
+    
+    | Option | Description | Plan Required |
+    |--------|-------------|---------------|
+    | **SSL Check** | Verify certificate validity and expiration | Free |
+    | **SEO Analysis** | Audit meta tags, headings, and images | Solo+ |
+    | **Anchor Text Analysis** | Evaluate link text quality | Pro+ |
+    | **Response Trends** | Track performance over time | Pro+ |
+    
+    <Tip>
+      For your first crawl, we recommend enabling **SSL Check** and **SEO Analysis** to get a comprehensive baseline of your site's health.
+    </Tip>
+  </Step>
+  
+  <Step title="Start Your First Crawl">
+    Click **Start Crawl** to begin. Our crawler will:
+    
+    1. Start from your homepage
+    2. Discover and follow all internal links
+    3. Check each URL for errors and issues
+    4. Analyze pages based on your selected options
+    
+    <Info>
+      Crawl time depends on your site size and selected options. A 100-page site typically completes in 2-3 minutes.
+    </Info>
+  </Step>
+  
+  <Step title="Review Your Results">
+    Once complete, you'll see a comprehensive report including:
+    
+    - **Summary Dashboard**: Overall health score and key metrics
+    - **Broken Links**: All 4xx and 5xx errors with source pages
+    - **Redirects**: Redirect chains and potential issues
+    - **SEO Issues**: Missing meta tags, headings, and alt text
+    - **Performance**: Response time distribution
+    
+    Click any issue to see details and recommended fixes.
+  </Step>
+</Steps>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
+## What's Next?
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card
+    title="Understanding Your Results"
+    icon="chart-simple"
+    href="/crawling/crawl-results"
+  >
+    Learn how to interpret crawl data and prioritize fixes.
+  </Card>
+  <Card
+    title="Scan Options Deep Dive"
+    icon="sliders"
+    href="/crawling/scan-options"
+  >
+    Configure advanced crawl settings for your needs.
+  </Card>
+  <Card
+    title="Schedule Automated Crawls"
+    icon="calendar"
+    href="/crawling/starting-crawls"
+  >
+    Set up recurring crawls to catch issues early.
+  </Card>
+  <Card
+    title="Share Reports"
+    icon="share-nodes"
+    href="/crawling/sharing-results"
+  >
+    Generate shareable reports for stakeholders.
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card
+    title="Verification Issues?"
+    icon="circle-question"
+    href="/domains/verification-troubleshooting"
+  >
+    Common DNS verification problems and solutions.
+  </Card>
+  <Card
+    title="Contact Support"
+    icon="headset"
+    href="mailto:support@linkhealthmonitor.com"
+  >
+    Our team typically responds within 2 hours.
+  </Card>
+</CardGroup>

@@ -1,0 +1,253 @@
+---
+title: 'Adding Domains'
+description: 'Add and configure domains for link health monitoring'
+icon: 'plus'
+---
+
+## Overview
+
+Domains are the foundation of Link Health Monitor. Each domain represents a website you want to monitor for broken links, SEO issues, and performance problems.
+
+## Adding Your First Domain
+
+<Steps>
+  <Step title="Navigate to Domains">
+    From your dashboard, click **Domains** in the sidebar, then click the **Add Domain** button.
+  </Step>
+  
+  <Step title="Enter Domain Name">
+    Enter your domain name in the input field:
+    
+    ```
+    example.com
+    ```
+    
+    <Note>
+      Enter just the domain name without `https://`, `www.`, or trailing paths. We'll automatically detect your site's configuration.
+    </Note>
+  </Step>
+  
+  <Step title="Configure Options">
+    Select initial configuration options:
+    
+    | Option | Description |
+    |--------|-------------|
+    | **Protocol** | Auto-detect, Force HTTPS, or Force HTTP |
+    | **Include www** | Also monitor www subdomain |
+    | **Start URL** | Custom starting page (default: homepage) |
+  </Step>
+  
+  <Step title="Submit for Verification">
+    Click **Add Domain** to create the domain. You'll be directed to the verification page.
+  </Step>
+</Steps>
+
+## Domain Requirements
+
+### Supported Domain Types
+
+| Type | Example | Supported |
+|------|---------|-----------|
+| Root domain | `example.com` | ✅ |
+| Subdomain | `blog.example.com` | ✅ |
+| Deep subdomain | `app.us.example.com` | ✅ |
+| IP address | `192.168.1.1` | ❌ |
+| localhost | `localhost:3000` | ❌ |
+
+### Plan Limits
+
+| Plan | Max Domains |
+|------|-------------|
+| Free | 1 |
+| Solo | 3 |
+| Pro | 10 |
+| Agency | Unlimited |
+
+<Warning>
+  Each subdomain counts as a separate domain toward your plan limit.
+</Warning>
+
+## Domain Configuration
+
+### Protocol Settings
+
+Choose how Link Health Monitor connects to your site:
+
+<Tabs>
+  <Tab title="Auto-detect (Recommended)">
+    We'll check both HTTP and HTTPS, following redirects to determine your canonical protocol.
+    
+    Best for:
+    - Sites with proper redirects
+    - When you're unsure of configuration
+  </Tab>
+  
+  <Tab title="Force HTTPS">
+    Only connect via HTTPS. Useful if:
+    - Your site is HTTPS-only
+    - HTTP redirects aren't working properly
+    - You want to verify HTTPS specifically
+  </Tab>
+  
+  <Tab title="Force HTTP">
+    Only connect via HTTP (not recommended). Useful for:
+    - Internal sites without SSL
+    - Testing environments
+  </Tab>
+</Tabs>
+
+### www Handling
+
+Configure how we handle the www subdomain:
+
+| Setting | Behavior |
+|---------|----------|
+| **Auto-detect** | Follow your site's redirect configuration |
+| **Include www** | Treat www and non-www as the same domain |
+| **Exclude www** | Only crawl the exact domain entered |
+
+<Tip>
+  If your site redirects `www` to non-www (or vice versa), use **Auto-detect** to follow your canonical configuration.
+</Tip>
+
+### Custom Start URL
+
+By default, crawls start from your homepage (`/`). You can specify a different starting URL:
+
+- `/blog` - Start from your blog section
+- `/products` - Start from your products catalog
+- `/sitemap.xml` - Use your sitemap as a link source
+
+## Managing Multiple Domains
+
+### Domain Dashboard
+
+Your domain list shows:
+
+| Column | Description |
+|--------|-------------|
+| **Domain** | Domain name and status indicator |
+| **Health Score** | Overall health rating (0-100) |
+| **Last Crawl** | When the domain was last crawled |
+| **Issues** | Count of active issues |
+| **Actions** | Quick actions (crawl, view, settings) |
+
+### Domain Groups (Agency Plan)
+
+Organize domains into groups for easier management:
+
+<Steps>
+  <Step title="Create a Group">
+    Click **New Group** and enter a name (e.g., "Client A Sites").
+  </Step>
+  
+  <Step title="Add Domains to Group">
+    Select domains and click **Move to Group**, or drag and drop.
+  </Step>
+  
+  <Step title="Manage by Group">
+    Filter the domain list by group, or run bulk actions on all domains in a group.
+  </Step>
+</Steps>
+
+## Domain Settings
+
+### General Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Display Name** | Friendly name shown in dashboard |
+| **Protocol** | HTTPS/HTTP configuration |
+| **Start URL** | Default crawl starting point |
+| **Notes** | Internal notes about this domain |
+
+### Crawl Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Default Depth** | How deep to crawl by default |
+| **Max URLs** | Maximum URLs to check per crawl |
+| **Rate Limiting** | Requests per second (be respectful) |
+| **User Agent** | Custom user agent string |
+
+### Notification Settings
+
+| Setting | Description |
+|---------|-------------|
+| **Crawl Complete** | Notify when crawls finish |
+| **New Issues** | Notify when new problems are found |
+| **Issue Resolved** | Notify when issues are fixed |
+| **SSL Expiring** | Alert for certificate expiration |
+
+## Removing Domains
+
+To remove a domain:
+
+<Steps>
+  <Step title="Open Domain Settings">
+    Navigate to the domain and click **Settings**.
+  </Step>
+  
+  <Step title="Scroll to Danger Zone">
+    At the bottom, find the **Danger Zone** section.
+  </Step>
+  
+  <Step title="Click Remove Domain">
+    Click **Remove Domain** and confirm the action.
+  </Step>
+</Steps>
+
+<Warning>
+  Removing a domain deletes all associated crawl history, results, and reports. This action cannot be undone.
+</Warning>
+
+## Transferring Domains
+
+To transfer a domain to another user (Agency plan):
+
+1. Open domain settings
+2. Click **Transfer Ownership**
+3. Enter the recipient's email
+4. Recipient accepts the transfer
+
+The recipient must have available domain slots on their plan.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Domain already exists">
+    This domain is already in your account or another user's account. If you previously verified this domain, check your domain list. If someone else owns it, they must transfer it to you.
+  </Accordion>
+  
+  <Accordion title="Invalid domain format">
+    Ensure you're entering just the domain name:
+    - ✅ `example.com`
+    - ❌ `https://example.com`
+    - ❌ `example.com/page`
+    - ❌ `www.example.com` (use root domain)
+  </Accordion>
+  
+  <Accordion title="Domain limit reached">
+    Upgrade your plan to add more domains, or remove unused domains to free up slots.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="DNS Verification"
+    icon="shield-check"
+    href="/domains/dns-verification"
+  >
+    Verify domain ownership to start crawling.
+  </Card>
+  <Card
+    title="Start Your First Crawl"
+    icon="spider-web"
+    href="/crawling/starting-crawls"
+  >
+    Run your first crawl after verification.
+  </Card>
+</CardGroup>
+

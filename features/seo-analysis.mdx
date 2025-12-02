@@ -1,0 +1,362 @@
+---
+title: 'SEO Analysis'
+description: 'Audit on-page SEO factors including meta tags, headings, and images'
+icon: 'magnifying-glass-chart'
+---
+
+## Overview
+
+On-page SEO elements help search engines understand your content and rank it appropriately. Link Health Monitor analyzes every page for SEO best practices, identifying issues that could hurt your search visibility.
+
+<Info>
+  **Available on**: Solo, Pro, and Agency plans
+</Info>
+
+## What We Analyze
+
+### Meta Tags
+
+| Element | What We Check |
+|---------|---------------|
+| **Title Tag** | Present, length (50-60 chars), uniqueness |
+| **Meta Description** | Present, length (150-160 chars), uniqueness |
+| **Canonical URL** | Present, self-referencing or valid target |
+| **Robots Meta** | Noindex/nofollow directives |
+| **Open Graph** | og:title, og:description, og:image |
+| **Twitter Cards** | twitter:card, twitter:title, twitter:description |
+
+### Heading Structure
+
+| Check | Description |
+|-------|-------------|
+| **H1 Presence** | Every page should have exactly one H1 |
+| **H1 Uniqueness** | H1 text should be unique across site |
+| **Heading Hierarchy** | Proper nesting (H1 → H2 → H3) |
+| **Keyword Relevance** | Headings relate to page content |
+
+### Images
+
+| Check | Description |
+|-------|-------------|
+| **Alt Text** | All images have descriptive alt attributes |
+| **Alt Quality** | Alt text is descriptive, not just filenames |
+| **File Size** | Large images flagged for optimization |
+| **Broken Images** | Missing or 404 image sources |
+
+### Technical Elements
+
+| Element | What We Check |
+|---------|---------------|
+| **Viewport Meta** | Mobile-friendly viewport configuration |
+| **Language** | `lang` attribute on `<html>` element |
+| **Charset** | UTF-8 encoding specified |
+| **Structured Data** | JSON-LD or Microdata presence |
+
+## Why SEO Analysis Matters
+
+### Search Visibility
+
+Search engines use on-page signals to:
+- **Understand Content**: Meta tags summarize page topic
+- **Rank Appropriately**: Proper optimization improves rankings
+- **Display Results**: Titles and descriptions appear in search results
+
+### Click-Through Rate
+
+Well-optimized meta tags increase clicks:
+
+| Element | Impact |
+|---------|--------|
+| **Compelling Title** | +20-30% CTR improvement |
+| **Good Description** | Users know what to expect |
+| **Rich Snippets** | Structured data adds visual appeal |
+
+### Accessibility
+
+Many SEO elements also improve accessibility:
+- **Image Alt Text**: Screen readers for visually impaired users
+- **Heading Structure**: Navigation for keyboard users
+- **Language Tag**: Proper pronunciation in screen readers
+
+## Reading SEO Results
+
+### Summary Dashboard
+
+After a crawl with SEO Analysis enabled:
+
+| Metric | Description |
+|--------|-------------|
+| **SEO Score** | Overall on-page SEO health (0-100) |
+| **Pages Analyzed** | Number of pages checked |
+| **Issues Found** | Total SEO problems detected |
+| **Critical Issues** | High-priority problems |
+
+### Issue Categories
+
+Issues are grouped by type and severity:
+
+```
+SEO Issues Summary
+─────────────────────────────────────────
+🔴 Critical (3)
+   • Missing H1 tag (3 pages)
+   
+🟠 Warning (12)
+   • Title too long (5 pages)
+   • Missing meta description (4 pages)
+   • Missing image alt text (3 pages)
+   
+🟡 Info (8)
+   • Short meta description (8 pages)
+```
+
+### Page-Level Detail
+
+Click any page to see all SEO issues:
+
+```
+Page: /blog/example-post
+─────────────────────────────────────────
+Title:       "Example Post - My Blog | Example Company"
+             ✓ Present
+             ⚠ 58 characters (recommended: 50-60)
+             
+Description: "Learn about example topics..."
+             ✓ Present
+             ✓ 145 characters (good length)
+             
+H1:          "Example Post Title"
+             ✓ Present
+             ✓ Unique on site
+             
+Images:      4 images found
+             ⚠ 2 missing alt text
+```
+
+## Common Issues and Fixes
+
+### Missing or Poor Title Tags
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No title tag -->
+    <head>
+      <meta charset="UTF-8">
+    </head>
+    
+    <!-- Generic title -->
+    <title>Untitled</title>
+    
+    <!-- Too long (truncated in search results) -->
+    <title>This Is An Extremely Long Title That Goes On And On And Will Be Truncated By Search Engines</title>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Good title: descriptive, 50-60 characters -->
+    <title>SEO Guide: On-Page Optimization Best Practices | Company</title>
+    ```
+    
+    **Best practices**:
+    - Include primary keyword near the beginning
+    - Make each title unique
+    - Include brand name at the end
+    - Keep under 60 characters
+  </Tab>
+</Tabs>
+
+### Missing or Poor Meta Descriptions
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No description -->
+    <head>
+      <title>Page Title</title>
+    </head>
+    
+    <!-- Too short -->
+    <meta name="description" content="A page.">
+    
+    <!-- Duplicate across pages -->
+    <meta name="description" content="Welcome to our website.">
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Good description: compelling, 150-160 characters -->
+    <meta name="description" content="Learn proven SEO techniques to improve your search rankings. This guide covers meta tags, headings, images, and technical optimization.">
+    ```
+    
+    **Best practices**:
+    - Summarize page content compellingly
+    - Include a call to action
+    - Make each description unique
+    - Keep between 150-160 characters
+  </Tab>
+</Tabs>
+
+### H1 Tag Issues
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No H1 -->
+    <body>
+      <h2>Welcome</h2>
+    </body>
+    
+    <!-- Multiple H1s -->
+    <body>
+      <h1>Main Title</h1>
+      <h1>Another Title</h1>
+    </body>
+    
+    <!-- H1 is logo/site name on every page -->
+    <h1><img src="logo.png" alt="Company Name"></h1>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Exactly one H1 per page, unique and descriptive -->
+    <body>
+      <header>
+        <a href="/"><img src="logo.png" alt="Company Name"></a>
+      </header>
+      <main>
+        <h1>Complete Guide to On-Page SEO</h1>
+        <h2>Section 1: Meta Tags</h2>
+        <h3>Title Tags</h3>
+        <h3>Meta Descriptions</h3>
+        <h2>Section 2: Content Structure</h2>
+      </main>
+    </body>
+    ```
+  </Tab>
+</Tabs>
+
+### Missing Image Alt Text
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No alt attribute -->
+    <img src="photo.jpg">
+    
+    <!-- Empty alt -->
+    <img src="photo.jpg" alt="">
+    
+    <!-- Filename as alt -->
+    <img src="photo.jpg" alt="IMG_1234.jpg">
+    
+    <!-- Keyword stuffing -->
+    <img src="photo.jpg" alt="SEO SEO optimization SEO tips SEO guide">
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Descriptive alt text -->
+    <img src="photo.jpg" alt="Marketing team brainstorming SEO strategies on whiteboard">
+    
+    <!-- Decorative images can have empty alt -->
+    <img src="decorative-line.png" alt="" role="presentation">
+    ```
+    
+    **Best practices**:
+    - Describe the image content
+    - Include relevant keywords naturally
+    - Keep reasonably short (125 characters max)
+    - Use empty alt for purely decorative images
+  </Tab>
+</Tabs>
+
+### Missing Viewport Meta
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No viewport = not mobile-friendly -->
+    <head>
+      <title>Page</title>
+    </head>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Page</title>
+    </head>
+    ```
+  </Tab>
+</Tabs>
+
+## SEO Best Practices Checklist
+
+<Steps>
+  <Step title="Unique Titles and Descriptions">
+    Every page needs unique, compelling title and meta description.
+  </Step>
+  
+  <Step title="Single H1 Per Page">
+    One descriptive H1 that summarizes the page topic.
+  </Step>
+  
+  <Step title="Proper Heading Hierarchy">
+    Use headings in order (H1 → H2 → H3) without skipping levels.
+  </Step>
+  
+  <Step title="All Images Have Alt Text">
+    Descriptive alt text for all meaningful images.
+  </Step>
+  
+  <Step title="Mobile Viewport Configured">
+    Include viewport meta tag for mobile-friendly display.
+  </Step>
+  
+  <Step title="Structured Data">
+    Add JSON-LD for rich snippets (articles, products, etc.).
+  </Step>
+</Steps>
+
+## Filtering SEO Issues
+
+| Filter | Description |
+|--------|-------------|
+| **Severity** | Critical, Warning, Info |
+| **Issue Type** | Title, Description, H1, Images, etc. |
+| **Page URL** | Filter by URL pattern |
+| **Has Issue** | Pages with specific problem types |
+
+## Bulk Editing Recommendations
+
+For sites with many similar issues:
+
+<Tip>
+  If the same issue appears on many pages (e.g., missing descriptions on all blog posts), consider:
+  
+  1. **Template fixes** for CMS-generated pages
+  2. **Bulk find/replace** in your codebase
+  3. **CMS plugins** for automated meta tag generation
+</Tip>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="Anchor Text Analysis"
+    icon="font"
+    href="/features/anchor-text-analysis"
+  >
+    Analyze link text quality for internal and external links.
+  </Card>
+  <Card
+    title="AI Review"
+    icon="sparkles"
+    href="/features/ai-review"
+  >
+    Get AI-powered SEO recommendations with priority rankings.
+  </Card>
+</CardGroup>
+

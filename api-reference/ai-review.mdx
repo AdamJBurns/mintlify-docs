@@ -1,0 +1,280 @@
+---
+title: 'AI Review'
+description: 'Generate AI-powered analysis of crawl results'
+api: 'POST /v1/crawl/{crawlId}/ai-review'
+---
+
+## Generate AI Review
+
+Request an AI-powered analysis of a completed crawl.
+
+<Info>
+  **Available on**: Pro and Agency plans only. Uses your monthly AI Review allocation.
+</Info>
+
+<ParamField header="Authorization" type="string" required>
+  Bearer token with your API key
+</ParamField>
+
+<ParamField path="crawlId" type="string" required>
+  The UUID of the completed crawl to analyze
+</ParamField>
+
+<ParamField body="focus" type="array">
+  Optional array of areas to focus the analysis
+  
+  Valid values: `broken_links`, `seo`, `performance`, `security`, `redirects`
+</ParamField>
+
+<ParamField body="context" type="string">
+  Optional context about the site (e.g., "e-commerce site", "company blog")
+</ParamField>
+
+### Request
+
+```bash
+curl -X POST \
+  "https://api.linkhealthmonitor.com/v1/crawl/456e4567-e89b-12d3-a456-426614174100/ai-review" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "focus": ["seo", "broken_links"],
+    "context": "E-commerce website selling electronics"
+  }'
+```
+
+### Response
+
+<ResponseField name="reviewId" type="string">
+  UUID of the AI review
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Status: `processing`, `completed`, `failed`
+</ResponseField>
+
+<ResponseField name="health_score" type="integer">
+  Overall health score (0-100)
+</ResponseField>
+
+<ResponseField name="summary" type="string">
+  Executive summary of findings
+</ResponseField>
+
+<ResponseField name="critical_issues" type="array">
+  High-priority problems requiring immediate attention
+</ResponseField>
+
+<ResponseField name="quick_wins" type="array">
+  Easy fixes with significant impact
+</ResponseField>
+
+<ResponseField name="recommendations" type="array">
+  Detailed recommendations with code fixes
+</ResponseField>
+
+<ResponseExample>
+```json
+{
+  "reviewId": "789e4567-e89b-12d3-a456-426614174200",
+  "crawlId": "456e4567-e89b-12d3-a456-426614174100",
+  "status": "completed",
+  "domain": "example.com",
+  "health_score": 67,
+  "summary": "Your website has several issues affecting user experience and search visibility. The most critical are 12 broken links affecting navigation and 3 pages missing essential SEO elements. Addressing the quick wins below could improve your score to approximately 85/100.",
+  "critical_issues": [
+    {
+      "id": "ci-1",
+      "title": "12 Broken Internal Links",
+      "severity": "high",
+      "impact": "Users encountering dead ends, lost conversions",
+      "affected_urls": 12,
+      "description": "Found 12 internal links returning 404 errors. The most impactful is /products/old-widget, linked from 8 pages including your homepage navigation.",
+      "recommendation": "Set up 301 redirects for moved content, or remove links to deleted pages.",
+      "code_fix": {
+        "language": "apache",
+        "filename": ".htaccess",
+        "code": "Redirect 301 /products/old-widget /products/new-widget\nRedirect 301 /blog/draft-post /blog"
+      }
+    },
+    {
+      "id": "ci-2",
+      "title": "Missing H1 Tags on Key Pages",
+      "severity": "high",
+      "impact": "Search engines can't determine page topics",
+      "affected_urls": 3,
+      "description": "Three important pages (/services, /pricing, /contact) lack H1 headings, which are critical for SEO.",
+      "recommendation": "Add a single, descriptive H1 tag to each page.",
+      "code_fix": {
+        "language": "html",
+        "filename": "services.html",
+        "code": "<h1>Professional Web Development Services</h1>"
+      }
+    }
+  ],
+  "quick_wins": [
+    {
+      "id": "qw-1",
+      "title": "Add Meta Descriptions to 18 Pages",
+      "effort": "low",
+      "impact": "medium",
+      "description": "18 pages lack meta descriptions. Search engines will show random snippets instead of compelling summaries.",
+      "affected_urls": 18,
+      "estimated_time": "2 hours"
+    },
+    {
+      "id": "qw-2",
+      "title": "Fix 5 Image Alt Text Issues",
+      "effort": "low",
+      "impact": "medium",
+      "description": "5 product images lack alt text, hurting both SEO and accessibility.",
+      "affected_urls": 5,
+      "estimated_time": "30 minutes"
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec-1",
+      "category": "seo",
+      "title": "Optimize Title Tags",
+      "priority": "medium",
+      "description": "8 pages have title tags over 60 characters that will be truncated in search results.",
+      "details": [
+        {
+          "url": "/products/premium-wireless-bluetooth-noise-cancelling-headphones",
+          "current": "Premium Wireless Bluetooth Noise Cancelling Headphones with 40 Hour Battery - Electronics Store",
+          "suggested": "Premium Wireless Headphones | 40hr Battery - Store Name"
+        }
+      ]
+    },
+    {
+      "id": "rec-2",
+      "category": "performance",
+      "title": "Reduce Redirect Chains",
+      "priority": "medium",
+      "description": "Found 3 redirect chains with 3+ hops. Each hop adds latency and dilutes SEO value.",
+      "details": [
+        {
+          "chain": "/old-blog → /blog → /articles → /content",
+          "hops": 3,
+          "recommendation": "Update all redirects to point directly to /content"
+        }
+      ]
+    }
+  ],
+  "score_breakdown": {
+    "broken_links": -15,
+    "seo_issues": -10,
+    "redirects": -5,
+    "performance": -3,
+    "ssl": 0
+  },
+  "generated_at": "2024-12-02T15:10:00Z"
+}
+```
+</ResponseExample>
+
+## Check AI Review Status
+
+AI Reviews may take 30-60 seconds to generate. Check status:
+
+```
+GET /v1/ai-review/{reviewId}
+```
+
+### Request
+
+```bash
+curl -X GET \
+  "https://api.linkhealthmonitor.com/v1/ai-review/789e4567-e89b-12d3-a456-426614174200" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### Processing Response
+
+```json
+{
+  "reviewId": "789e4567-e89b-12d3-a456-426614174200",
+  "status": "processing",
+  "progress": 65,
+  "estimated_remaining_seconds": 20
+}
+```
+
+## List AI Reviews
+
+Get all AI reviews for a domain:
+
+```
+GET /v1/domains/{domainId}/ai-reviews
+```
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "reviewId": "789e4567-e89b-12d3-a456-426614174200",
+      "crawlId": "456e4567-e89b-12d3-a456-426614174100",
+      "health_score": 67,
+      "generated_at": "2024-12-02T15:10:00Z"
+    },
+    {
+      "reviewId": "889e4567-e89b-12d3-a456-426614174201",
+      "crawlId": "356e4567-e89b-12d3-a456-426614174099",
+      "health_score": 62,
+      "generated_at": "2024-11-25T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 2
+  }
+}
+```
+
+## AI Review Allocation
+
+Check your remaining AI reviews:
+
+```
+GET /v1/account/usage
+```
+
+```json
+{
+  "ai_reviews": {
+    "used": 3,
+    "limit": 5,
+    "resets_at": "2024-12-15T00:00:00Z"
+  }
+}
+```
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `crawl_not_complete` | Crawl must be completed before review |
+| `403` | `ai_reviews_exhausted` | Monthly AI review limit reached |
+| `403` | `feature_not_available` | AI Reviews not available on your plan |
+| `404` | `crawl_not_found` | Crawl doesn't exist |
+| `404` | `review_not_found` | Review doesn't exist |
+
+### Limit Exceeded Response
+
+```json
+{
+  "error": {
+    "code": "ai_reviews_exhausted",
+    "message": "You have used all 5 AI reviews for this month. Your allocation resets on December 15, 2024.",
+    "used": 5,
+    "limit": 5,
+    "resets_at": "2024-12-15T00:00:00Z",
+    "upgrade_url": "https://app.linkhealthmonitor.com/billing"
+  }
+}
+```
+

@@ -1,0 +1,292 @@
+---
+title: 'Plan Limits'
+description: 'Detailed limits and quotas for each plan'
+icon: 'chart-bar'
+---
+
+## Overview
+
+Each Link Health Monitor plan has specific limits designed to match different use cases. This page provides detailed information about all limits and what happens when you reach them.
+
+## Complete Limits Table
+
+| Feature | Free | Solo ($19/mo) | Pro ($49/mo) | Agency ($149/mo) |
+|---------|------|---------------|--------------|------------------|
+| **Domains** | 1 | 3 | 10 | Unlimited |
+| **URLs per Crawl** | 100 | 1,000 | 10,000 | Unlimited |
+| **Crawl Depth** | 2 levels | 5 levels | 10 levels | Unlimited |
+| **Crawl Frequency** | Manual | Weekly | Daily | Hourly |
+| **Daily Crawls** | 2 | 5 | 10 | 25 |
+| **AI Reviews/Month** | 0 | 0 | 5 | 10 |
+| **Team Members** | 1 | 1 | 5 | Unlimited |
+| **History Retention** | 30 days | 90 days | 1 year | Unlimited |
+| **White-Label** | ❌ | ❌ | ❌ | ✅ |
+| **Custom Domain** | ❌ | ❌ | ❌ | ✅ |
+| **API Access** | ❌ | ❌ | ✅ | ✅ |
+
+## Limit Details
+
+### Domains
+
+The maximum number of verified domains you can add to your account.
+
+| Plan | Limit | Notes |
+|------|-------|-------|
+| Free | 1 | Perfect for trying the product |
+| Solo | 3 | Ideal for personal sites |
+| Pro | 10 | Great for small agencies |
+| Agency | Unlimited | No restrictions |
+
+<Note>
+  Each subdomain counts as a separate domain. For example, `example.com` and `blog.example.com` are two domains.
+</Note>
+
+### URLs per Crawl
+
+Maximum number of URLs checked in a single crawl.
+
+| Plan | Limit | Typical Site Size |
+|------|-------|-------------------|
+| Free | 100 | Small blog or portfolio |
+| Solo | 1,000 | Medium business site |
+| Pro | 10,000 | Large content site |
+| Agency | Unlimited | Enterprise or e-commerce |
+
+**What happens at the limit:**
+- Crawl completes with partial results
+- Dashboard shows "URL limit reached"
+- All checked URLs are included in results
+- Suggestion to upgrade is displayed
+
+<Tip>
+  For large sites on limited plans, use URL filters to crawl specific sections (e.g., just `/blog/`) within your limit.
+</Tip>
+
+### Crawl Depth
+
+How many levels deep the crawler follows links from the start URL.
+
+| Plan | Depth | Coverage |
+|------|-------|----------|
+| Free | 2 levels | Homepage + direct links |
+| Solo | 5 levels | Most small-medium sites |
+| Pro | 10 levels | Large sites |
+| Agency | Unlimited | Complete coverage |
+
+**Understanding depth:**
+```
+Depth 1: /                          (homepage only)
+Depth 2: / → /about                 (+ direct links)
+Depth 3: / → /about → /team         (+ two hops)
+Depth 4: / → /about → /team → /john (+ three hops)
+```
+
+### Daily Crawls
+
+Maximum crawls you can run per 24-hour period.
+
+| Plan | Limit | Resets |
+|------|-------|--------|
+| Free | 2 | Midnight UTC |
+| Solo | 5 | Midnight UTC |
+| Pro | 10 | Midnight UTC |
+| Agency | 25 | Midnight UTC |
+
+**What counts toward the limit:**
+- ✅ Manual crawls
+- ✅ Scheduled crawls
+- ✅ API-triggered crawls
+- ❌ Cancelled crawls (don't count)
+
+<Warning>
+  Scheduled crawls count toward your daily limit. If you schedule daily crawls for 5 domains on the Solo plan (5 limit), you won't have capacity for manual crawls.
+</Warning>
+
+### Crawl Frequency (Scheduling)
+
+How often you can schedule automated crawls.
+
+| Plan | Options |
+|------|---------|
+| Free | Manual only (no scheduling) |
+| Solo | Weekly |
+| Pro | Daily, Weekly |
+| Agency | Hourly, Daily, Weekly |
+
+### AI Reviews per Month
+
+Monthly allocation of AI-powered crawl analysis.
+
+| Plan | Reviews | Resets |
+|------|---------|--------|
+| Free | 0 | — |
+| Solo | 0 | — |
+| Pro | 5 | Monthly billing date |
+| Agency | 10 | Monthly billing date |
+
+**AI Review characteristics:**
+- Each review analyzes one crawl result
+- Reviews don't roll over to next month
+- Additional reviews available as add-on ($5 each)
+
+### Team Members
+
+Number of users who can access your account.
+
+| Plan | Members | Roles Available |
+|------|---------|-----------------|
+| Free | 1 | Owner only |
+| Solo | 1 | Owner only |
+| Pro | 5 | Owner, Admin, Editor, Viewer |
+| Agency | Unlimited | All roles |
+
+### History Retention
+
+How long crawl results are stored.
+
+| Plan | Retention |
+|------|-----------|
+| Free | 30 days |
+| Solo | 90 days |
+| Pro | 1 year |
+| Agency | Unlimited |
+
+<Note>
+  After the retention period, crawl results are automatically deleted. Export important data before it expires.
+</Note>
+
+## Limit Warnings
+
+We notify you as you approach limits:
+
+| Threshold | Notification |
+|-----------|--------------|
+| 80% | In-app warning |
+| 90% | Email notification |
+| 100% | Limit reached, action blocked |
+
+### Notification Preferences
+
+Control how you're notified about limits:
+
+```
+Limit Notifications
+─────────────────────────────────────────
+☑ In-app warnings at 80%
+☑ Email at 90%
+☑ Daily limit summary email
+☐ Weekly usage report
+```
+
+## Exceeding Limits
+
+### Soft Limits
+
+These limits show warnings but don't block functionality:
+- Approaching domain limit
+- Approaching daily crawl limit
+- Low AI review balance
+
+### Hard Limits
+
+These limits block the action:
+- URL limit during crawl (partial results returned)
+- Domain limit reached (can't add more)
+- Daily crawl limit reached (wait until reset)
+- AI reviews depleted (wait for reset or purchase more)
+
+## Upgrading for More Capacity
+
+When you need more:
+
+<Steps>
+  <Step title="Identify the Bottleneck">
+    Check which limit you're hitting most often in Settings → Usage.
+  </Step>
+  
+  <Step title="Compare Plans">
+    See if the next plan tier provides enough headroom.
+  </Step>
+  
+  <Step title="Upgrade">
+    Go to Settings → Billing → Change Plan.
+    
+    - Upgrades take effect immediately
+    - You're charged a prorated amount
+    - New limits apply right away
+  </Step>
+</Steps>
+
+## Add-On Purchases (Agency)
+
+Agency plan users can purchase additional capacity:
+
+| Add-On | Price | Notes |
+|--------|-------|-------|
+| Extra AI Reviews | $5/each | One-time purchase |
+| Priority Crawling | $50/mo | Faster queue priority |
+| Extended History | $25/mo | 5+ years retention |
+
+## Monitoring Usage
+
+Track your usage in the dashboard:
+
+### Usage Dashboard
+
+```
+Current Usage (this billing period)
+═══════════════════════════════════════════════════════════
+Domains:           7 / 10      ████████░░  70%
+Daily Crawls:      8 / 10      ████████░░  80% (resets in 4h)
+AI Reviews:        3 / 5       ██████░░░░  60% (resets Dec 15)
+Team Members:      4 / 5       ████████░░  80%
+
+Storage:          2.3 GB / 10 GB
+```
+
+### Historical Usage
+
+View usage trends over time:
+- Daily crawl usage patterns
+- Domain additions/removals
+- AI review consumption
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Can I get a one-time limit increase?">
+    Contact support for temporary limit increases during special circumstances (site migrations, audits, etc.). This is available for Pro and Agency customers.
+  </Accordion>
+  
+  <Accordion title="Do unused limits roll over?">
+    No, daily and monthly limits reset on their schedule and don't accumulate. Use them or lose them!
+  </Accordion>
+  
+  <Accordion title="What timezone do limits reset in?">
+    Daily limits reset at midnight UTC. Monthly limits reset on your billing date.
+  </Accordion>
+  
+  <Accordion title="Can I downgrade if I'm over the new plan's limits?">
+    Yes, but you'll need to remove domains or wait for history to expire before the downgrade takes effect. We'll guide you through the process.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Compare Plans"
+    icon="credit-card"
+    href="/billing/plans"
+  >
+    See full plan features and pricing.
+  </Card>
+  <Card
+    title="Upgrade Your Plan"
+    icon="arrow-up"
+    href="/billing/upgrading"
+  >
+    Learn how to upgrade your account.
+  </Card>
+</CardGroup>
+

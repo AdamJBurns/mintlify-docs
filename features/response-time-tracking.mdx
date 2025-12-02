@@ -1,0 +1,248 @@
+---
+title: 'Response Time Tracking'
+description: 'Monitor page load performance and identify slow resources'
+icon: 'gauge-high'
+---
+
+## Overview
+
+Page speed directly impacts user experience, conversion rates, and search rankings. Link Health Monitor tracks response times for every URL discovered during crawls, helping you identify and fix performance bottlenecks.
+
+<Info>
+  **Available on**: All plans (basic metrics), Pro/Agency (trend analysis)
+</Info>
+
+## What We Measure
+
+### Time to First Byte (TTFB)
+
+The time between our crawler sending a request and receiving the first byte of the response. This measures server-side performance:
+
+- Database queries
+- Server processing
+- Network latency
+
+### Total Response Time
+
+The time to download the complete response body. This includes TTFB plus:
+
+- Content transfer time
+- Network throughput
+
+## Performance Thresholds
+
+We categorize response times into three levels:
+
+| Rating | TTFB | Total Time | Impact |
+|--------|------|------------|--------|
+| 🟢 **Fast** | < 200ms | < 1s | Excellent user experience |
+| 🟡 **Moderate** | 200-600ms | 1-3s | Acceptable but room for improvement |
+| 🔴 **Slow** | > 600ms | > 3s | Negatively impacts users and SEO |
+
+<Warning>
+  Google considers page speed a ranking factor. Pages with TTFB over 600ms may be deprioritized in search results.
+</Warning>
+
+## Why Response Time Matters
+
+### User Experience
+
+Studies show clear correlations between speed and user behavior:
+
+| Delay | Impact |
+|-------|--------|
+| +1 second | 7% reduction in conversions |
+| +2 seconds | 40% of users abandon the page |
+| +3 seconds | 53% of mobile users leave |
+
+### SEO Impact
+
+- **Core Web Vitals**: Google measures Largest Contentful Paint, which correlates with TTFB
+- **Crawl Efficiency**: Slow pages consume more of Google's crawl budget
+- **Mobile-First Indexing**: Mobile users on slower connections are particularly affected
+
+## Using Response Time Data
+
+### Dashboard View
+
+The Response Time section shows:
+
+- **Average TTFB**: Mean response time across all pages
+- **Slowest Pages**: Top 10 pages by response time
+- **Distribution Chart**: Histogram of response times
+- **Trend Graph**: Performance changes over time (Pro/Agency)
+
+### Identifying Slow Pages
+
+Click any slow page to see:
+
+| Field | Description |
+|-------|-------------|
+| **URL** | The slow page URL |
+| **TTFB** | Time to first byte |
+| **Total Time** | Complete response time |
+| **Response Size** | Total bytes downloaded |
+| **History** | Performance trend across crawls |
+
+<Tip>
+  Look for pages that are both slow AND high-traffic. Fixing these provides the biggest impact.
+</Tip>
+
+## Common Performance Issues
+
+### Server-Side Problems
+
+<AccordionGroup>
+  <Accordion title="Slow Database Queries">
+    **Symptoms**: High TTFB, especially on dynamic pages
+    
+    **Solutions**:
+    - Add database indexes
+    - Optimize queries (avoid N+1 problems)
+    - Implement query caching
+    - Use database connection pooling
+  </Accordion>
+  
+  <Accordion title="No Page Caching">
+    **Symptoms**: Consistently high TTFB on repeat visits
+    
+    **Solutions**:
+    - Enable server-side page caching
+    - Use a CDN for static assets
+    - Implement edge caching for dynamic content
+    - Add proper cache headers
+  </Accordion>
+  
+  <Accordion title="Slow Third-Party APIs">
+    **Symptoms**: High TTFB on pages that fetch external data
+    
+    **Solutions**:
+    - Cache API responses
+    - Make API calls asynchronous
+    - Implement circuit breakers
+    - Add timeout limits
+  </Accordion>
+</AccordionGroup>
+
+### Content Problems
+
+<AccordionGroup>
+  <Accordion title="Large Page Size">
+    **Symptoms**: Low TTFB but high total time
+    
+    **Solutions**:
+    - Compress images
+    - Enable gzip/brotli compression
+    - Minify HTML, CSS, JavaScript
+    - Remove unused code
+  </Accordion>
+  
+  <Accordion title="Too Many Resources">
+    **Symptoms**: High number of requests in waterfall
+    
+    **Solutions**:
+    - Bundle JavaScript files
+    - Use CSS sprites
+    - Inline critical CSS
+    - Lazy load non-critical resources
+  </Accordion>
+</AccordionGroup>
+
+## Response Trends (Pro/Agency)
+
+<Info>
+  Response Trends requires the **Response Trends** scan option to be enabled.
+</Info>
+
+Track performance changes over time to:
+
+- **Detect Regressions**: Spot when deployments slow down your site
+- **Measure Improvements**: Verify optimization efforts are working
+- **Identify Patterns**: Find time-based performance issues (peak traffic)
+
+### Trend Analysis
+
+The trend view shows:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Average TTFB Over Time                                 │
+│                                                          │
+│  300ms ─┤                    ╭───╮                       │
+│         │               ╭────╯   ╰───╮                   │
+│  200ms ─┤    ╭─────────╯             ╰────╮              │
+│         │────╯                            ╰───────       │
+│  100ms ─┤                                                │
+│         └────┬────┬────┬────┬────┬────┬────┬────┬───    │
+│            Oct 1  8   15   22   29  Nov 5  12   19       │
+└─────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+  Set up alerts to notify you when average response time exceeds a threshold. This catches performance regressions quickly.
+</Tip>
+
+## Optimization Checklist
+
+<Steps>
+  <Step title="Identify Slowest Pages">
+    Review the "Slowest Pages" report to find your biggest bottlenecks.
+  </Step>
+  
+  <Step title="Check High-Traffic Pages">
+    Cross-reference with analytics to prioritize pages that affect the most users.
+  </Step>
+  
+  <Step title="Analyze Server Response">
+    For high TTFB, investigate server-side code, database queries, and caching.
+  </Step>
+  
+  <Step title="Optimize Content">
+    For high total time, compress and optimize page content and assets.
+  </Step>
+  
+  <Step title="Enable CDN">
+    Serve static assets from a CDN to reduce latency for global users.
+  </Step>
+  
+  <Step title="Monitor Continuously">
+    Enable Response Trends to track improvements and catch regressions.
+  </Step>
+</Steps>
+
+## Filtering Options
+
+| Filter | Description |
+|--------|-------------|
+| **Speed Rating** | Fast, Moderate, Slow |
+| **Page Type** | HTML, Images, CSS, JavaScript |
+| **URL Pattern** | Filter by URL contains/starts with |
+| **Time Range** | Compare different crawl periods |
+
+## Integration with Other Features
+
+Response time data enhances other analyses:
+
+- **Broken Link Detection**: Timeouts are tracked with response data
+- **SEO Analysis**: Slow pages flagged as SEO issues
+- **AI Review**: Performance incorporated into health scores
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="SEO Analysis"
+    icon="magnifying-glass-chart"
+    href="/features/seo-analysis"
+  >
+    Page speed is a ranking factor—see your full SEO picture.
+  </Card>
+  <Card
+    title="AI Review"
+    icon="sparkles"
+    href="/features/ai-review"
+  >
+    Get AI-powered recommendations for performance improvements.
+  </Card>
+</CardGroup>
+

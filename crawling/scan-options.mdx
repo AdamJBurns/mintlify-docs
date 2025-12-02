@@ -1,0 +1,326 @@
+---
+title: 'Scan Options'
+description: 'Configure crawl settings and analysis options'
+icon: 'sliders'
+---
+
+## Overview
+
+Scan options control what analyses run during a crawl. Enable more options for comprehensive reports, or keep it simple for faster crawls.
+
+## Available Scan Options
+
+### SSL Certificate Check
+
+<Card title="SSL Certificate Check" icon="lock">
+  Verifies SSL/TLS certificate validity and expiration dates.
+</Card>
+
+| What It Checks | Details |
+|----------------|---------|
+| Certificate validity | Is the certificate valid and trusted? |
+| Expiration date | When does the certificate expire? |
+| Certificate chain | Is the chain complete and valid? |
+| Hostname match | Does cert match the domain? |
+
+**Available on**: All plans
+
+**Performance impact**: Minimal (adds ~50ms per domain, not per page)
+
+<Tip>
+  Always enable SSL Check—it's fast and catches critical security issues.
+</Tip>
+
+### SEO Analysis
+
+<Card title="SEO Analysis" icon="magnifying-glass">
+  Audits on-page SEO factors for every crawled page.
+</Card>
+
+| What It Checks | Details |
+|----------------|---------|
+| Title tags | Present, length, uniqueness |
+| Meta descriptions | Present, length, uniqueness |
+| H1 headings | Single H1, descriptive content |
+| Heading hierarchy | Proper nesting (H1→H2→H3) |
+| Image alt text | All images have alt attributes |
+| Viewport meta | Mobile-friendly configuration |
+| Language attribute | `lang` on HTML element |
+
+**Available on**: Solo, Pro, Agency
+
+**Performance impact**: Moderate (adds ~200ms per page for parsing)
+
+### Anchor Text Analysis
+
+<Card title="Anchor Text Analysis" icon="font">
+  Evaluates link text quality for all discovered links.
+</Card>
+
+| What It Checks | Details |
+|----------------|---------|
+| Generic text | "Click here", "Read more", etc. |
+| Empty anchors | Links with no text content |
+| Image links | Images used as links without alt |
+| Over-optimization | Same anchor text used repeatedly |
+| Descriptiveness | Quality score for anchor relevance |
+
+**Available on**: Pro, Agency
+
+**Performance impact**: Low (adds ~50ms per page)
+
+### Response Trends
+
+<Card title="Response Trends" icon="chart-line">
+  Tracks response times across multiple crawls for trend analysis.
+</Card>
+
+| What It Tracks | Details |
+|----------------|---------|
+| TTFB over time | Time to First Byte trends |
+| Total response time | Full download time trends |
+| Performance changes | Regressions or improvements |
+| Slow pages | Consistently slow resources |
+
+**Available on**: Pro, Agency
+
+**Performance impact**: None (uses existing timing data)
+
+<Note>
+  Response Trends requires multiple crawls to show meaningful data. Run at least 3-4 crawls before analyzing trends.
+</Note>
+
+## Configuring Options
+
+### Per-Crawl Configuration
+
+Configure options each time you start a crawl:
+
+<Steps>
+  <Step title="Start Crawl">
+    Click **Start Crawl** on your domain.
+  </Step>
+  
+  <Step title="Select Options">
+    Check the boxes for desired analyses:
+    
+    ```
+    ┌─────────────────────────────────────┐
+    │  Scan Options                       │
+    │  ─────────────────────────────────  │
+    │  ☑ SSL Certificate Check            │
+    │  ☑ SEO Analysis                     │
+    │  ☐ Anchor Text Analysis             │
+    │  ☐ Response Trends                  │
+    └─────────────────────────────────────┘
+    ```
+  </Step>
+  
+  <Step title="Start">
+    Click **Start Crawl** with your selected options.
+  </Step>
+</Steps>
+
+### Default Options
+
+Set default options to apply to all crawls:
+
+<Steps>
+  <Step title="Open Domain Settings">
+    Navigate to domain → **Settings** → **Crawl Defaults**.
+  </Step>
+  
+  <Step title="Configure Defaults">
+    | Setting | Description |
+    |---------|-------------|
+    | **Default Options** | Pre-selected scan options |
+    | **Default Depth** | Starting crawl depth |
+    | **Max URLs** | URL limit per crawl |
+  </Step>
+  
+  <Step title="Save">
+    Click **Save Defaults**.
+  </Step>
+</Steps>
+
+## Advanced Settings
+
+### Rate Limiting
+
+Control how fast the crawler makes requests:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Requests per second** | Max requests per second | 5 |
+| **Concurrent connections** | Parallel requests | 3 |
+| **Request delay** | Minimum delay between requests | 200ms |
+
+<Warning>
+  Be respectful of target servers. Aggressive crawling can trigger rate limits or blocks.
+</Warning>
+
+### Timeouts
+
+Configure how long to wait for responses:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Connect timeout** | Time to establish connection | 10s |
+| **Response timeout** | Time to receive headers | 30s |
+| **Total timeout** | Maximum total request time | 60s |
+
+### User Agent
+
+Customize the crawler's user agent string:
+
+```
+Default:
+LinkHealthMonitor/1.0 (+https://linkhealthmonitor.com/bot)
+```
+
+Options:
+- **Default**: Identifies as Link Health Monitor
+- **Generic**: Generic bot user agent
+- **Browser-like**: Mimics a standard browser
+- **Custom**: Enter your own user agent
+
+<Note>
+  Some sites block bot user agents. Use browser-like if you're seeing unexpected blocks.
+</Note>
+
+### URL Filters
+
+Control which URLs are included or excluded:
+
+| Filter Type | Example | Effect |
+|-------------|---------|--------|
+| **Include patterns** | `/blog/*` | Only crawl matching URLs |
+| **Exclude patterns** | `/admin/*` | Skip matching URLs |
+| **Exclude extensions** | `.pdf, .zip` | Skip certain file types |
+
+```
+URL Filters
+─────────────────────────────────────────
+Include (leave empty for all):
+  /blog/*
+  /products/*
+
+Exclude:
+  /admin/*
+  /login/*
+  /api/*
+  
+Skip file types:
+  .pdf, .zip, .doc, .xls
+```
+
+### External Links
+
+Configure how external links are handled:
+
+| Setting | Description |
+|---------|-------------|
+| **Check external links** | Verify external URLs respond |
+| **Follow external redirects** | Follow redirects on external links |
+| **Max external depth** | How many hops for external redirects |
+
+<Tip>
+  Enable external link checking to catch broken outbound links, but don't follow them deeply—that slows crawls significantly.
+</Tip>
+
+## Option Combinations
+
+### Quick Audit
+
+Fast overview of site health:
+
+```
+☑ SSL Certificate Check
+☐ SEO Analysis
+☐ Anchor Text Analysis
+☐ Response Trends
+
+Depth: 2
+Max URLs: 100
+```
+
+Best for: Quick health checks, post-deployment verification
+
+### SEO Audit
+
+Comprehensive SEO analysis:
+
+```
+☑ SSL Certificate Check
+☑ SEO Analysis
+☑ Anchor Text Analysis
+☐ Response Trends
+
+Depth: 5
+Max URLs: 1,000
+```
+
+Best for: Monthly SEO audits, client reports
+
+### Full Analysis
+
+Complete site analysis:
+
+```
+☑ SSL Certificate Check
+☑ SEO Analysis
+☑ Anchor Text Analysis
+☑ Response Trends
+
+Depth: 10
+Max URLs: 10,000
+```
+
+Best for: Quarterly deep audits, site migrations
+
+### Performance Focus
+
+Focus on speed and reliability:
+
+```
+☑ SSL Certificate Check
+☐ SEO Analysis
+☐ Anchor Text Analysis
+☑ Response Trends
+
+Depth: 5
+Max URLs: 1,000
+```
+
+Best for: Performance monitoring, server health
+
+## Plan Feature Matrix
+
+| Option | Free | Solo | Pro | Agency |
+|--------|------|------|-----|--------|
+| SSL Check | ✅ | ✅ | ✅ | ✅ |
+| SEO Analysis | ❌ | ✅ | ✅ | ✅ |
+| Anchor Text | ❌ | ❌ | ✅ | ✅ |
+| Response Trends | ❌ | ❌ | ✅ | ✅ |
+| Custom User Agent | ❌ | ❌ | ✅ | ✅ |
+| URL Filters | ❌ | ✅ | ✅ | ✅ |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Starting Crawls"
+    icon="spider-web"
+    href="/crawling/starting-crawls"
+  >
+    Run your first crawl with configured options.
+  </Card>
+  <Card
+    title="Crawl Results"
+    icon="chart-simple"
+    href="/crawling/crawl-results"
+  >
+    Understand and act on your crawl data.
+  </Card>
+</CardGroup>
+

@@ -1,0 +1,345 @@
+---
+title: 'Anchor Text Analysis'
+description: 'Evaluate link text quality and improve internal linking strategy'
+icon: 'font'
+---
+
+## Overview
+
+Anchor text—the clickable text in a hyperlink—tells both users and search engines what to expect on the linked page. Poor anchor text hurts usability and wastes SEO opportunities. Link Health Monitor analyzes your anchor text quality and identifies issues.
+
+<Info>
+  **Available on**: Pro and Agency plans
+</Info>
+
+## What We Analyze
+
+### Anchor Text Types
+
+| Type | Example | SEO Value |
+|------|---------|-----------|
+| **Exact Match** | `<a href="/seo-guide">SEO Guide</a>` | High (but avoid over-optimization) |
+| **Partial Match** | `<a href="/seo-guide">complete SEO guide for beginners</a>` | High |
+| **Branded** | `<a href="/about">About LinkHealthMonitor</a>` | Medium |
+| **Generic** | `<a href="/seo-guide">click here</a>` | Low |
+| **Naked URL** | `<a href="/seo-guide">example.com/seo-guide</a>` | Low |
+| **Image Link** | `<a href="/seo-guide"><img src="..." alt=""></a>` | Depends on alt text |
+
+### Quality Indicators
+
+| Indicator | Good | Poor |
+|-----------|------|------|
+| **Descriptive** | Tells users what they'll find | Generic or vague |
+| **Concise** | 2-5 words typically | Too long or too short |
+| **Relevant** | Matches target page content | Unrelated to destination |
+| **Unique** | Varied anchor text for same target | Same anchor everywhere |
+
+## Why Anchor Text Matters
+
+### User Experience
+
+Good anchor text helps users:
+- **Know What to Expect**: Clear indication of destination content
+- **Scan Efficiently**: Descriptive links stand out when scanning
+- **Navigate Confidently**: Reduces uncertainty about clicking
+
+<Note>
+  Studies show users are 40% more likely to click descriptive links than generic "click here" text.
+</Note>
+
+### SEO Impact
+
+Search engines use anchor text to:
+- **Understand Context**: Anchor text signals what the target page is about
+- **Distribute Authority**: Links pass relevance along with PageRank
+- **Assess Quality**: Natural, varied anchor text indicates quality
+
+### Accessibility
+
+Screen reader users rely on anchor text:
+- Links are often read out of context ("List of links" mode)
+- Generic text like "click here" provides no context
+- Descriptive text enables efficient navigation
+
+## Reading Anchor Text Results
+
+### Summary Dashboard
+
+| Metric | Description |
+|--------|-------------|
+| **Anchor Score** | Overall anchor text quality (0-100) |
+| **Links Analyzed** | Total links with anchor text |
+| **Issues Found** | Links with quality problems |
+| **Generic Anchors** | Count of "click here" style links |
+
+### Issue Breakdown
+
+```
+Anchor Text Analysis
+─────────────────────────────────────────
+🔴 Critical Issues (12)
+   • Empty anchor text: 8 links
+   • Image links without alt: 4 links
+
+🟠 Warnings (34)
+   • Generic anchor text: 22 links
+   • Single-word anchors: 12 links
+
+🟡 Optimization Opportunities (18)
+   • Naked URLs: 10 links
+   • Very long anchors: 8 links
+```
+
+### Detailed Link View
+
+Click any issue to see specifics:
+
+```
+Generic Anchor Text: "click here"
+─────────────────────────────────────────
+Found on:     /blog/getting-started
+Target:       /documentation/quickstart
+Current:      <a href="/documentation/quickstart">click here</a>
+Suggestion:   <a href="/documentation/quickstart">quickstart documentation</a>
+
+Found on:     /about
+Target:       /contact
+Current:      <a href="/contact">click here</a>
+Suggestion:   <a href="/contact">contact our team</a>
+```
+
+## Common Issues and Fixes
+
+### Generic Anchor Text
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- Vague, non-descriptive -->
+    <p>To learn more about SEO, <a href="/seo-guide">click here</a>.</p>
+    <p>Read more <a href="/blog/post">here</a>.</p>
+    <p><a href="/pricing">Learn more</a> about our pricing.</p>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Descriptive, contextual -->
+    <p>Read our <a href="/seo-guide">complete SEO guide</a> to learn more.</p>
+    <p>Read our <a href="/blog/post">guide to link building</a>.</p>
+    <p>Explore our <a href="/pricing">pricing plans</a>.</p>
+    ```
+  </Tab>
+</Tabs>
+
+### Empty Anchor Text
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- No text content -->
+    <a href="/page"></a>
+    
+    <!-- Only whitespace -->
+    <a href="/page">   </a>
+    
+    <!-- Hidden text (SEO spam technique) -->
+    <a href="/page"><span style="display:none">text</span></a>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Add meaningful text -->
+    <a href="/page">View our services</a>
+    
+    <!-- Or if decorative, use aria-label -->
+    <a href="/page" aria-label="View our services">
+      <span class="icon-arrow"></span>
+    </a>
+    ```
+  </Tab>
+</Tabs>
+
+### Image Links Without Alt
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- Image link with no alt text -->
+    <a href="/product">
+      <img src="product.jpg">
+    </a>
+    
+    <!-- Empty alt text -->
+    <a href="/product">
+      <img src="product.jpg" alt="">
+    </a>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Add descriptive alt text -->
+    <a href="/product">
+      <img src="product.jpg" alt="Blue Widget - View product details">
+    </a>
+    
+    <!-- Or combine image with text -->
+    <a href="/product">
+      <img src="product.jpg" alt="">
+      <span>Blue Widget</span>
+    </a>
+    ```
+  </Tab>
+</Tabs>
+
+### Over-Optimized Anchors
+
+<Warning>
+  Using the exact same keyword-rich anchor text for every link to a page can trigger spam filters.
+</Warning>
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- Same anchor everywhere (over-optimization) -->
+    <a href="/seo-services">best SEO services</a>
+    <a href="/seo-services">best SEO services</a>
+    <a href="/seo-services">best SEO services</a>
+    <a href="/seo-services">best SEO services</a>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Natural variation -->
+    <a href="/seo-services">our SEO services</a>
+    <a href="/seo-services">search engine optimization</a>
+    <a href="/seo-services">SEO consulting</a>
+    <a href="/seo-services">learn about our SEO approach</a>
+    ```
+  </Tab>
+</Tabs>
+
+### Naked URLs
+
+<Tabs>
+  <Tab title="Issue">
+    ```html
+    <!-- URL as anchor text -->
+    <p>Visit <a href="https://example.com/guide">https://example.com/guide</a></p>
+    ```
+  </Tab>
+  <Tab title="Fix">
+    ```html
+    <!-- Descriptive text -->
+    <p>Visit our <a href="https://example.com/guide">complete guide</a></p>
+    
+    <!-- Or if URL display is important -->
+    <p>Visit our guide at <a href="https://example.com/guide">example.com/guide</a></p>
+    ```
+  </Tab>
+</Tabs>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Be Descriptive" icon="file-lines">
+    Anchor text should describe the destination page. Users and search engines should know what to expect.
+  </Card>
+  <Card title="Keep It Concise" icon="compress">
+    2-5 words is ideal. Long anchor text dilutes relevance and is harder to scan.
+  </Card>
+  <Card title="Vary Your Anchors" icon="shuffle">
+    Don't use identical anchor text for every link to the same page. Natural variation is better.
+  </Card>
+  <Card title="Front-Load Keywords" icon="arrow-left">
+    Put important words at the beginning of anchor text where they're most visible.
+  </Card>
+</CardGroup>
+
+## Anchor Text Strategy
+
+<Steps>
+  <Step title="Audit Current State">
+    Run a crawl with Anchor Text Analysis enabled to identify issues.
+  </Step>
+  
+  <Step title="Fix Critical Issues">
+    Address empty anchors and image links without alt text first.
+  </Step>
+  
+  <Step title="Replace Generic Text">
+    Update "click here" and "read more" with descriptive alternatives.
+  </Step>
+  
+  <Step title="Plan Internal Linking">
+    Create an internal linking strategy with varied, relevant anchor text.
+  </Step>
+  
+  <Step title="Monitor Over Time">
+    Regular crawls catch new issues as content is added.
+  </Step>
+</Steps>
+
+## Filtering Options
+
+| Filter | Description |
+|--------|-------------|
+| **Issue Type** | Generic, Empty, No Alt, Over-optimized |
+| **Link Type** | Internal or External |
+| **Source Page** | Links from specific URLs |
+| **Target Page** | Links to specific URLs |
+
+## Bulk Fix Strategies
+
+For sites with many anchor text issues:
+
+<AccordionGroup>
+  <Accordion title="CMS Templates">
+    Update "Read More" links in blog templates:
+    
+    ```php
+    <!-- Before -->
+    <a href="<?php the_permalink(); ?>">Read more</a>
+    
+    <!-- After -->
+    <a href="<?php the_permalink(); ?>">
+      Read more about <?php the_title(); ?>
+    </a>
+    ```
+  </Accordion>
+  
+  <Accordion title="JavaScript Widgets">
+    Update link generators:
+    
+    ```javascript
+    // Before
+    link.textContent = 'Click here';
+    
+    // After
+    link.textContent = `View ${item.title}`;
+    ```
+  </Accordion>
+  
+  <Accordion title="Navigation Menus">
+    Review and update menu link text in your CMS navigation settings.
+  </Accordion>
+</AccordionGroup>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="SEO Analysis"
+    icon="magnifying-glass-chart"
+    href="/features/seo-analysis"
+  >
+    Anchor text is part of your overall on-page SEO picture.
+  </Card>
+  <Card
+    title="Broken Link Detection"
+    icon="link-slash"
+    href="/features/broken-link-detection"
+  >
+    Find broken links while analyzing anchor text.
+  </Card>
+</CardGroup>
+

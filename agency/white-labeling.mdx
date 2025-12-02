@@ -1,0 +1,341 @@
+---
+title: 'White-Labeling'
+description: 'Customize Link Health Monitor with your own branding'
+icon: 'palette'
+---
+
+## Overview
+
+White-labeling allows Agency plan customers to present Link Health Monitor as their own branded solution. Replace our branding with yours on reports, shared links, and client-facing interfaces.
+
+<Info>
+  **Available on**: Agency plan only
+</Info>
+
+## What Can Be Customized
+
+### Visual Branding
+
+| Element | Customization |
+|---------|---------------|
+| **Logo** | Replace LHM logo with yours |
+| **Colors** | Primary, secondary, accent colors |
+| **Favicon** | Custom browser tab icon |
+| **Email Header** | Branded email templates |
+
+### Content Branding
+
+| Element | Customization |
+|---------|---------------|
+| **Company Name** | Appears in reports and UI |
+| **Contact Info** | Support email, phone |
+| **Footer Text** | Custom legal/copyright |
+| **Report Title** | "Website Health Report by [Your Company]" |
+
+### Domain Branding
+
+| Element | Customization |
+|---------|---------------|
+| **Share URLs** | `reports.youragency.com` instead of LHM domain |
+| **Email Sender** | `reports@youragency.com` |
+
+## Setting Up White-Label
+
+<Steps>
+  <Step title="Open White-Label Settings">
+    Navigate to **Settings** → **White Label** in your dashboard.
+  </Step>
+  
+  <Step title="Upload Your Logo">
+    Upload logos in two formats:
+    
+    | Type | Specifications |
+    |------|----------------|
+    | **Primary Logo** | PNG/SVG, 200x50px recommended |
+    | **Dark Mode Logo** | For dark backgrounds |
+    | **Favicon** | ICO/PNG, 32x32px |
+    
+    <Tip>
+      Use SVG for logos when possible—they scale perfectly at any size.
+    </Tip>
+  </Step>
+  
+  <Step title="Configure Colors">
+    Set your brand colors:
+    
+    | Color | Usage |
+    |-------|-------|
+    | **Primary** | Buttons, links, accents |
+    | **Secondary** | Secondary buttons, borders |
+    | **Background** | Report backgrounds |
+    | **Text** | Primary text color |
+    
+    ```css
+    /* Example color scheme */
+    --primary: #2563eb;    /* Blue */
+    --secondary: #64748b;  /* Slate */
+    --background: #ffffff; /* White */
+    --text: #1e293b;       /* Dark slate */
+    ```
+  </Step>
+  
+  <Step title="Enter Company Details">
+    Fill in your company information:
+    
+    - Company name
+    - Support email
+    - Support phone (optional)
+    - Website URL
+    - Footer copyright text
+  </Step>
+  
+  <Step title="Preview and Save">
+    Preview your branding on sample reports, then click **Save Branding**.
+  </Step>
+</Steps>
+
+## Logo Guidelines
+
+### Size Requirements
+
+| Logo Type | Min Size | Recommended | Max Size |
+|-----------|----------|-------------|----------|
+| Header | 100x25px | 200x50px | 400x100px |
+| Report | 150x40px | 300x80px | 600x160px |
+| Favicon | 16x16px | 32x32px | 64x64px |
+
+### File Formats
+
+| Format | Best For |
+|--------|----------|
+| **SVG** | Logos (scalable, small file) |
+| **PNG** | Logos with transparency |
+| **ICO** | Favicon only |
+
+### Logo Placement
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  [YOUR LOGO]                        Settings  Profile   │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│                    Website Health Report                │
+│                                                         │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │  Client: Acme Corp                              │   │
+│  │  Domain: acmecorp.com                           │   │
+│  │  Date: December 2, 2024                         │   │
+│  │                                                  │   │
+│  │  Prepared by: [YOUR COMPANY NAME]               │   │
+│  └─────────────────────────────────────────────────┘   │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+## Color Configuration
+
+### Color Picker
+
+Use the built-in color picker or enter hex values:
+
+```
+Brand Colors
+─────────────────────────────────────────
+Primary:    [#2563eb]  ████  (buttons, links)
+Secondary:  [#64748b]  ████  (borders, subtle)
+Accent:     [#10b981]  ████  (success states)
+Warning:    [#f59e0b]  ████  (warnings)
+Error:      [#ef4444]  ████  (errors)
+```
+
+### Color Accessibility
+
+Ensure your colors meet accessibility standards:
+
+<Warning>
+  Text must have at least 4.5:1 contrast ratio against its background. Use a contrast checker before finalizing colors.
+</Warning>
+
+### Dark Mode
+
+Configure separate colors for dark mode:
+
+```
+Dark Mode Colors
+─────────────────────────────────────────
+Background:    [#1e293b]  ████
+Text:          [#f1f5f9]  ████
+Primary:       [#60a5fa]  ████
+```
+
+## Email Customization
+
+Customize automated emails sent to clients:
+
+### Email Branding
+
+| Element | Customization |
+|---------|---------------|
+| **From Name** | "Your Agency Reports" |
+| **From Email** | Requires custom domain setup |
+| **Logo** | Header logo in emails |
+| **Footer** | Company info and unsubscribe |
+
+### Email Templates
+
+Customize the content of automated emails:
+
+```
+Subject: Weekly Health Report - {{domain}}
+
+Hi {{client_name}},
+
+Here's your weekly website health report for {{domain}}.
+
+HEALTH SCORE: {{score}}/100
+Broken Links: {{broken_count}}
+SEO Issues: {{seo_count}}
+
+View Full Report: {{report_link}}
+
+Best regards,
+{{your_company}}
+```
+
+<Note>
+  Use template variables ({{variable}}) for dynamic content.
+</Note>
+
+## Report Customization
+
+### PDF Report Branding
+
+| Section | Your Branding |
+|---------|---------------|
+| **Cover Page** | Your logo, colors |
+| **Header** | Your logo on each page |
+| **Footer** | "Prepared by [Your Company]" |
+| **Colors** | Charts, highlights use your palette |
+
+### Report Preview
+
+Preview white-labeled reports before sending:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│                    [YOUR LOGO]                          │
+│                                                         │
+│              WEBSITE HEALTH REPORT                      │
+│                                                         │
+│                    acmecorp.com                         │
+│                                                         │
+│               Prepared December 2024                    │
+│               by [Your Agency Name]                     │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  HEALTH SCORE                                           │
+│                                                         │
+│         ┌───────────────────────┐                      │
+│         │        78/100         │                      │
+│         │         Good          │                      │
+│         └───────────────────────┘                      │
+│                                                         │
+│  [Charts and data in your brand colors]                │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+## What Clients See
+
+With white-labeling enabled, your clients see:
+
+### On Shared Reports
+
+- ✅ Your logo
+- ✅ Your colors
+- ✅ Your company name
+- ✅ Your contact information
+- ❌ Link Health Monitor branding
+
+### In Emails
+
+- ✅ Your logo in header
+- ✅ "From" shows your company (with custom domain)
+- ✅ Your support contact in footer
+- ❌ Link Health Monitor mentioned
+
+### On Share Links
+
+With custom domain:
+```
+https://reports.youragency.com/share/abc123
+```
+
+Without custom domain:
+```
+https://app.linkhealthmonitor.com/share/abc123
+(Your branding on the page itself)
+```
+
+## What You Still See
+
+In your admin dashboard:
+
+- Link Health Monitor interface (not client-facing)
+- Your white-label settings and preview
+- All management features
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Consistent Branding" icon="paintbrush">
+    Use the same logo and colors as your main website for brand consistency.
+  </Card>
+  <Card title="Test Thoroughly" icon="flask">
+    Preview reports on desktop and mobile before sending to clients.
+  </Card>
+  <Card title="Update Regularly" icon="rotate">
+    Keep branding current if you rebrand or change logos.
+  </Card>
+  <Card title="Custom Domain" icon="globe">
+    Set up a custom domain for fully branded share URLs.
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Logo looks blurry on reports">
+    Upload a higher resolution image (at least 2x the display size) or use SVG format for perfect scaling.
+  </Accordion>
+  
+  <Accordion title="Colors don't match my brand exactly">
+    Ensure you're entering the correct hex values. Some displays show colors differently—test on multiple devices.
+  </Accordion>
+  
+  <Accordion title="Emails still show LHM branding">
+    Email branding requires custom domain setup. See [Custom Domains](/agency/custom-domains) for setup instructions.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Custom Domains"
+    icon="globe"
+    href="/agency/custom-domains"
+  >
+    Set up your own domain for share links.
+  </Card>
+  <Card
+    title="Client Management"
+    icon="users"
+    href="/agency/client-management"
+  >
+    Organize and manage multiple clients.
+  </Card>
+</CardGroup>
+

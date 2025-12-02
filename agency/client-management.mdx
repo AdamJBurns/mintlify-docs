@@ -1,0 +1,392 @@
+---
+title: 'Client Management'
+description: 'Organize and manage multiple client domains efficiently'
+icon: 'users'
+---
+
+## Overview
+
+Agency plan users often manage dozens or hundreds of domains across multiple clients. Client Management features help you organize domains, control access, and streamline reporting for your agency workflow.
+
+<Info>
+  **Available on**: Agency plan only
+</Info>
+
+## Client Organization
+
+### Creating Client Groups
+
+Organize domains into logical groups for each client:
+
+<Steps>
+  <Step title="Open Client Management">
+    Navigate to **Clients** in the sidebar.
+  </Step>
+  
+  <Step title="Create New Client">
+    Click **Add Client** and enter:
+    
+    | Field | Description |
+    |-------|-------------|
+    | **Client Name** | Company or project name |
+    | **Contact Email** | Primary contact email |
+    | **Contact Name** | Main point of contact |
+    | **Notes** | Internal notes about the client |
+  </Step>
+  
+  <Step title="Assign Domains">
+    Add existing domains to the client or add new domains directly.
+  </Step>
+  
+  <Step title="Configure Settings">
+    Set client-specific options:
+    - Report recipients
+    - Crawl schedules
+    - Notification preferences
+  </Step>
+</Steps>
+
+### Client Dashboard
+
+Each client has a dedicated dashboard:
+
+```
+Client: Acme Corporation
+═══════════════════════════════════════════════════════════
+Contact: John Smith (john@acme.com)
+Domains: 5
+Last Activity: 2 hours ago
+
+Domains                          Health    Last Crawl
+─────────────────────────────────────────────────────────
+acme.com                         82/100    Today
+shop.acme.com                    78/100    Today
+blog.acme.com                    91/100    Yesterday
+support.acme.com                 85/100    Yesterday
+careers.acme.com                 73/100    2 days ago
+
+Quick Actions:
+[Crawl All] [Generate Report] [Share Access] [Settings]
+```
+
+## Bulk Operations
+
+### Bulk Crawling
+
+Crawl all domains for a client at once:
+
+<Steps>
+  <Step title="Select Client">
+    Navigate to the client dashboard.
+  </Step>
+  
+  <Step title="Click Crawl All">
+    Click **Crawl All Domains** button.
+  </Step>
+  
+  <Step title="Configure Options">
+    Choose scan options to apply to all crawls:
+    
+    - SSL Check
+    - SEO Analysis
+    - Anchor Text Analysis
+    - Response Trends
+  </Step>
+  
+  <Step title="Start">
+    Crawls are queued and run sequentially.
+  </Step>
+</Steps>
+
+### Bulk Reporting
+
+Generate combined reports for all client domains:
+
+| Report Type | Description |
+|-------------|-------------|
+| **Summary Report** | High-level overview of all domains |
+| **Detailed Report** | Full analysis for each domain |
+| **Executive Report** | 1-page summary for stakeholders |
+| **Individual Reports** | Separate report per domain |
+
+```
+Bulk Report Generation
+─────────────────────────────────────────
+Client: Acme Corporation
+
+Report Type:
+  ● Combined Summary (all domains in one report)
+  ○ Individual Reports (one per domain)
+  ○ Both
+
+Include:
+  ☑ Executive Summary
+  ☑ Domain Health Scores
+  ☑ Top Issues by Priority
+  ☐ Full Issue Lists (adds many pages)
+
+Format: PDF ▼
+
+[Generate Reports]
+```
+
+### Bulk Scheduling
+
+Set crawl schedules for all client domains:
+
+1. Select client
+2. Click **Schedule All**
+3. Configure frequency (daily, weekly)
+4. Choose time slot
+5. Apply to all or selected domains
+
+## Client Access Control
+
+### Sharing Access with Clients
+
+Give clients direct access to their reports:
+
+<Tabs>
+  <Tab title="View-Only Access">
+    Clients can view reports but not run crawls or change settings.
+    
+    1. Go to Client → **Share Access**
+    2. Enter client's email
+    3. Select **Viewer** role
+    4. Send invitation
+    
+    Clients receive a link to view their dashboard.
+  </Tab>
+  
+  <Tab title="Shared Links">
+    Generate shareable links for specific reports:
+    
+    1. Go to a crawl result
+    2. Click **Share**
+    3. Configure access (password, expiry)
+    4. Send link to client
+    
+    No account required for clients.
+  </Tab>
+  
+  <Tab title="Scheduled Reports">
+    Automatically send reports to clients:
+    
+    1. Go to Client → **Scheduled Reports**
+    2. Add recipient email
+    3. Set frequency
+    4. Choose report type
+    
+    Reports are sent automatically via email.
+  </Tab>
+</Tabs>
+
+### Access Levels
+
+| Role | Capabilities |
+|------|--------------|
+| **Viewer** | View reports, receive notifications |
+| **Collaborator** | View + run manual crawls |
+| **Manager** | All above + edit settings, schedules |
+
+<Note>
+  Client users only see domains assigned to their client—they cannot access other clients' data.
+</Note>
+
+## Client Notifications
+
+### Configuring Notifications
+
+Set which notifications clients receive:
+
+```
+Client Notifications: Acme Corporation
+─────────────────────────────────────────
+Recipients: john@acme.com, sarah@acme.com
+
+Notify on:
+  ☑ Crawl completed
+  ☑ New critical issues found
+  ☑ Issues resolved
+  ☑ SSL certificate expiring
+  ☐ Weekly summary (use scheduled reports instead)
+
+Notification method:
+  ● Email only
+  ○ Email + In-app
+```
+
+### Notification Templates
+
+Customize notification emails per client:
+
+- Use client's name in greeting
+- Include only relevant domains
+- White-label branding applied
+
+## Billing & Client Tracking
+
+### Per-Client Usage
+
+Track usage by client for billing purposes:
+
+```
+Usage by Client (This Month)
+═══════════════════════════════════════════════════════════
+Client              Domains  Crawls  AI Reviews  Usage $
+─────────────────────────────────────────────────────────
+Acme Corporation        5      32        2       $45.00
+Beta Industries         3      18        1       $28.00
+Gamma Startup           2      12        0       $15.00
+Delta Agency            8      45        3       $62.00
+─────────────────────────────────────────────────────────
+Total                  18     107        6      $150.00
+```
+
+### Export for Invoicing
+
+Export usage data for client billing:
+
+1. Go to **Reports** → **Usage Export**
+2. Select date range
+3. Choose clients to include
+4. Export as CSV
+
+CSV includes:
+- Domains crawled
+- Crawl count
+- Pages checked
+- AI reviews used
+- Estimated cost
+
+## Client Lifecycle
+
+### Onboarding New Clients
+
+<Steps>
+  <Step title="Create Client">
+    Add new client with contact information.
+  </Step>
+  
+  <Step title="Add Domains">
+    Add all client domains (they'll need to verify each).
+  </Step>
+  
+  <Step title="Initial Crawl">
+    Run first crawl on all domains.
+  </Step>
+  
+  <Step title="Generate Baseline Report">
+    Create initial health report.
+  </Step>
+  
+  <Step title="Set Up Scheduling">
+    Configure ongoing crawl schedule.
+  </Step>
+  
+  <Step title="Share Access">
+    Invite client to view their dashboard (optional).
+  </Step>
+</Steps>
+
+### Offboarding Clients
+
+When a client relationship ends:
+
+<Steps>
+  <Step title="Export Final Reports">
+    Generate comprehensive final reports for records.
+  </Step>
+  
+  <Step title="Remove Client Access">
+    Revoke any viewer/collaborator access.
+  </Step>
+  
+  <Step title="Archive or Delete">
+    Choose to archive (keep data) or delete (remove all data).
+    
+    <Warning>
+      Deleting a client removes all associated domains and crawl history permanently.
+    </Warning>
+  </Step>
+</Steps>
+
+## Agency Workflow Tips
+
+<CardGroup cols={2}>
+  <Card title="Standardize Schedules" icon="calendar">
+    Use consistent crawl schedules (e.g., all clients crawled weekly on Sundays) for easier management.
+  </Card>
+  <Card title="Template Reports" icon="file-lines">
+    Create report templates that work across clients, customized only by branding.
+  </Card>
+  <Card title="Batch Operations" icon="layer-group">
+    Use bulk operations to manage multiple clients efficiently during review sessions.
+  </Card>
+  <Card title="Client Portals" icon="door-open">
+    Give clients viewer access so they can check status without emailing you.
+  </Card>
+</CardGroup>
+
+## Client Tags & Filtering
+
+### Adding Tags
+
+Tag clients for filtering and organization:
+
+- `active` / `inactive`
+- `enterprise` / `small-business`
+- `monthly-retainer` / `project-based`
+- Industry tags: `ecommerce`, `saas`, `agency`
+
+### Filtering by Tags
+
+```
+Client Filter
+─────────────────────────────────────────
+Tags: [active ▼] [enterprise ▼]
+
+Showing 12 of 45 clients
+
+Sort by: [Last Activity ▼]
+```
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Can clients see each other's data?">
+    No. Client access is strictly isolated. Users with client-level access can only see domains assigned to their specific client.
+  </Accordion>
+  
+  <Accordion title="How many clients can I have?">
+    Unlimited clients on the Agency plan. There's no cap on client groups—only on total domains and daily crawls.
+  </Accordion>
+  
+  <Accordion title="Can I transfer a domain between clients?">
+    Yes. Go to the domain settings and change the assigned client. History and data move with the domain.
+  </Accordion>
+  
+  <Accordion title="Do clients need to verify domains?">
+    Yes, domain verification is still required. You can verify on behalf of clients if you have DNS access, or guide them through the process.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="White-Labeling"
+    icon="palette"
+    href="/agency/white-labeling"
+  >
+    Brand reports with your agency identity.
+  </Card>
+  <Card
+    title="Custom Domains"
+    icon="globe"
+    href="/agency/custom-domains"
+  >
+    Serve reports from your own domain.
+  </Card>
+</CardGroup>
+

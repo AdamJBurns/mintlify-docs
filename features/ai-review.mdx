@@ -1,0 +1,318 @@
+---
+title: 'AI Review'
+description: 'Get intelligent, prioritized recommendations with code-level fixes'
+icon: 'sparkles'
+---
+
+## Overview
+
+AI Review uses advanced language models to analyze your crawl results and provide actionable recommendations. Instead of simply listing issues, AI Review prioritizes fixes by impact, explains why they matter, and provides ready-to-implement code.
+
+<Info>
+  **Available on**: Pro (5 reviews/month) and Agency (10 reviews/month) plans
+</Info>
+
+## What AI Review Provides
+
+### Health Score
+
+An overall score (0-100) reflecting your website's health based on:
+- Broken links and server errors
+- Redirect efficiency
+- SEO optimization
+- Performance metrics
+- SSL status
+
+### Prioritized Issues
+
+Issues ranked by:
+- **Severity**: How much the issue hurts your site
+- **Impact**: How many users/pages are affected
+- **Effort**: How difficult the fix is
+
+### Actionable Categories
+
+| Category | Description |
+|----------|-------------|
+| **Critical Issues** | High-priority problems requiring immediate attention |
+| **Quick Wins** | Easy fixes with significant positive impact |
+| **Optimizations** | Improvements that boost performance and SEO |
+| **Best Practices** | Recommendations for long-term site health |
+
+### Code Fixes
+
+Where applicable, AI Review provides:
+- Specific code snippets to implement
+- Before/after comparisons
+- File locations or component references
+- Implementation notes
+
+## How It Works
+
+<Steps>
+  <Step title="Run a Crawl">
+    Complete a crawl with your desired scan options enabled. More options = more data for analysis.
+  </Step>
+  
+  <Step title="Request AI Review">
+    After the crawl completes, click **Generate AI Review**. Reviews typically complete in 30-60 seconds.
+  </Step>
+  
+  <Step title="Review Findings">
+    AI Review presents findings in order of priority with explanations and code fixes.
+  </Step>
+  
+  <Step title="Implement Fixes">
+    Work through recommendations, implementing fixes and re-crawling to verify.
+  </Step>
+</Steps>
+
+## Sample AI Review Output
+
+```
+═══════════════════════════════════════════════════════════
+                    AI REVIEW REPORT
+                    example.com
+                    Generated: Dec 2, 2024
+═══════════════════════════════════════════════════════════
+
+HEALTH SCORE: 67/100 (Fair)
+
+Your website has several issues affecting user experience and 
+search visibility. Focus on the critical issues first for 
+immediate improvement.
+
+───────────────────────────────────────────────────────────
+🔴 CRITICAL ISSUES (3)
+───────────────────────────────────────────────────────────
+
+1. SSL Certificate Expiring in 5 Days
+
+   Your SSL certificate expires on December 7, 2024. After 
+   expiration, visitors will see security warnings.
+
+   IMPACT: High - All site visitors affected
+   EFFORT: Low - 15 minutes with auto-renewal
+
+   ACTION:
+   • If using Let's Encrypt, run: sudo certbot renew
+   • If using a commercial CA, log in to renew immediately
+   • Enable auto-renewal to prevent future issues
+
+───────────────────────────────────────────────────────────
+
+2. 23 Broken Internal Links
+
+   Found 23 links pointing to non-existent pages on your site.
+   These create poor user experience and waste crawl budget.
+
+   TOP OFFENDERS:
+   • /products/old-widget (linked from 8 pages)
+   • /blog/draft-post (linked from 5 pages)
+   • /team/john-doe (linked from 4 pages)
+
+   ACTION:
+   • Set up 301 redirects for moved content
+   • Remove links to deleted content
+   • Update navigation menus
+
+   CODE FIX (.htaccess):
+   ```apache
+   Redirect 301 /products/old-widget /products/new-widget
+   Redirect 301 /blog/draft-post /blog
+   Redirect 301 /team/john-doe /team
+   ```
+
+───────────────────────────────────────────────────────────
+
+3. Missing H1 Tags on 12 Pages
+
+   These pages lack an H1 heading, which is critical for 
+   search engines to understand page topic.
+
+   PAGES AFFECTED:
+   • /services
+   • /pricing
+   • /contact
+   • (+ 9 more)
+
+   ACTION:
+   Add a single, descriptive H1 to each page.
+
+   CODE FIX (example for /services):
+   ```html
+   <!-- Add after opening <main> tag -->
+   <h1>Professional SEO & Marketing Services</h1>
+   ```
+
+───────────────────────────────────────────────────────────
+⚡ QUICK WINS (5)
+───────────────────────────────────────────────────────────
+
+1. Add Meta Descriptions to 18 Pages
+
+   Pages without meta descriptions show random text snippets 
+   in search results, reducing click-through rates.
+
+   EFFORT: Low - 5 minutes per page
+   IMPACT: Medium - Improved CTR from search
+
+   TEMPLATE:
+   ```html
+   <meta name="description" content="[Page summary in 
+   150-160 characters. Include primary keyword naturally.]">
+   ```
+
+───────────────────────────────────────────────────────────
+
+2. Compress 34 Large Images
+
+   Found images over 500KB that slow page load times.
+
+   LARGEST IMAGES:
+   • /images/hero-banner.png (2.4 MB)
+   • /images/team-photo.jpg (1.8 MB)
+   • /images/product-gallery-1.png (1.2 MB)
+
+   ACTION:
+   • Convert PNG to WebP for 70%+ size reduction
+   • Use responsive images with srcset
+   • Consider lazy loading below-fold images
+
+───────────────────────────────────────────────────────────
+📊 SUMMARY & NEXT STEPS
+───────────────────────────────────────────────────────────
+
+Addressing all critical issues and quick wins would improve 
+your health score to approximately 85/100.
+
+RECOMMENDED ORDER:
+1. Renew SSL certificate (5 min)
+2. Fix navigation broken links (30 min)
+3. Add H1 tags to key pages (1 hour)
+4. Add meta descriptions (2 hours)
+5. Optimize images (1 hour)
+
+Total estimated time: 4-5 hours
+```
+
+## Maximizing AI Review Value
+
+### Enable All Scan Options
+
+AI Review is most valuable when it has comprehensive data:
+
+<CardGroup cols={2}>
+  <Card title="SSL Check" icon="lock">
+    Required for certificate expiration analysis
+  </Card>
+  <Card title="SEO Analysis" icon="magnifying-glass">
+    Required for meta tag and heading recommendations
+  </Card>
+  <Card title="Anchor Text Analysis" icon="font">
+    Required for link text quality suggestions
+  </Card>
+  <Card title="Response Trends" icon="chart-line">
+    Required for performance recommendations
+  </Card>
+</CardGroup>
+
+### Provide Context
+
+When requesting a review, you can optionally provide context:
+
+- **Site type**: E-commerce, blog, SaaS, etc.
+- **Priority goals**: SEO, performance, accessibility
+- **Recent changes**: New deployment, redesign, migration
+
+### Implement Incrementally
+
+<Tip>
+  Don't try to fix everything at once. Work through critical issues first, then quick wins, then optimizations. Re-crawl and review after each batch to verify progress.
+</Tip>
+
+## AI Review vs Manual Analysis
+
+| Aspect | Manual Analysis | AI Review |
+|--------|-----------------|-----------|
+| **Time** | Hours to days | 30-60 seconds |
+| **Prioritization** | Requires expertise | Automatic by impact |
+| **Code Fixes** | Research required | Ready to implement |
+| **Explanations** | Varies by analyst | Consistent, clear |
+| **Scalability** | Limited | Handles any site size |
+
+## Understanding the Health Score
+
+### Score Components
+
+| Factor | Weight | Description |
+|--------|--------|-------------|
+| **Broken Links** | 25% | 4xx/5xx errors and timeouts |
+| **Redirects** | 15% | Chain length and loops |
+| **SEO Elements** | 25% | Titles, descriptions, H1s, alt text |
+| **Performance** | 15% | Response times and page size |
+| **SSL/Security** | 10% | Certificate status |
+| **Accessibility** | 10% | Basic accessibility factors |
+
+### Score Interpretation
+
+| Score | Rating | Meaning |
+|-------|--------|---------|
+| 90-100 | Excellent | Site is well-optimized with minimal issues |
+| 75-89 | Good | Some issues but fundamentals are solid |
+| 50-74 | Fair | Multiple issues needing attention |
+| 25-49 | Poor | Significant problems affecting users |
+| 0-24 | Critical | Severe issues requiring immediate action |
+
+## Sharing AI Reviews
+
+AI Reviews can be shared with stakeholders:
+
+- **Direct Link**: Shareable URL (optionally password-protected)
+- **PDF Export**: Formatted report for presentations
+- **White-Label**: Custom branding for agencies (Agency plan)
+
+## Review History
+
+Access previous AI Reviews from the domain dashboard:
+
+- Compare scores over time
+- Track which recommendations were implemented
+- Measure improvement velocity
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Review After Major Changes" icon="rotate">
+    Request AI Review after redesigns, migrations, or large content updates.
+  </Card>
+  <Card title="Track Progress" icon="chart-line">
+    Compare reviews over time to ensure continuous improvement.
+  </Card>
+  <Card title="Share with Teams" icon="users">
+    Use PDF exports to get buy-in from stakeholders on fixes.
+  </Card>
+  <Card title="Prioritize by Impact" icon="ranking-star">
+    Trust the AI prioritization—it considers severity, reach, and effort.
+  </Card>
+</CardGroup>
+
+## Related Features
+
+<CardGroup cols={2}>
+  <Card
+    title="SEO Analysis"
+    icon="magnifying-glass-chart"
+    href="/features/seo-analysis"
+  >
+    AI Review builds on SEO Analysis data for recommendations.
+  </Card>
+  <Card
+    title="Crawl Results"
+    icon="chart-simple"
+    href="/crawling/crawl-results"
+  >
+    Understand raw crawl data that feeds AI Review.
+  </Card>
+</CardGroup>
+
