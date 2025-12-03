@@ -1,0 +1,79 @@
+---
+title: 'SSL Certificate Check'
+description: 'Monitor your SSL certificates and get warnings before they expire'
+icon: 'lock'
+---
+
+## Overview
+
+The SSL Certificate Check monitors your domain's HTTPS security and warns you before certificates expire. An expired SSL certificate causes browsers to display security warnings, driving visitors away and hurting your search rankings.
+
+**We handle everything automatically.** Just toggle on SSL Check when starting a crawl—no configuration, credentials, or manual steps required.
+
+## Enabling SSL Check
+
+<Steps>
+  <Step title="Start a Crawl">
+    Click **Start Crawl** on any verified domain.
+  </Step>
+  
+  <Step title="Enable SSL Check">
+    Toggle on **SSL Certificate Check** in the scan options.
+  </Step>
+  
+  <Step title="View Results">
+    After the crawl completes, SSL results appear in the **Analysis** section.
+  </Step>
+</Steps>
+
+## What You'll See
+
+| Data | Description |
+| ---- | ----------- |
+| **Status** | Valid, Expiring Soon, or Critical |
+| **Issuer** | Who issued the certificate (Let's Encrypt, DigiCert, etc.) |
+| **Days Until Expiry** | Countdown to expiration |
+
+## Warning Levels
+
+| Level | Meaning | Action |
+| ----- | ------- | ------ |
+| 🟢 **OK** | More than 60 days left | No action needed |
+| 🔵 **Notice** | 31–60 days left | Plan renewal |
+| 🟠 **Warning** | 8–30 days left | Renew soon |
+| 🔴 **Critical** | 7 days or less | Renew immediately |
+
+## Common Issues
+
+<AccordionGroup>
+  <Accordion title="SSL certificate not yet available">
+    Your certificate hasn't been provisioned yet. This is common with new domains or recent DNS changes. Wait 5-10 minutes and try again.
+  </Accordion>
+  
+  <Accordion title="Connection timed out">
+    We couldn't reach your server. Check that your site is online and try again.
+  </Accordion>
+  
+  <Accordion title="Connection refused">
+    Your server isn't accepting HTTPS connections. Ensure SSL is configured on your web server.
+  </Accordion>
+</AccordionGroup>
+
+## Custom SSL (Agency Plan)
+
+<Info>
+  Agency plan customers can use custom SSL certificates for white-label report domains. Contact support to set this up.
+</Info>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="SEO Analysis" icon="magnifying-glass-chart" href="/features/seo-analysis">
+    Combine SSL checks with SEO analysis.
+  </Card>
+  
+  <Card title="Automated Crawls" icon="clock" href="/crawling/automated-crawls">
+    Set up scheduled crawls with SSL monitoring.
+  </Card>
+</CardGroup>
+

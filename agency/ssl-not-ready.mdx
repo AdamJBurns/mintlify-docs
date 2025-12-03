@@ -1,0 +1,62 @@
+---
+title: 'SSL Not Ready'
+description: 'Understanding SSL provisioning when connecting a custom domain'
+icon: 'lock'
+---
+
+## What This Means
+
+When connecting a custom domain for white-label reports, you may see:
+
+```
+SSL Not Ready
+SSL certificate not yet available
+```
+
+**This is normal.** SSL certificates are automatically provisioned after your DNS changes propagate. You don't need to do anything—just wait a few minutes.
+
+## How Long Does It Take?
+
+| Situation | Wait Time |
+| --------- | --------- |
+| **Typical** | 1–5 minutes |
+| **Slow DNS** | Up to 15 minutes |
+| **DNS issues** | Won't complete (see below) |
+
+Click **Refresh** to check if your certificate is ready.
+
+## If It's Taking Too Long
+
+If SSL hasn't provisioned after 15 minutes, check your CNAME record:
+
+<Steps>
+  <Step title="Verify CNAME Record">
+    Ensure your CNAME record points to the correct target shown in Settings → Agency.
+  </Step>
+  
+  <Step title="Check DNS Propagation">
+    Use a tool like [whatsmydns.net](https://www.whatsmydns.net) to verify your DNS has propagated globally.
+  </Step>
+  
+  <Step title="Wait and Refresh">
+    Once DNS is propagated, return to Settings and click **Refresh**. SSL should provision within minutes.
+  </Step>
+</Steps>
+
+## Common Causes of Delays
+
+| Issue | Solution |
+| ----- | -------- |
+| CNAME not added | Add the CNAME record to your DNS provider |
+| Wrong CNAME target | Double-check the target value in Settings |
+| DNS not propagated | Wait for propagation (can take up to 48 hours in rare cases) |
+| Conflicting A record | Remove any A records for the same subdomain |
+
+<Note>
+  We handle SSL provisioning automatically—no certificates to upload or configure. Once your CNAME is correct, everything else happens on our end.
+</Note>
+
+## Need Help?
+
+If SSL still isn't provisioning after verifying your DNS, contact support with your custom domain and we'll investigate.
+

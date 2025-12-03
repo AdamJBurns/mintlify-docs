@@ -46,7 +46,7 @@
               "features/missing-from-site",
               "features/response-time-tracking",
               "features/redirect-chain-analysis",
-              "features/ssl-monitoring",
+              "features/ssl-certificate-check",
               "features/seo-analysis",
               "features/anchor-text-analysis",
               "features/ai-review"
@@ -84,6 +84,7 @@
             "pages": [
               "agency/white-labeling",
               "agency/custom-domains",
+              "agency/ssl-not-ready",
               "agency/client-management"
             ]
           },
