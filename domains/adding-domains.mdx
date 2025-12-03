@@ -19,28 +19,31 @@ Domains are the foundation of SEO Crawler. Each domain represents a website you 
     Enter your domain name in the input field:
     
     ```
-    example.com
+    mysite.com
     ```
     
     <Note>
-      Enter just the domain name without `https://`, `www.`, or trailing paths. We'll automatically detect your site's configuration.
+      Enter just the domain name. We'll automatically strip any `https://`, `www.`, ports, or paths you include.
     </Note>
   </Step>
   
-  <Step title="Configure Options">
-    Select initial configuration options:
-    
-    | Option | Description |
-    |--------|-------------|
-    | **Protocol** | Auto-detect, Force HTTPS, or Force HTTP |
-    | **Include www** | Also monitor www subdomain |
-    | **Start URL** | Custom starting page (default: homepage) |
-  </Step>
-  
   <Step title="Submit for Verification">
-    Click **Add Domain** to create the domain. You'll be directed to the verification page.
+    Click **Continue** to create the domain. You'll be directed to the DNS verification page.
   </Step>
 </Steps>
+
+## Input Normalization
+
+SEO Crawler automatically cleans up your domain input:
+
+| You Enter | We Use |
+|-----------|--------|
+| `https://mysite.com` | `mysite.com` |
+| `www.mysite.com` | `mysite.com` |
+| `mysite.com/page` | `mysite.com` |
+| `mysite.com:8080` | `mysite.com` |
+| `MYSITE.COM` | `mysite.com` |
+| `https://www.mysite.com/page?q=1` | `mysite.com` |
 
 ## Domain Requirements
 
@@ -48,11 +51,28 @@ Domains are the foundation of SEO Crawler. Each domain represents a website you 
 
 | Type | Example | Supported |
 |------|---------|-----------|
-| Root domain | `example.com` | ✅ |
-| Subdomain | `blog.example.com` | ✅ |
-| Deep subdomain | `app.us.example.com` | ✅ |
-| IP address | `192.168.1.1` | ❌ |
-| localhost | `localhost:3000` | ❌ |
+| Root domain | `mysite.com` | ✅ |
+| Subdomain | `blog.mysite.com` | ✅ |
+| Deep subdomain | `app.us.mysite.com` | ✅ |
+| With numbers | `site123.com` | ✅ |
+| With hyphens | `my-cool-site.com` | ✅ |
+
+### Not Supported
+
+The following domain types cannot be monitored:
+
+| Type | Example | Reason |
+|------|---------|--------|
+| IP addresses | `192.168.1.1` | Must be a domain name |
+| Localhost | `localhost:3000` | Not publicly accessible |
+| Local network | `mypc.local` | Not publicly accessible |
+| Internal domains | `server.internal` | Not publicly accessible |
+| Tor hidden services | `site.onion` | Not accessible via standard HTTP |
+| Reserved domains | `example.com` | IANA reserved for documentation |
+
+<Tip>
+  Domains must be publicly accessible on the internet for SEO Crawler to monitor them.
+</Tip>
 
 ### Plan Limits
 
@@ -67,58 +87,58 @@ Domains are the foundation of SEO Crawler. Each domain represents a website you 
   Each subdomain counts as a separate domain toward your plan limit.
 </Warning>
 
-## Domain Configuration
+## Validation Error Messages
 
-### Protocol Settings
+When adding a domain, you may see specific error messages:
 
-Choose how SEO Crawler connects to your site:
-
-<Tabs>
-  <Tab title="Auto-detect (Recommended)">
-    We'll check both HTTP and HTTPS, following redirects to determine your canonical protocol.
-    
-    Best for:
-    - Sites with proper redirects
-    - When you're unsure of configuration
-  </Tab>
+<AccordionGroup>
+  <Accordion title="IP addresses cannot be monitored">
+    You entered an IP address like `192.168.1.1` or `127.0.0.1`. Please enter a domain name like `mysite.com` instead.
+  </Accordion>
   
-  <Tab title="Force HTTPS">
-    Only connect via HTTPS. Useful if:
-    - Your site is HTTPS-only
-    - HTTP redirects aren't working properly
-    - You want to verify HTTPS specifically
-  </Tab>
+  <Accordion title="Localhost cannot be monitored">
+    You entered `localhost` or a localhost subdomain. Please enter a publicly accessible domain that SEO Crawler can reach over the internet.
+  </Accordion>
   
-  <Tab title="Force HTTP">
-    Only connect via HTTP (not recommended). Useful for:
-    - Internal sites without SSL
-    - Testing environments
-  </Tab>
-</Tabs>
+  <Accordion title="Reserved example domain">
+    You entered `example.com`, `example.org`, or similar IANA-reserved domains. These are reserved for documentation purposes. Please enter your actual domain.
+  </Accordion>
+  
+  <Accordion title="Reserved test domain">
+    You entered `test.com` or a `.test` domain. Please enter your actual production domain.
+  </Accordion>
+  
+  <Accordion title="Local/internal network domains">
+    You entered a domain ending in `.local`, `.internal`, `.lan`, `.home`, or `.corp`. These are private network domains that aren't publicly accessible.
+  </Accordion>
+  
+  <Accordion title="Domain contains invalid characters">
+    Your domain has invalid formatting like double dots (`..`). Please check for typos.
+  </Accordion>
+  
+  <Accordion title="Domain part cannot start/end with hyphen">
+    Domain labels (parts between dots) cannot begin or end with a hyphen. For example, `-mysite.com` and `mysite-.com` are invalid.
+  </Accordion>
+  
+  <Accordion title="Domain already added">
+    This exact domain is already in your account. Check your domain list to find it.
+  </Accordion>
+  
+  <Accordion title="Domain limit reached">
+    You've reached the maximum number of domains for your plan. Upgrade your plan or remove unused domains to add more.
+  </Accordion>
+</AccordionGroup>
 
-### www Handling
+## After Adding a Domain
 
-Configure how we handle the www subdomain:
+Once you add a domain, you'll need to verify ownership before you can start crawling:
 
-| Setting | Behavior |
-|---------|----------|
-| **Auto-detect** | Follow your site's redirect configuration |
-| **Include www** | Treat www and non-www as the same domain |
-| **Exclude www** | Only crawl the exact domain entered |
+1. **DNS Verification** - Add a TXT record to prove you own the domain
+2. **Wait for Propagation** - DNS changes can take up to 48 hours (usually much faster)
+3. **Verify** - Click "Check DNS" to confirm verification
+4. **Start Crawling** - Once verified, run your first crawl
 
-<Tip>
-  If your site redirects `www` to non-www (or vice versa), use **Auto-detect** to follow your canonical configuration.
-</Tip>
-
-### Custom Start URL
-
-By default, crawls start from your homepage (`/`). You can specify a different starting URL:
-
-- `/blog` - Start from your blog section
-- `/products` - Start from your products catalog
-- `/sitemap.xml` - Use your sitemap as a link source
-
-## Managing Multiple Domains
+## Managing Domains
 
 ### Domain Dashboard
 
@@ -126,74 +146,34 @@ Your domain list shows:
 
 | Column | Description |
 |--------|-------------|
-| **Domain** | Domain name and status indicator |
-| **Health Score** | Overall health rating (0-100) |
+| **Domain** | Domain name and verification status |
+| **Health** | Overall health score based on latest crawl |
 | **Last Crawl** | When the domain was last crawled |
-| **Issues** | Count of active issues |
-| **Actions** | Quick actions (crawl, view, settings) |
+| **Actions** | Start crawl, view details, settings |
 
-### Domain Groups (Agency Plan)
+### Domain Details
 
-Organize domains into groups for easier management:
+Click on any domain to see:
 
-<Steps>
-  <Step title="Create a Group">
-    Click **New Group** and enter a name (e.g., "Client A Sites").
-  </Step>
-  
-  <Step title="Add Domains to Group">
-    Select domains and click **Move to Group**, or drag and drop.
-  </Step>
-  
-  <Step title="Manage by Group">
-    Filter the domain list by group, or run bulk actions on all domains in a group.
-  </Step>
-</Steps>
-
-## Domain Settings
-
-### General Settings
-
-| Setting | Description |
-|---------|-------------|
-| **Display Name** | Friendly name shown in dashboard |
-| **Protocol** | HTTPS/HTTP configuration |
-| **Start URL** | Default crawl starting point |
-| **Notes** | Internal notes about this domain |
-
-### Crawl Settings
-
-| Setting | Description |
-|---------|-------------|
-| **Default Depth** | How deep to crawl by default |
-| **Max URLs** | Maximum URLs to check per crawl |
-| **Rate Limiting** | Requests per second (be respectful) |
-| **User Agent** | Custom user agent string |
-
-### Notification Settings
-
-| Setting | Description |
-|---------|-------------|
-| **Crawl Complete** | Notify when crawls finish |
-| **New Issues** | Notify when new problems are found |
-| **Issue Resolved** | Notify when issues are fixed |
-| **SSL Expiring** | Alert for certificate expiration |
+- **Overview** - Health score, total links, broken links count
+- **Crawl History** - List of all previous crawls with results
+- **Settings** - Domain configuration and danger zone
 
 ## Removing Domains
 
 To remove a domain:
 
 <Steps>
-  <Step title="Open Domain Settings">
-    Navigate to the domain and click **Settings**.
+  <Step title="Open Domain Details">
+    Navigate to the domain you want to remove.
   </Step>
   
   <Step title="Scroll to Danger Zone">
-    At the bottom, find the **Danger Zone** section.
+    At the bottom of the page, find the **Danger Zone** section.
   </Step>
   
-  <Step title="Click Remove Domain">
-    Click **Remove Domain** and confirm the action.
+  <Step title="Click Delete Domain">
+    Click **Delete Domain** and confirm the action.
   </Step>
 </Steps>
 
@@ -201,34 +181,24 @@ To remove a domain:
   Removing a domain deletes all associated crawl history, results, and reports. This action cannot be undone.
 </Warning>
 
-## Transferring Domains
-
-To transfer a domain to another user (Agency plan):
-
-1. Open domain settings
-2. Click **Transfer Ownership**
-3. Enter the recipient's email
-4. Recipient accepts the transfer
-
-The recipient must have available domain slots on their plan.
-
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="Domain already exists">
-    This domain is already in your account or another user's account. If you previously verified this domain, check your domain list. If someone else owns it, they must transfer it to you.
+  <Accordion title="I can't add my domain">
+    Check that your domain:
+    - Is a valid domain format (e.g., `mysite.com`)
+    - Is not an IP address or localhost
+    - Is not a reserved domain like `example.com`
+    - Doesn't use a blocked TLD like `.local` or `.internal`
+    - You haven't reached your plan's domain limit
   </Accordion>
   
-  <Accordion title="Invalid domain format">
-    Ensure you're entering just the domain name:
-    - ✅ `example.com`
-    - ❌ `https://example.com`
-    - ❌ `example.com/page`
-    - ❌ `www.example.com` (use root domain)
+  <Accordion title="My domain shows as unverified">
+    You need to complete DNS verification before crawling. Go to your domain's verification page and follow the instructions to add a TXT record.
   </Accordion>
   
-  <Accordion title="Domain limit reached">
-    Upgrade your plan to add more domains, or remove unused domains to free up slots.
+  <Accordion title="I accidentally added the wrong domain">
+    You can delete the domain from the domain details page and add the correct one. If you've already verified it, you'll need to verify the new domain as well.
   </Accordion>
 </AccordionGroup>
 
