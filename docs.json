@@ -20,23 +20,8 @@
       "family": "Geist Mono"
     }
   },
-  "appearance": {
-    "default": "system",
-    "strict": false
-  },
+  "appearance": "system",
   "rounded": "default",
-  "modeToggle": {
-    "default": "dark"
-  },
-  "codeBlock": {
-    "mode": "auto"
-  },
-  "sidebar": {
-    "lines": "container"
-  },
-  "search": {
-    "prompt": "Search documentation..."
-  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
@@ -162,9 +147,6 @@
       "label": "Get Started",
       "href": "https://app.seocrawler.app/signup"
     }
-  },
-  "topbar": {
-    "style": "gradient"
   },
   "contextual": {
     "options": [
