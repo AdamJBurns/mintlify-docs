@@ -49,7 +49,8 @@
               "features/ssl-certificate-check",
               "features/seo-analysis",
               "features/anchor-text-analysis",
-              "features/ai-review"
+              "features/ai-review",
+              "features/ai-internal-link-suggestions"
             ]
           },
           {

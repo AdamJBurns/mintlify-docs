@@ -1,0 +1,284 @@
+---
+title: 'AI Internal Link Suggestions'
+description: 'Get AI-powered recommendations for internal links to improve your site SEO and rescue orphan pages'
+icon: 'wand-magic-sparkles'
+---
+
+## Overview
+
+AI Internal Link Suggestions analyzes your site's content structure and generates smart recommendations for where to add internal links. The AI examines page titles, headings, and descriptions to find opportunities for contextual linking—helping you build better topic clusters and rescue pages that have no incoming links.
+
+```
+AI Link Suggestion Flow
+═══════════════════════════════════════════════════════════
+
+   ┌─────────────────┐
+   │  Completed      │
+   │  Crawl + SEO    │
+   └────────┬────────┘
+            │
+            ▼
+   ┌─────────────────┐
+   │  AI Analyzes    │───→  Page titles, H1s, descriptions
+   │  Site Content   │───→  Existing link structure
+   └────────┬────────┘───→  Orphan pages needing links
+            │
+            ▼
+   ┌─────────────────┐
+   │  Generate       │
+   │  Link           │───→  Up to 25 suggestions
+   │  Suggestions    │───→  Ready-to-copy HTML
+   └─────────────────┘
+```
+
+## How It Works
+
+1. **Content Analysis** — The AI examines each page's title, H1 heading, meta description, and word count to understand what each page is about.
+
+2. **Structure Mapping** — It maps your existing internal link structure to identify pages with weak connectivity.
+
+3. **Orphan Detection** — Pages with no incoming internal links are flagged as high-priority targets for new links.
+
+4. **Smart Matching** — The AI finds semantically relevant pages that should link to each other based on content similarity.
+
+5. **Anchor Text Generation** — For each suggestion, the AI generates descriptive, SEO-friendly anchor text.
+
+## Suggestion Categories
+
+Each suggestion is categorized to help you prioritize:
+
+| Category | Description | Priority |
+| -------- | ----------- | -------- |
+| **Orphan Rescue** | Links TO pages that have no incoming internal links | High |
+| **Topic Cluster** | Links between semantically related content | Medium |
+| **Navigation** | Improves user journey and site navigation flow | Medium |
+| **Related Content** | Contextually relevant pages that support each other | Low |
+
+<Tip>
+  Focus on **Orphan Rescue** suggestions first—these have the biggest SEO impact since they help search engines discover and index pages that were previously isolated.
+</Tip>
+
+## Plan Availability
+
+AI Internal Link Suggestions shares your monthly AI quota with AI Reviews:
+
+| Plan | AI Uses/Month | Pages Analyzed | Available |
+| ---- | ------------- | -------------- | --------- |
+| **Free** | 0 | — | ❌ |
+| **Solo** | 0 | — | ❌ |
+| **Pro** | 5 total | Up to 50 pages | ✓ |
+| **Agency** | 10 total | Up to 100 pages | ✓ |
+
+<Info>
+  Using AI Link Suggestions counts as **1 AI credit** from your monthly quota—the same as running an AI Review. Choose which analysis provides more value for each crawl.
+</Info>
+
+## Using Link Suggestions
+
+<Steps>
+  <Step title="Run a Crawl with SEO Analysis">
+    Make sure **SEO Analysis** is enabled in your scan options. Link suggestions require page content data to work.
+  </Step>
+
+  <Step title="Navigate to Crawl Results">
+    After the crawl completes, go to the crawl results page for your domain.
+  </Step>
+
+  <Step title="Find the Link Suggestions Section">
+    Scroll to the **Internal Link Opportunities** section (Pro and Agency plans only).
+  </Step>
+
+  <Step title="Generate Suggestions">
+    Click **Generate Suggestions** to start the AI analysis. This takes 10-30 seconds depending on site size.
+  </Step>
+
+  <Step title="Review and Implement">
+    Browse suggestions, filter by category or priority, and implement the ones that make sense for your site.
+  </Step>
+</Steps>
+
+## Understanding Suggestions
+
+Each suggestion includes:
+
+```
+Suggestion Details
+═══════════════════════════════════════════════════════════
+
+From:    /blog/getting-started-with-react
+         "Getting Started with React: A Beginner's Guide"
+
+To:      /blog/react-hooks-explained        [ORPHAN]
+         "Understanding React Hooks"
+
+Anchor:  "React Hooks for managing component state"
+
+Why:     Both pages cover React fundamentals. The hooks
+         guide is an orphan page that would benefit from
+         a link in the getting started guide.
+
+Priority: High
+Category: Orphan Rescue
+```
+
+### Ready-to-Copy HTML
+
+Click on any suggestion to see the full details, including a ready-to-copy HTML snippet:
+
+```html
+<a href="https://example.com/blog/react-hooks-explained">React Hooks for managing component state</a>
+```
+
+## Managing Suggestions
+
+### Mark as Implemented
+
+After you've added a suggested link to your site, click **Mark as Implemented** to track your progress. Implemented suggestions remain visible but are de-emphasized.
+
+### Dismiss Suggestions
+
+If a suggestion doesn't make sense for your site, click **Dismiss** to hide it. Dismissed suggestions won't appear in your list.
+
+### Filtering
+
+Use the filter buttons to focus on specific types:
+
+- **By Category** — Show only orphan rescue, topic cluster, navigation, or related content
+- **By Priority** — Show only high, medium, or low priority suggestions
+
+## Best Practices
+
+### Prioritize Orphan Pages
+
+```
+Impact Priority
+═══════════════════════════════════════════════════════════
+
+1. 🔴 Orphan Rescue    →  Highest SEO impact
+2. 🔵 Topic Cluster    →  Builds topical authority  
+3. 🟢 Navigation       →  Improves user experience
+4. 🟣 Related Content  →  Adds contextual value
+```
+
+### Quality Over Quantity
+
+Don't add all suggested links blindly:
+
+- ✅ Add links that make contextual sense
+- ✅ Use the suggested anchor text or improve it
+- ✅ Ensure the link helps readers
+- ❌ Don't stuff pages with excessive links
+- ❌ Don't add links that feel forced
+
+### Natural Placement
+
+Add links where they naturally fit in your content:
+
+```
+Good placement:
+─────────────────────────────────────────────────────────
+"React Hooks revolutionized how we manage state in
+functional components. Learn more about [React Hooks 
+for managing component state] in our detailed guide."
+
+Bad placement:
+─────────────────────────────────────────────────────────
+"React is a JavaScript library. [React Hooks for managing
+component state]. It was created by Facebook."
+```
+
+### Review Anchor Text
+
+The AI suggests descriptive anchor text, but you should:
+
+- Verify it matches your content voice
+- Ensure it accurately describes the target page
+- Avoid keyword stuffing
+- Make it natural to read
+
+## Token Usage
+
+AI Link Suggestions uses Claude Sonnet 4 for analysis. Token consumption varies based on site size:
+
+| Site Size | Pages Analyzed | Approx. Tokens | Est. Cost |
+| --------- | -------------- | -------------- | --------- |
+| Small | 25 pages | ~5,000 | ~$0.03 |
+| Medium | 50 pages | ~8,000 | ~$0.06 |
+| Large | 100 pages | ~14,000 | ~$0.10 |
+
+<Info>
+  Token costs are included in your subscription—there are no additional charges. The quota system ensures fair usage across all users.
+</Info>
+
+## Limitations
+
+### Content Requirements
+
+Link suggestions work best when:
+
+- Pages have proper meta titles and H1 headings
+- Pages have descriptive meta descriptions
+- SEO Analysis was enabled during the crawl
+
+### Page Limits
+
+To manage costs and processing time:
+
+- **Pro** — Analyzes up to 50 pages per request
+- **Agency** — Analyzes up to 100 pages per request
+
+For larger sites, the AI samples the most important pages (based on existing link structure and crawl order).
+
+### One Analysis Per Crawl
+
+You can only generate link suggestions once per crawl. To get fresh suggestions:
+
+1. Run a new crawl with SEO Analysis enabled
+2. Generate suggestions on the new crawl
+
+## Troubleshooting
+
+### "AI features not available on your plan"
+
+Link suggestions require a **Pro** or **Agency** plan. Upgrade to access AI features.
+
+### "Monthly AI usage limit reached"
+
+You've used all your AI credits for the month. Your quota resets on your billing date.
+
+### "No links found for this crawl"
+
+The crawl didn't discover any pages. Check that:
+
+- Your domain is verified
+- The site is accessible
+- The crawl wasn't blocked by firewalls
+
+### "Crawl must be completed before generating suggestions"
+
+Wait for your crawl to finish processing before requesting link suggestions.
+
+### Suggestions seem irrelevant
+
+This can happen when:
+
+- Pages lack proper meta tags (AI has less context)
+- Content is very thin (< 100 words)
+- Pages are highly technical or niche
+
+<Tip>
+  Improve your page metadata (titles, descriptions, H1s) for better AI suggestions. The AI relies on this content to understand what each page is about.
+</Tip>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="AI Reviews" icon="sparkles" href="/features/ai-review">
+    Get comprehensive AI analysis of your site.
+  </Card>
+
+  <Card title="Orphan Pages" icon="ghost" href="/features/orphan-pages">
+    Understanding orphan page detection.
+  </Card>
+</CardGroup>
+
