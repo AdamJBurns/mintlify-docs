@@ -20,7 +20,9 @@
       "family": "Geist Mono"
     }
   },
-  "appearance": "system",
+  "appearance": {
+    "default": "system"
+  },
   "rounded": "default",
   "favicon": "/favicon.svg",
   "navigation": {
