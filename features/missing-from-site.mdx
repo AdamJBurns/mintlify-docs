@@ -1,0 +1,405 @@
+---
+title: 'Missing from Site (404s)'
+description: 'Find sitemap URLs that no longer exist on your website'
+icon: 'file-circle-xmark'
+---
+
+## Overview
+
+"Missing from Site" identifies URLs listed in your `sitemap.xml` that **weren't found during the crawl**. These are typically pages that return 404 errors, have been deleted, or are inaccessible—yet they're still declared in your sitemap as valid pages.
+
+```
+Sitemap vs Reality
+═══════════════════════════════════════════════════════════
+
+sitemap.xml declares:          Actual site returns:
+─────────────────────          ────────────────────
+/about           ────────────→  200 OK ✓
+/products        ────────────→  200 OK ✓
+/old-product     ────────────→  404 Not Found ✗
+/deleted-page    ────────────→  404 Not Found ✗
+/typo-url        ────────────→  404 Not Found ✗
+                                    │
+                                    └─ These are "Missing from Site"
+```
+
+## Why This Matters
+
+Listing non-existent pages in your sitemap causes several problems:
+
+| Issue | Impact |
+| ----- | ------ |
+| **Wasted crawl budget** | Search engines spend resources on dead pages |
+| **Poor indexing signals** | Indicates poor site maintenance |
+| **Sitemap trust erosion** | Search engines may deprioritize your sitemap |
+| **User experience** | Users following sitemap-based links hit 404s |
+| **SEO authority loss** | Broken pages can't pass link equity |
+
+<Warning>
+  Google explicitly recommends only including canonical, 200-status URLs in your sitemap. Including 404s violates their sitemap guidelines and can reduce crawl efficiency.
+</Warning>
+
+## How We Detect Missing Pages
+
+Our analysis cross-references your sitemap with crawl results:
+
+<Steps>
+  <Step title="Fetch Sitemap">
+    We download and parse your `sitemap.xml` (and any sitemap index files).
+  </Step>
+
+  <Step title="Track Crawl Results">
+    During the crawl, we record the HTTP status of every URL encountered.
+  </Step>
+
+  <Step title="Match Sitemap URLs">
+    We check each sitemap URL against our crawl results.
+  </Step>
+
+  <Step title="Flag Missing Pages">
+    URLs in the sitemap that returned 404, 410, or weren't reachable are flagged.
+  </Step>
+</Steps>
+
+## Common Causes
+
+### 1. Deleted Content
+
+Content removed without updating the sitemap:
+
+```
+Timeline:
+─────────────────────────────────────────
+Jan 1:   /winter-sale created, added to sitemap
+Jan 31:  /winter-sale deleted
+Feb 15:  Sitemap still contains /winter-sale ← Problem
+```
+
+### 2. URL Structure Changes
+
+Restructuring URLs without proper cleanup:
+
+| Old URL | New URL | Sitemap Status |
+| ------- | ------- | -------------- |
+| `/blog/my-post` | `/articles/my-post` | Still lists old URL |
+| `/products/widget` | `/shop/widget` | Still lists old URL |
+| `/about-us` | `/about` | Still lists old URL |
+
+### 3. CMS Migration Issues
+
+Moving between content management systems:
+
+* Import errors creating bad URLs
+* Different URL slug generation rules
+* Missing content from partial migrations
+* Draft content included by mistake
+
+### 4. Auto-Generated Sitemaps
+
+CMS plugins that don't clean up properly:
+
+```
+WordPress Example:
+─────────────────────────────────────────
+Plugin auto-adds all posts to sitemap ✓
+Post is trashed ✓  
+Post is deleted ✓
+Sitemap still references post ✗ ← Plugin didn't update
+```
+
+### 5. Manual Sitemap Errors
+
+Hand-maintained sitemaps with mistakes:
+
+* Typos in URLs
+* Copy-paste errors
+* Forgotten test URLs
+* Outdated entries never reviewed
+
+### 6. Staging/Dev URLs
+
+Test URLs accidentally included:
+
+```xml
+<!-- These shouldn't be in production sitemap -->
+<url>
+  <loc>https://example.com/test-page-123</loc>
+</url>
+<url>
+  <loc>https://example.com/staging-preview</loc>
+</url>
+```
+
+## How to Fix
+
+### Step 1: Verify the Issue
+
+First, confirm the pages are truly missing:
+
+<Tabs>
+  <Tab title="Browser Check">
+    Visit each URL directly:
+    
+    ```
+    https://example.com/missing-page
+    
+    Expected: 404 Not Found page
+    ```
+  </Tab>
+
+  <Tab title="curl Check">
+    Use command line to verify:
+    
+    ```bash
+    curl -I https://example.com/missing-page
+    
+    # Look for:
+    # HTTP/2 404
+    ```
+  </Tab>
+
+  <Tab title="Bulk Check">
+    For many URLs, use a spreadsheet approach:
+    
+    1. Export the missing URLs list
+    2. Use a bulk HTTP checker tool
+    3. Confirm all return 404/410
+  </Tab>
+</Tabs>
+
+### Step 2: Decide on Action
+
+For each missing URL, choose an approach:
+
+| Scenario | Action |
+| -------- | ------ |
+| Content moved to new URL | Set up 301 redirect, update sitemap |
+| Content intentionally deleted | Remove from sitemap |
+| Content should exist | Restore or recreate the page |
+| URL has typo in sitemap | Fix the URL in sitemap |
+| Duplicate/outdated entry | Remove from sitemap |
+
+### Step 3: Update Your Sitemap
+
+Remove or fix the problematic entries:
+
+```xml
+<!-- REMOVE these entries from sitemap.xml -->
+
+<!-- Deleted page - remove entirely -->
+<url>
+  <loc>https://example.com/deleted-page</loc>
+  <lastmod>2024-01-15</lastmod>
+</url>
+
+<!-- Moved page - remove old URL (redirect handles SEO) -->
+<url>
+  <loc>https://example.com/old-url</loc>
+  <lastmod>2024-01-15</lastmod>
+</url>
+
+<!-- ADD the new location if it moved -->
+<url>
+  <loc>https://example.com/new-url</loc>
+  <lastmod>2024-12-01</lastmod>
+</url>
+```
+
+### Step 4: Set Up Redirects (If Applicable)
+
+For moved content, configure proper redirects:
+
+<Tabs>
+  <Tab title="Apache (.htaccess)">
+    ```apache
+    # Redirect single page
+    Redirect 301 /old-page /new-page
+    
+    # Redirect pattern
+    RedirectMatch 301 ^/blog/(.*)$ /articles/$1
+    ```
+  </Tab>
+
+  <Tab title="Nginx">
+    ```nginx
+    # Single redirect
+    location = /old-page {
+      return 301 /new-page;
+    }
+    
+    # Pattern redirect
+    location ~ ^/blog/(.*)$ {
+      return 301 /articles/$1;
+    }
+    ```
+  </Tab>
+
+  <Tab title="Next.js">
+    ```javascript
+    // next.config.js
+    module.exports = {
+      async redirects() {
+        return [
+          {
+            source: '/old-page',
+            destination: '/new-page',
+            permanent: true,
+          },
+        ]
+      },
+    }
+    ```
+  </Tab>
+
+  <Tab title="Vercel">
+    ```json
+    // vercel.json
+    {
+      "redirects": [
+        {
+          "source": "/old-page",
+          "destination": "/new-page",
+          "permanent": true
+        }
+      ]
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Step 5: Regenerate Sitemap
+
+After cleanup, regenerate your sitemap:
+
+| CMS | How to Regenerate |
+| --- | ----------------- |
+| **WordPress** | Use Yoast/RankMath to rebuild |
+| **Shopify** | Automatic (wait 24-48 hours) |
+| **Next.js** | Rebuild with `next build` |
+| **Static** | Run sitemap generator script |
+| **Manual** | Edit `sitemap.xml` directly |
+
+## Preventing Future Issues
+
+### Automated Sitemap Generation
+
+Use tools that automatically maintain sitemap accuracy:
+
+```javascript
+// Example: Dynamic sitemap generation
+export async function generateSitemap() {
+  const pages = await getAllPublishedPages() // Only live pages
+  
+  return pages
+    .filter(page => page.status === 'published')
+    .filter(page => !page.noindex)
+    .map(page => ({
+      url: page.url,
+      lastmod: page.updatedAt,
+    }))
+}
+```
+
+### Pre-Delete Checklist
+
+Before deleting any page:
+
+<Steps>
+  <Step title="Check Inbound Links">
+    Are other pages linking to this URL?
+  </Step>
+
+  <Step title="Check Search Rankings">
+    Is this page ranking for valuable keywords?
+  </Step>
+
+  <Step title="Set Up Redirect">
+    If valuable, redirect to relevant alternative.
+  </Step>
+
+  <Step title="Update Sitemap">
+    Remove the URL from sitemap.xml.
+  </Step>
+
+  <Step title="Update Internal Links">
+    Fix any internal links pointing to deleted page.
+  </Step>
+</Steps>
+
+### Regular Audits
+
+Schedule sitemap health checks:
+
+| Frequency | Action |
+| --------- | ------ |
+| Weekly | Automated sitemap validation |
+| Monthly | Manual review of sitemap entries |
+| Quarterly | Full sitemap audit with crawl comparison |
+| After major changes | Immediate sitemap verification |
+
+<Tip>
+  Set up monitoring alerts for sitemap changes. Any significant increase in sitemap size without corresponding content creation could indicate issues.
+</Tip>
+
+## Interpreting Results
+
+### Severity Assessment
+
+| Missing Pages | Severity | Recommended Action |
+| ------------- | -------- | ------------------ |
+| 0 | ✅ Excellent | Sitemap is accurate |
+| 1-5 | 🟡 Low | Fix during regular maintenance |
+| 6-20 | 🟠 Medium | Prioritize cleanup this week |
+| 20+ | 🔴 High | Immediate sitemap audit needed |
+
+### Percentage Threshold
+
+Consider the ratio of missing pages:
+
+```
+Missing Pages: 15
+Total Sitemap URLs: 500
+Percentage: 3%
+
+Assessment: Acceptable, but should be fixed
+Target: < 1% missing pages
+```
+
+### False Positives
+
+Some URLs may appear missing but aren't problems:
+
+| Scenario | Explanation |
+| -------- | ----------- |
+| **Recently published** | Page exists but wasn't in this crawl |
+| **Protected content** | Login required, crawl couldn't access |
+| **Rate limiting** | Server blocked crawler temporarily |
+| **Geo-restricted** | Page not available in crawler's region |
+
+<Info>
+  If you believe a page is incorrectly flagged, manually verify it exists by visiting the URL directly. Our crawler may have been blocked or rate-limited.
+</Info>
+
+## Related Issues
+
+Missing pages often indicate broader problems:
+
+| Related Issue | Connection |
+| ------------- | ---------- |
+| **Orphan pages** | May have been orphaned before deletion |
+| **Broken internal links** | Other pages may link to missing URLs |
+| **Redirect chains** | Missing pages may be part of broken chains |
+| **Index bloat** | Old URLs may still be indexed |
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Orphan Pages" icon="sitemap" href="/features/orphan-pages">
+    Find pages with no internal links.
+  </Card>
+
+  <Card title="Broken Links" icon="link-slash" href="/features/broken-link-detection">
+    Discover all broken links on your site.
+  </Card>
+</CardGroup>
+

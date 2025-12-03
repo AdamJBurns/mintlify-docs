@@ -1,0 +1,287 @@
+---
+title: 'Orphan Pages'
+description: 'Discover and fix pages with no internal links pointing to them'
+icon: 'ghost'
+---
+
+## Overview
+
+Orphan pages are URLs that exist in your sitemap but have **no internal links** pointing to them from other pages on your site. These pages are isolated from your site's link structure, making them difficult for both users and search engines to discover through normal navigation.
+
+```
+Site Structure with Orphan Pages
+═══════════════════════════════════════════════════════════
+
+    Homepage
+       │
+   ┌───┼───┐
+   │   │   │
+  Blog About Products
+   │         │
+  Post1    Widget
+  Post2    Gadget
+  Post3    
+
+  ❌ /hidden-landing-page    ← Orphan (in sitemap, no links)
+  ❌ /old-campaign           ← Orphan (in sitemap, no links)
+  ❌ /test-page-2023         ← Orphan (in sitemap, no links)
+```
+
+## Why Orphan Pages Matter
+
+Orphan pages create several problems for your website:
+
+| Issue | Impact |
+| ----- | ------ |
+| **Poor discoverability** | Users can't navigate to these pages |
+| **Weak SEO signals** | No internal link equity flows to these pages |
+| **Crawl inefficiency** | Search engines may deprioritize orphan pages |
+| **Wasted content** | Valuable pages go unseen |
+| **Index issues** | Search engines may not index orphan pages reliably |
+
+<Warning>
+  Even if a page is in your sitemap, search engines prioritize pages that are well-connected within your site structure. Orphan pages often rank poorly or get deindexed over time.
+</Warning>
+
+## How We Detect Orphan Pages
+
+Our sitemap analysis compares two data sources:
+
+<Steps>
+  <Step title="Parse Sitemap">
+    We fetch and parse your `sitemap.xml` to get all URLs you've declared as important.
+  </Step>
+
+  <Step title="Crawl Internal Links">
+    During the crawl, we track all internal links found on each page.
+  </Step>
+
+  <Step title="Compare Results">
+    We identify sitemap URLs that received **zero internal links** during the crawl.
+  </Step>
+
+  <Step title="Report Orphans">
+    These disconnected pages are flagged as orphan pages.
+  </Step>
+</Steps>
+
+## Common Causes
+
+### 1. Removed Navigation Links
+
+Pages that were once linked but had their navigation removed:
+
+```
+Before: Blog sidebar listed all 50 posts
+After:  Blog sidebar shows only 10 recent posts
+        └─ 40 older posts are now orphans
+```
+
+### 2. Campaign Landing Pages
+
+Marketing pages created for specific campaigns without permanent links:
+
+| Page Type | Example |
+| --------- | ------- |
+| PPC landing pages | `/summer-sale-2023` |
+| Email campaign pages | `/newsletter-exclusive` |
+| A/B test variants | `/homepage-v2` |
+| Event pages | `/webinar-signup-march` |
+
+### 3. Pagination Changes
+
+Restructuring pagination can orphan older content:
+
+```
+Before: /blog?page=1, /blog?page=2, ... /blog?page=20
+After:  /blog with infinite scroll
+        └─ Page 11-20 content now orphaned
+```
+
+### 4. Site Redesigns
+
+Major redesigns often leave pages disconnected:
+
+* Menu restructuring removes links
+* Category reorganization breaks connections
+* URL changes without redirect mapping
+
+### 5. CMS Quirks
+
+Content management systems can create orphans:
+
+* Draft pages accidentally published
+* Duplicate pages from imports
+* Auto-generated tag/category pages
+* Test content left in production
+
+## How to Fix Orphan Pages
+
+### Option 1: Add Internal Links
+
+Connect orphan pages to your site structure:
+
+<Tabs>
+  <Tab title="Navigation">
+    Add to menus, footers, or sidebars:
+    
+    ```html
+    <!-- Add to relevant navigation -->
+    <nav>
+      <a href="/orphan-page">Newly Linked Page</a>
+    </nav>
+    ```
+  </Tab>
+
+  <Tab title="Related Content">
+    Link from relevant pages:
+    
+    ```html
+    <!-- In a blog post or article -->
+    <p>
+      For more information, see our 
+      <a href="/orphan-page">detailed guide</a>.
+    </p>
+    ```
+  </Tab>
+
+  <Tab title="Hub Pages">
+    Create category or resource pages:
+    
+    ```html
+    <!-- Resource hub page -->
+    <h2>All Resources</h2>
+    <ul>
+      <li><a href="/resource-1">Resource 1</a></li>
+      <li><a href="/orphan-page">Previously Orphaned</a></li>
+    </ul>
+    ```
+  </Tab>
+</Tabs>
+
+### Option 2: Remove from Sitemap
+
+If the page shouldn't be indexed:
+
+```xml
+<!-- Remove this entry from sitemap.xml -->
+<url>
+  <loc>https://example.com/orphan-page</loc>
+  <lastmod>2024-01-15</lastmod>
+</url>
+```
+
+### Option 3: Add Noindex Tag
+
+Keep the page but exclude from search:
+
+```html
+<head>
+  <meta name="robots" content="noindex, follow">
+</head>
+```
+
+### Option 4: Redirect or Delete
+
+For outdated or duplicate content:
+
+| Scenario | Action |
+| -------- | ------ |
+| Content moved | 301 redirect to new URL |
+| Duplicate content | Redirect to canonical |
+| Truly obsolete | Delete and return 410 |
+
+## Decision Framework
+
+Use this flowchart to decide how to handle each orphan page:
+
+```
+Is the page valuable?
+│
+├─ YES → Should it be discoverable?
+│        │
+│        ├─ YES → Add internal links
+│        │
+│        └─ NO → Is it for specific traffic (ads, email)?
+│                │
+│                ├─ YES → Keep in sitemap, accept as orphan
+│                │
+│                └─ NO → Remove from sitemap, add noindex
+│
+└─ NO → Is there a better page for this content?
+        │
+        ├─ YES → 301 redirect to that page
+        │
+        └─ NO → Delete the page (410 response)
+```
+
+## Best Practices
+
+### Regular Audits
+
+Schedule periodic orphan page checks:
+
+| Site Size | Audit Frequency |
+| --------- | --------------- |
+| Small (<100 pages) | Monthly |
+| Medium (100-1000) | Weekly |
+| Large (1000+) | Daily/Continuous |
+
+### Sitemap Hygiene
+
+Keep your sitemap clean:
+
+* Only include pages you want indexed
+* Remove 404s, redirects, and noindexed pages
+* Update `lastmod` dates accurately
+* Validate sitemap after major changes
+
+### Link Architecture
+
+Design for discoverability:
+
+* Use breadcrumbs on all pages
+* Include related content sections
+* Create hub/spoke content structures
+* Ensure pagination doesn't orphan content
+
+<Tip>
+  A well-structured site should have **zero orphan pages** in the sitemap. Every page worth indexing should be reachable through internal links.
+</Tip>
+
+## Interpreting Results
+
+### Severity Levels
+
+| Orphan Count | Severity | Action |
+| ------------ | -------- | ------ |
+| 0 | ✅ Excellent | Maintain current structure |
+| 1-5 | 🟡 Low | Review and fix when convenient |
+| 6-20 | 🟠 Medium | Prioritize fixes this week |
+| 20+ | 🔴 High | Audit site structure immediately |
+
+### False Positives
+
+Some pages may appear orphaned but are intentional:
+
+* **Login-only pages**: Protected content not crawlable
+* **JavaScript-rendered links**: Links our crawler can't see
+* **Dynamic navigation**: Links generated per-user
+* **Intentional landing pages**: PPC/campaign pages
+
+<Info>
+  If you have intentional orphan pages (like PPC landing pages), consider removing them from your sitemap to keep your sitemap focused on discoverable content.
+</Info>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Missing from Site" icon="ghost" href="/features/missing-from-site">
+    Learn about sitemap URLs that return 404 errors.
+  </Card>
+
+  <Card title="SEO Analysis" icon="magnifying-glass-chart" href="/features/seo-analysis">
+    Discover other SEO issues affecting your pages.
+  </Card>
+</CardGroup>
+

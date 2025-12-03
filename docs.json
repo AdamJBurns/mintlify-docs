@@ -55,6 +55,8 @@
             "group": "Features",
             "pages": [
               "features/broken-link-detection",
+              "features/orphan-pages",
+              "features/missing-from-site",
               "features/response-time-tracking",
               "features/redirect-chain-analysis",
               "features/ssl-monitoring",
