@@ -62,6 +62,7 @@
             "group": "Crawling",
             "pages": [
               "crawling/starting-crawls",
+              "crawling/automated-crawls",
               "crawling/scan-options",
               "crawling/crawler-whitelist",
               "crawling/crawl-results",

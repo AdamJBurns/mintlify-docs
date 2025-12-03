@@ -1,0 +1,269 @@
+---
+title: 'Automated Crawls'
+description: 'Schedule automatic link health checks to run on your domains without manual intervention'
+icon: 'clock'
+---
+
+## Overview
+
+Automated crawls let you **set it and forget it**—configure a schedule for each domain, and we'll automatically run link health checks at your chosen frequency. You'll receive email reports with the results, and optionally a public shareable link for your team or clients.
+
+```
+Automation Flow
+═══════════════════════════════════════════════════════════
+
+   ┌─────────────────┐
+   │  Configure      │
+   │  Schedule       │───→  Every 6 hours
+   └────────┬────────┘
+            │
+            ▼
+   ┌─────────────────┐      ┌─────────────────┐
+   │  Crawl Runs     │─────→│  Email Report   │
+   │  Automatically  │      │  Sent to You    │
+   └────────┬────────┘      └─────────────────┘
+            │
+            ▼
+   ┌─────────────────┐
+   │  Repeat at      │
+   │  Next Interval  │
+   └─────────────────┘
+```
+
+## Available Schedules by Plan
+
+The frequency options available depend on your subscription plan:
+
+| Schedule | Free | Solo | Pro | Agency |
+| -------- | ---- | ---- | --- | ------ |
+| **Off** | ✓ | ✓ | ✓ | ✓ |
+| **Weekly** | — | ✓ | ✓ | ✓ |
+| **Daily** | — | — | ✓ | ✓ |
+| **Every 12 Hours** | — | — | — | ✓ |
+| **Every 6 Hours** | — | — | — | ✓ |
+| **Hourly** | — | — | — | ✓ |
+
+<Info>
+  Free plan users can run manual crawls but don't have access to automation. Upgrade to Solo or higher to enable scheduled crawls.
+</Info>
+
+## Setting Up Automation
+
+<Steps>
+  <Step title="Go to Settings">
+    Navigate to **Settings** → **Automation** tab in your dashboard.
+  </Step>
+
+  <Step title="Select a Domain">
+    Find the domain you want to automate. Each verified domain has its own configuration card.
+  </Step>
+
+  <Step title="Choose a Schedule">
+    Use the dropdown to select your preferred frequency (based on your plan).
+  </Step>
+
+  <Step title="Configure Scan Options">
+    Select which checks to run during each automated crawl.
+  </Step>
+
+  <Step title="Set Report Preferences (Agency)">
+    Agency users can customize the email recipient and enable public report links.
+  </Step>
+</Steps>
+
+## Scan Options
+
+When configuring automation, you can enable any combination of these checks:
+
+| Option | Description | Available |
+| ------ | ----------- | --------- |
+| **SSL Certificate** | Check certificate expiry and warn about upcoming expirations | All plans |
+| **Anchor Text Analysis** | Identify generic or non-descriptive link text for SEO | All plans |
+| **Response Time Trends** | Compare response times with previous crawls | All plans |
+| **SEO Analysis** | Analyze meta tags, headings, content, images, and markup | All plans |
+| **Sitemap & Orphan Pages** | Compare sitemap.xml with crawled pages, detect orphan pages | Pro+ only |
+
+<Tip>
+  Enable only the checks you need. More checks mean longer crawl times but more comprehensive reports.
+</Tip>
+
+## Report Delivery
+
+### Email Reports
+
+After each automated crawl completes, you'll receive an email summary containing:
+
+- **Total links checked**
+- **Number of broken links found**
+- **Health score percentage**
+- **Link to view full report**
+
+### Custom Recipients (Agency)
+
+Agency plan users can send reports to any email address—perfect for:
+
+- **Clients** — Send reports directly to your clients
+- **Team members** — Route reports to different team members per domain
+- **Stakeholders** — Keep project managers informed
+
+```
+Report Delivery Options
+═══════════════════════════════════════════════════════════
+
+Solo/Pro Plans:          Agency Plan:
+─────────────────        ────────────────────────────────
+Reports → Your email     Reports → Any email you specify
+                                   │
+                                   ├─ client@company.com
+                                   ├─ dev-team@agency.com
+                                   └─ seo@client.com
+```
+
+### Public Report Links (Agency)
+
+Enable **Include public report link** to:
+
+1. Automatically make each crawl report publicly accessible
+2. Include the shareable link in the email
+3. Allow anyone with the link to view the report (no login required)
+
+<Warning>
+  Public links expose your crawl data to anyone with the URL. Only enable this if you need to share reports externally.
+</Warning>
+
+## How Automation Works
+
+### Scheduling Engine
+
+Our automation runs on a background scheduler that:
+
+1. **Checks every minute** for domains due for a crawl
+2. **Respects your daily limits** — automated crawls count toward your plan's daily crawl limit
+3. **Prevents overlaps** — won't start a new crawl if one is already running for that domain
+4. **Calculates next run** — automatically schedules the next crawl after completion
+
+```
+Scheduling Logic
+═══════════════════════════════════════════════════════════
+
+Every minute:
+├─ Find domains where next_run_at ≤ now
+├─ Filter to verified domains only
+├─ Check user hasn't hit daily crawl limit
+├─ Skip if crawl already running
+└─ Start crawl & calculate next_run_at
+```
+
+### Daily Crawl Limits
+
+Automated crawls **count toward your daily limit**:
+
+| Plan | Daily Crawls | Example with Hourly Schedule |
+| ---- | ------------ | ---------------------------- |
+| Free | 2 | N/A (no automation) |
+| Solo | 5 | 5 domains × weekly |
+| Pro | 10 | 10 domains × daily |
+| Agency | 25 | 2 domains × every 6h + 1 × hourly |
+
+<Warning>
+  If you've used all your daily crawls (manual + automated), scheduled crawls will be skipped until the next day.
+</Warning>
+
+## Best Practices
+
+### Choose the Right Frequency
+
+| Site Type | Recommended Schedule | Reasoning |
+| --------- | -------------------- | --------- |
+| **Blog** | Weekly | Content changes infrequently |
+| **E-commerce** | Daily | Products added/removed regularly |
+| **News site** | Every 6 hours | High content velocity |
+| **Corporate** | Weekly | Stable content structure |
+| **SaaS app** | Daily | Docs and links change with releases |
+
+### Optimize Scan Options
+
+```
+Minimal Check (Fastest):
+└─ Just link health check
+
+Standard Check:
+├─ SSL Certificate
+├─ Response Trends
+└─ SEO Analysis
+
+Comprehensive Check (Slowest):
+├─ SSL Certificate
+├─ Anchor Text Analysis
+├─ Response Trends
+├─ SEO Analysis
+└─ Sitemap & Orphan Pages
+```
+
+### Monitor Your Limits
+
+Keep an eye on your daily crawl usage in the dashboard. If you're frequently hitting limits:
+
+1. **Reduce frequency** on less critical domains
+2. **Upgrade your plan** for higher limits
+3. **Stagger schedules** across domains
+
+## Troubleshooting
+
+### Crawl Didn't Run
+
+| Cause | Solution |
+| ----- | -------- |
+| Domain not verified | Complete DNS verification first |
+| Daily limit reached | Wait until tomorrow or upgrade |
+| Crawl already running | Previous crawl still in progress |
+| Schedule set to "Off" | Enable a schedule frequency |
+
+### Didn't Receive Email
+
+| Cause | Solution |
+| ----- | -------- |
+| Check spam folder | Mark as "not spam" |
+| Wrong email | Update report recipient (Agency) |
+| Notifications disabled | Check Settings → Notifications |
+
+### Wrong Scan Options
+
+Scan options are configured **per domain**. Make sure you're looking at the correct domain card in the Automation settings.
+
+## API Access
+
+Automation settings can also be managed via API:
+
+```bash
+# Get automation settings
+GET /api/automation
+
+# Update domain schedule
+PATCH /api/automation
+{
+  "domainId": "uuid",
+  "schedule": "daily",
+  "scanOptions": {
+    "sslCheck": true,
+    "seoAnalysis": true
+  }
+}
+```
+
+<Info>
+  Full API documentation coming soon. Contact support for early access.
+</Info>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Orphan Pages" icon="ghost" href="/features/orphan-pages">
+    Find pages with no internal links pointing to them.
+  </Card>
+
+  <Card title="Sharing Results" icon="share-nodes" href="/crawling/sharing-results">
+    Learn about sharing crawl reports with others.
+  </Card>
+</CardGroup>
+
