@@ -1,101 +1,76 @@
 ---
-title: 'API Reference'
-description: 'Programmatic access to SEO Crawler - Coming Soon'
+title: API Reference
+description: Link Health Monitor REST API
 icon: 'code'
 ---
 
-<img
-  className="block dark:hidden rounded-lg"
-  src="/images/hero-light.png"
-  alt="SEO Crawler API"
-/>
-<img
-  className="hidden dark:block rounded-lg"
-  src="/images/hero-dark.png"
-  alt="SEO Crawler API"
-/>
+# API Reference
 
-<br />
+Base URL: `https://linkhealthmonitor.com/api/v1`
+
+## Authentication
+
+Include your API key in the `Authorization` header:
+
+```bash
+Authorization: Bearer lhm_your_api_key
+```
 
 <Note>
-  **The SEO Crawler API is coming soon!** We're working hard to bring you a powerful REST API for programmatic access to all platform features.
+API access requires an **Agency plan**. Generate keys at [Settings → API](https://linkhealthmonitor.com/settings).
 </Note>
 
-## What's Coming
+---
 
-The SEO Crawler API will enable you to:
+## Available Endpoints
 
 <CardGroup cols={2}>
-  <Card title="Domain Management" icon="globe">
-    Add, verify, and manage domains programmatically.
+  <Card title="Crawls" icon="spider-web" href="/api-reference/crawls">
+    Start crawls, check status, and retrieve results programmatically.
   </Card>
-  <Card title="Automated Crawls" icon="spider-web">
-    Trigger and schedule crawls via API calls.
-  </Card>
-  <Card title="Results & Reports" icon="chart-simple">
-    Retrieve crawl results and generate reports.
-  </Card>
-  <Card title="Webhooks" icon="webhook">
-    Receive real-time notifications for events.
+  <Card title="Webhooks" icon="webhook" href="/api-reference/webhooks">
+    Configure real-time notifications for crawl events.
   </Card>
 </CardGroup>
 
-## Planned Features
+---
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /domains` | List all verified domains |
-| `POST /domains` | Add a new domain |
-| `POST /crawl/start` | Start a new crawl |
-| `GET /crawl/{id}/progress` | Check crawl progress |
-| `GET /crawl/{id}/results` | Get crawl results |
-| `POST /reports` | Generate shareable reports |
-| `GET /ai-review` | Request AI-powered analysis |
+## Errors
 
-## API Access Plans
+All errors follow a consistent format:
 
-API access will be available on **Pro** and **Agency** plans:
+```json
+{
+  "error": {
+    "message": "Human-readable message",
+    "code": "ERROR_CODE"
+  }
+}
+```
 
-| Feature | Pro | Agency |
-|---------|-----|--------|
-| API Access | ✅ | ✅ |
-| Rate Limit | 60 req/min | 300 req/min |
-| Webhooks | ✅ | ✅ |
-| Daily Requests | 10,000 | 100,000 |
+| Status | Code | Description |
+|--------|------|-------------|
+| 400 | `VALIDATION_ERROR` | Invalid request |
+| 401 | `UNAUTHORIZED` | Invalid API key |
+| 403 | `AGENCY_REQUIRED` | Requires Agency plan |
+| 404 | `NOT_FOUND` | Resource not found |
+| 429 | `RATE_LIMITED` | Too many requests |
 
-## Get Notified
+---
 
-Be the first to know when the API launches:
+## Rate Limits
 
-<CardGroup cols={2}>
-  <Card
-    title="Join Waitlist"
-    icon="bell"
-    href="https://seocrawler.app/api-waitlist"
-  >
-    Sign up to get early access to the API.
-  </Card>
-  <Card
-    title="Follow Updates"
-    icon="x-twitter"
-    href="https://x.com/seocrawler"
-  >
-    Stay updated on development progress.
-  </Card>
-</CardGroup>
+- **1,000 requests/minute** per API key
+- **10 crawl starts/minute**
 
-## Questions?
+Headers included in every response:
 
-<Card
-  title="Contact Us"
-  icon="envelope"
-  href="mailto:api@seocrawler.app"
->
-  Have questions about the upcoming API? We'd love to hear from you.
-</Card>
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1699574400
+```
 
-
-
-
-
-
+<Tip>
+The `X-RateLimit-Reset` header contains a Unix timestamp indicating when your rate limit will reset.
+</Tip>

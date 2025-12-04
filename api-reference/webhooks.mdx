@@ -1,0 +1,200 @@
+---
+title: Webhooks
+description: Real-time notifications for crawl events
+icon: 'webhook'
+---
+
+# Webhooks
+
+Configure webhooks to receive real-time notifications when crawl events occur.
+
+**Available Events:**
+- `crawl.started` — A crawl has begun
+- `crawl.completed` — A crawl finished successfully
+- `crawl.failed` — A crawl encountered an error
+- `broken_links.found` — Broken links were discovered
+
+---
+
+## Create Webhook
+
+<ParamField method="POST" path="/webhooks" />
+
+Register a new webhook endpoint.
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `url` | string | Yes | HTTPS endpoint URL |
+| `name` | string | No | Friendly name |
+| `events` | array | No | Events to subscribe to |
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://linkhealthmonitor.com/api/v1/webhooks \
+  -H "Authorization: Bearer lhm_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://your-server.com/webhook",
+    "events": ["crawl.completed", "broken_links.found"]
+  }'
+```
+
+```json Response
+{
+  "data": {
+    "id": "webhook-uuid",
+    "url": "https://your-server.com/webhook",
+    "events": ["crawl.completed", "broken_links.found"],
+    "secret": "whsec_abc123...",
+    "active": true
+  },
+  "meta": {
+    "warning": "Save this secret now. It will not be shown again."
+  }
+}
+```
+</CodeGroup>
+
+<Warning>
+The `secret` is only returned once. Save it immediately for signature verification.
+</Warning>
+
+---
+
+## List Webhooks
+
+<ParamField method="GET" path="/webhooks" />
+
+Retrieve all configured webhooks.
+
+```bash
+curl https://linkhealthmonitor.com/api/v1/webhooks \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+---
+
+## Delete Webhook
+
+<ParamField method="DELETE" path="/webhooks/{id}" />
+
+Remove a webhook endpoint.
+
+```bash
+curl -X DELETE https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+---
+
+## Test Webhook
+
+<ParamField method="POST" path="/webhooks/{id}/test" />
+
+Send a test payload to verify your endpoint is working correctly.
+
+```bash
+curl -X POST https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid/test \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+---
+
+# Webhook Payloads
+
+All webhooks include a signature header for verification:
+
+```
+X-LinkHealth-Signature: t=1699574400,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+```
+
+---
+
+## crawl.completed
+
+Sent when a crawl finishes successfully.
+
+```json
+{
+  "event": "crawl.completed",
+  "timestamp": "2024-01-15T10:32:45Z",
+  "data": {
+    "crawl_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "domain_name": "example.com",
+    "total_links": 150,
+    "broken_links": 3,
+    "duration_seconds": 165
+  }
+}
+```
+
+---
+
+## crawl.failed
+
+Sent when a crawl encounters an error.
+
+```json
+{
+  "event": "crawl.failed",
+  "timestamp": "2024-01-15T10:35:00Z",
+  "data": {
+    "crawl_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "domain_name": "example.com",
+    "error": "Timeout: crawl exceeded maximum duration"
+  }
+}
+```
+
+---
+
+## broken_links.found
+
+Sent when broken links are discovered during a crawl.
+
+```json
+{
+  "event": "broken_links.found",
+  "timestamp": "2024-01-15T10:32:45Z",
+  "data": {
+    "crawl_id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "domain_name": "example.com",
+    "broken_count": 3,
+    "sample_links": [
+      { "url": "https://example.com/missing", "status_code": 404 }
+    ]
+  }
+}
+```
+
+---
+
+# Verifying Signatures
+
+Verify webhook authenticity by checking the signature header.
+
+```javascript
+const crypto = require('crypto');
+
+function verifySignature(payload, signature, secret) {
+  const [t, v1] = signature.split(',').map(p => p.split('=')[1]);
+  
+  // Check timestamp (5 min tolerance)
+  if (Math.abs(Date.now() / 1000 - parseInt(t)) > 300) return false;
+  
+  // Verify signature
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(`${t}.${payload}`)
+    .digest('hex');
+  
+  return crypto.timingSafeEqual(Buffer.from(v1), Buffer.from(expected));
+}
+```
+
+<Info>
+The signature includes a timestamp to prevent replay attacks. Reject any webhook with a timestamp older than 5 minutes.
+</Info>
+

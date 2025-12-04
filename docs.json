@@ -102,9 +102,16 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API",
+            "group": "Overview",
             "pages": [
               "api-reference/index"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/crawls",
+              "api-reference/webhooks"
             ]
           }
         ]
@@ -182,3 +189,4 @@
     }
   }
 }
+

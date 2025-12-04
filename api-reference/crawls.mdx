@@ -1,0 +1,186 @@
+---
+title: Crawls
+description: Start and manage crawls via the API
+icon: 'spider-web'
+---
+
+# Crawls
+
+Programmatically start crawls, check their status, and retrieve results.
+
+---
+
+## Start a Crawl
+
+<ParamField method="POST" path="/crawls" />
+
+Start a new crawl for a verified domain.
+
+**Request Body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `domain_id` | string | Yes | UUID of the domain to crawl |
+| `options.scan_images` | boolean | No | Check image URLs (default: false) |
+| `options.scan_scripts` | boolean | No | Check script URLs (default: false) |
+| `options.scan_stylesheets` | boolean | No | Check stylesheet URLs (default: false) |
+| `options.follow_external` | boolean | No | Check external links (default: false) |
+
+<CodeGroup>
+```bash cURL
+curl -X POST https://linkhealthmonitor.com/api/v1/crawls \
+  -H "Authorization: Bearer lhm_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{"domain_id": "550e8400-e29b-41d4-a716-446655440000"}'
+```
+
+```json Response
+{
+  "data": {
+    "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "domain_id": "550e8400-e29b-41d4-a716-446655440000",
+    "status": "pending",
+    "created_at": "2024-01-15T10:30:00Z"
+  }
+}
+```
+</CodeGroup>
+
+---
+
+## List Crawls
+
+<ParamField method="GET" path="/crawls" />
+
+Retrieve a paginated list of crawls.
+
+**Query Parameters**
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `page` | integer | 1 | Page number |
+| `limit` | integer | 20 | Results per page (max: 100) |
+| `domain_id` | string | — | Filter by domain |
+| `status` | string | — | Filter: `pending`, `running`, `completed`, `failed` |
+
+<CodeGroup>
+```bash cURL
+curl "https://linkhealthmonitor.com/api/v1/crawls?status=completed&limit=10" \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+```json Response
+{
+  "data": [
+    {
+      "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+      "domain_name": "example.com",
+      "status": "completed",
+      "total_links": 150,
+      "broken_links": 3,
+      "completed_at": "2024-01-15T10:32:45Z"
+    }
+  ],
+  "meta": { "page": 1, "limit": 10, "total": 45 }
+}
+```
+</CodeGroup>
+
+---
+
+## Get Crawl Details
+
+<ParamField method="GET" path="/crawls/{id}" />
+
+Retrieve detailed information about a specific crawl.
+
+<CodeGroup>
+```bash cURL
+curl https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7 \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+```json Response
+{
+  "data": {
+    "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+    "domain_name": "example.com",
+    "status": "completed",
+    "total_links": 150,
+    "broken_links": 3,
+    "pages_crawled": 25,
+    "started_at": "2024-01-15T10:30:00Z",
+    "completed_at": "2024-01-15T10:32:45Z"
+  }
+}
+```
+</CodeGroup>
+
+---
+
+## Get Crawl Links
+
+<ParamField method="GET" path="/crawls/{id}/links" />
+
+Retrieve all links discovered during a crawl.
+
+**Query Parameters**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `page` | integer | Page number |
+| `limit` | integer | Results per page (max: 100) |
+| `status_code` | integer | Filter by HTTP status |
+| `is_broken` | boolean | Filter broken links only |
+
+<CodeGroup>
+```bash cURL
+curl "https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/links?is_broken=true" \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+```json Response
+{
+  "data": [
+    {
+      "url": "https://example.com/missing",
+      "source_url": "https://example.com/blog",
+      "status_code": 404,
+      "is_broken": true,
+      "link_text": "Read more"
+    }
+  ],
+  "meta": { "page": 1, "total": 3 }
+}
+```
+</CodeGroup>
+
+---
+
+## Get Broken Links
+
+<ParamField method="GET" path="/crawls/{id}/broken" />
+
+Convenience endpoint returning only broken links from a crawl.
+
+<CodeGroup>
+```bash cURL
+curl https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/broken \
+  -H "Authorization: Bearer lhm_your_api_key"
+```
+
+```json Response
+{
+  "data": [
+    {
+      "url": "https://example.com/missing",
+      "source_url": "https://example.com/",
+      "status_code": 404,
+      "link_text": "Old Page"
+    }
+  ],
+  "meta": { "total_broken": 3 }
+}
+```
+</CodeGroup>
+
