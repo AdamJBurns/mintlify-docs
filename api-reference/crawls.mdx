@@ -28,8 +28,8 @@ Start a new crawl for a verified domain.
 
 <CodeGroup>
 ```bash cURL
-curl -X POST https://linkhealthmonitor.com/api/v1/crawls \
-  -H "Authorization: Bearer lhm_your_api_key" \
+curl -X POST https://seocrawler.app/api/v1/crawls \
+  -H "Authorization: Bearer sc_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{"domain_id": "550e8400-e29b-41d4-a716-446655440000"}'
 ```
@@ -65,8 +65,8 @@ Retrieve a paginated list of crawls.
 
 <CodeGroup>
 ```bash cURL
-curl "https://linkhealthmonitor.com/api/v1/crawls?status=completed&limit=10" \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl "https://seocrawler.app/api/v1/crawls?status=completed&limit=10" \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ```json Response
@@ -96,8 +96,8 @@ Retrieve detailed information about a specific crawl.
 
 <CodeGroup>
 ```bash cURL
-curl https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7 \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl https://seocrawler.app/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7 \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ```json Response
@@ -135,8 +135,8 @@ Retrieve all links discovered during a crawl.
 
 <CodeGroup>
 ```bash cURL
-curl "https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/links?is_broken=true" \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl "https://seocrawler.app/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/links?is_broken=true" \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ```json Response
@@ -165,8 +165,8 @@ Convenience endpoint returning only broken links from a crawl.
 
 <CodeGroup>
 ```bash cURL
-curl https://linkhealthmonitor.com/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/broken \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl https://seocrawler.app/api/v1/crawls/7c9e6679-7425-40de-944b-e07fc1f90ae7/broken \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ```json Response

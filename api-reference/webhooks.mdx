@@ -32,8 +32,8 @@ Register a new webhook endpoint.
 
 <CodeGroup>
 ```bash cURL
-curl -X POST https://linkhealthmonitor.com/api/v1/webhooks \
-  -H "Authorization: Bearer lhm_your_api_key" \
+curl -X POST https://seocrawler.app/api/v1/webhooks \
+  -H "Authorization: Bearer sc_your_api_key" \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://your-server.com/webhook",
@@ -70,8 +70,8 @@ The `secret` is only returned once. Save it immediately for signature verificati
 Retrieve all configured webhooks.
 
 ```bash
-curl https://linkhealthmonitor.com/api/v1/webhooks \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl https://seocrawler.app/api/v1/webhooks \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ---
@@ -83,8 +83,8 @@ curl https://linkhealthmonitor.com/api/v1/webhooks \
 Remove a webhook endpoint.
 
 ```bash
-curl -X DELETE https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl -X DELETE https://seocrawler.app/api/v1/webhooks/webhook-uuid \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ---
@@ -96,8 +96,8 @@ curl -X DELETE https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid \
 Send a test payload to verify your endpoint is working correctly.
 
 ```bash
-curl -X POST https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid/test \
-  -H "Authorization: Bearer lhm_your_api_key"
+curl -X POST https://seocrawler.app/api/v1/webhooks/webhook-uuid/test \
+  -H "Authorization: Bearer sc_your_api_key"
 ```
 
 ---
@@ -107,7 +107,7 @@ curl -X POST https://linkhealthmonitor.com/api/v1/webhooks/webhook-uuid/test \
 All webhooks include a signature header for verification:
 
 ```
-X-LinkHealth-Signature: t=1699574400,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+X-SEOCrawler-Signature: t=1699574400,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
 ```
 
 ---
