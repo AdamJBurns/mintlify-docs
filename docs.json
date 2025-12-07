@@ -29,9 +29,11 @@
     "tabs": [
       {
         "tab": "Documentation",
+        "icon": "book-text",
         "groups": [
           {
             "group": "Getting Started",
+            "icon": "rocket",
             "pages": [
               "introduction",
               "quickstart",
@@ -40,6 +42,7 @@
           },
           {
             "group": "Features",
+            "icon": "sparkles",
             "pages": [
               "features/broken-link-detection",
               "features/orphan-pages",
@@ -55,6 +58,7 @@
           },
           {
             "group": "Domain Management",
+            "icon": "globe",
             "pages": [
               "domains/adding-domains",
               "domains/dns-verification",
@@ -63,6 +67,7 @@
           },
           {
             "group": "Crawling",
+            "icon": "search",
             "pages": [
               "crawling/starting-crawls",
               "crawling/automated-crawls",
@@ -74,6 +79,7 @@
           },
           {
             "group": "Plans & Billing",
+            "icon": "credit-card",
             "pages": [
               "billing/plans",
               "billing/limits",
@@ -82,6 +88,7 @@
           },
           {
             "group": "Agency Features",
+            "icon": "building-2",
             "pages": [
               "agency/white-labeling",
               "agency/custom-domains",
@@ -91,6 +98,7 @@
           },
           {
             "group": "Integrations",
+            "icon": "plug",
             "pages": [
               "integrations/webhooks",
               "integrations/email-notifications"
@@ -100,15 +108,18 @@
       },
       {
         "tab": "API Reference",
+        "icon": "terminal",
         "groups": [
           {
             "group": "Overview",
+            "icon": "book-open",
             "pages": [
               "api-reference/index"
             ]
           },
           {
             "group": "Endpoints",
+            "icon": "code",
             "pages": [
               "api-reference/crawls",
               "api-reference/webhooks"
@@ -118,9 +129,11 @@
       },
       {
         "tab": "Changelog",
+        "icon": "history",
         "groups": [
           {
             "group": "Updates",
+            "icon": "clock",
             "pages": [
               "changelog"
             ]
@@ -133,12 +146,12 @@
         {
           "anchor": "Dashboard",
           "href": "https://app.seocrawler.app",
-          "icon": "gauge-high"
+          "icon": "gauge"
         },
         {
           "anchor": "Status",
           "href": "https://status.seocrawler.app",
-          "icon": "signal-bars"
+          "icon": "activity"
         }
       ]
     }
@@ -189,4 +202,6 @@
     }
   }
 }
+
+
 
