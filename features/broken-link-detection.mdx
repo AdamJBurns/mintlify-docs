@@ -4,12 +4,14 @@ description: 'Automatically find and fix broken links across your entire domain'
 icon: 'link-slash'
 ---
 
-## Overview
+# Broken Link Detection
 
-Broken links are one of the most common and damaging website issues. They frustrate users, waste search engine crawl budget, and signal poor site maintenance to both visitors and search engines. SEO Crawler automatically discovers and reports every broken link on your domain.
+Automatically find and fix broken links across your entire domain.
+
+Broken links frustrate users, waste crawl budget, and signal poor site maintenance. SEO Crawler discovers and reports every broken link on your domain.
 
 <Info>
-  **Available on**: All plans (Free, Solo, Pro, Agency)
+**Available on all plans**
 </Info>
 
 ## What We Detect
@@ -46,38 +48,36 @@ Our crawler identifies links that return error status codes, indicating they're 
 | **Connection Refused** | Server actively rejected the connection |
 | **SSL Error** | Certificate validation failed |
 
-## Why Broken Links Matter
-
-### SEO Impact
+## Why It Matters
 
 <Warning>
-  Google's crawlers encounter the same broken links as your users. Excessive 404 errors can hurt your search rankings.
+Google's crawlers encounter the same broken links as your users. Excessive 404 errors can hurt your search rankings.
 </Warning>
 
-- **Wasted Crawl Budget**: Search engines have limited resources to crawl your site. Every broken link is a wasted request.
-- **Lost PageRank**: Internal links pass authority. Broken links leak that authority into nothing.
-- **Indexing Issues**: Broken links can prevent search engines from discovering new content.
+**SEO Impact**
+- **Wasted Crawl Budget** — Limited resources spent on broken links
+- **Lost PageRank** — Authority leaks through broken internal links
+- **Indexing Issues** — Search engines can't discover new content
 
-### User Experience Impact
-
-- **Increased Bounce Rate**: Users who hit 404 pages often leave immediately
-- **Lost Conversions**: Broken links in conversion funnels directly cost revenue
-- **Damaged Trust**: Broken links make your site appear unmaintained or unreliable
+**User Experience**
+- **Increased Bounce Rate** — Users leave after hitting 404 pages
+- **Lost Conversions** — Broken funnels cost revenue
+- **Damaged Trust** — Signals an unmaintained site
 
 ## How It Works
 
 <Steps>
   <Step title="Discovery">
-    Our crawler starts from your homepage and follows every link, building a complete map of your site's link structure.
+    Start from your homepage and follow every link to build a complete site map
   </Step>
   <Step title="Validation">
-    Each discovered URL receives an HTTP HEAD request to check its status code. If HEAD isn't supported, we fall back to GET.
+    Check each URL's status code with HTTP HEAD requests
   </Step>
   <Step title="Classification">
-    Links are categorized by type (internal/external) and status code, with errors flagged for review.
+    Categorize by type and status code, flag errors for review
   </Step>
   <Step title="Source Tracking">
-    For every broken link, we record which pages contain it so you know exactly where to make fixes.
+    Record which pages contain each broken link
   </Step>
 </Steps>
 
@@ -179,16 +179,16 @@ Internal server errors indicate code problems:
 
 <CardGroup cols={2}>
   <Card title="Regular Crawls" icon="calendar-check">
-    Schedule weekly crawls to catch broken links quickly. The longer a link is broken, the more damage it causes.
+    Schedule weekly crawls to catch broken links quickly
   </Card>
   <Card title="Fix Internal First" icon="house">
-    Prioritize internal broken links—you have full control over these and they directly impact your site structure.
+    Prioritize internal links—you have full control
   </Card>
   <Card title="Use Redirects" icon="arrow-right">
-    When removing pages, always set up 301 redirects. This preserves any SEO value and helps users find relevant content.
+    Always set up 301 redirects when removing pages
   </Card>
   <Card title="Monitor External Links" icon="arrow-up-right-from-square">
-    External sites can break anytime. Regular monitoring catches these before users report them.
+    External sites can break anytime—catch them early
   </Card>
 </CardGroup>
 
@@ -212,7 +212,7 @@ Export broken link data for team collaboration or client reporting:
 - **API**: Programmatic access to all crawl data
 
 <Note>
-  Pro and Agency plans include white-label PDF exports for client-facing reports.
+Pro and Agency plans include white-label PDF exports
 </Note>
 
 ## Related Features
@@ -223,14 +223,14 @@ Export broken link data for team collaboration or client reporting:
     icon="arrow-right-arrow-left"
     href="/features/redirect-chain-analysis"
   >
-    Detect redirect loops and excessive chain lengths.
+    Detect redirect loops and excessive chains
   </Card>
   <Card
     title="Response Time Tracking"
     icon="gauge-high"
     href="/features/response-time-tracking"
   >
-    Monitor page performance alongside link health.
+    Monitor page performance alongside link health
   </Card>
 </CardGroup>
 

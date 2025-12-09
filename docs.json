@@ -1,11 +1,15 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "quill",
   "name": "SEO Crawler",
   "colors": {
-    "primary": "#000000",
-    "light": "#666666",
-    "dark": "#ffffff"
+    "primary": "#0F0F0F",
+    "light": "#0F0F0F",
+    "dark": "#FAFAFA",
+    "background": {
+      "light": "#FFFFFF",
+      "dark": "#0F0F0F"
+    }
   },
   "font": {
     "headings": {
@@ -23,42 +27,66 @@
   "appearance": {
     "default": "system"
   },
-  "rounded": "default",
+  "rounded": "lg",
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
-        "icon": "book-text",
+        "tab": "Overview",
+        "icon": "house",
         "groups": [
           {
             "group": "Getting Started",
-            "icon": "rocket",
             "pages": [
               "introduction",
               "quickstart",
               "concepts"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Features",
+        "icon": "sparkles",
+        "groups": [
           {
-            "group": "Features",
-            "icon": "sparkles",
+            "group": "Link Monitoring",
             "pages": [
               "features/broken-link-detection",
-              "features/orphan-pages",
-              "features/missing-from-site",
-              "features/response-time-tracking",
               "features/redirect-chain-analysis",
-              "features/ssl-certificate-check",
-              "features/seo-analysis",
-              "features/anchor-text-analysis",
-              "features/ai-review",
-              "features/ai-internal-link-suggestions"
+              "features/orphan-pages",
+              "features/missing-from-site"
             ]
           },
           {
+            "group": "Performance",
+            "pages": [
+              "features/response-time-tracking",
+              "features/ssl-certificate-check"
+            ]
+          },
+          {
+            "group": "SEO Tools",
+            "pages": [
+              "features/seo-analysis",
+              "features/anchor-text-analysis"
+            ]
+          },
+          {
+            "group": "AI-Powered",
+            "pages": [
+              "features/ai-review",
+              "features/ai-internal-link-suggestions"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Domain & Crawling",
+        "icon": "globe",
+        "groups": [
+          {
             "group": "Domain Management",
-            "icon": "globe",
             "pages": [
               "domains/adding-domains",
               "domains/dns-verification",
@@ -66,8 +94,7 @@
             ]
           },
           {
-            "group": "Crawling",
-            "icon": "search",
+            "group": "Crawling Operations",
             "pages": [
               "crawling/starting-crawls",
               "crawling/automated-crawls",
@@ -76,10 +103,15 @@
               "crawling/crawl-results",
               "crawling/sharing-results"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Platform",
+        "icon": "building",
+        "groups": [
           {
             "group": "Plans & Billing",
-            "icon": "credit-card",
             "pages": [
               "billing/plans",
               "billing/limits",
@@ -88,17 +120,15 @@
           },
           {
             "group": "Agency Features",
-            "icon": "building-2",
             "pages": [
               "agency/white-labeling",
               "agency/custom-domains",
-              "agency/ssl-not-ready",
-              "agency/client-management"
+              "agency/client-management",
+              "agency/ssl-not-ready"
             ]
           },
           {
             "group": "Integrations",
-            "icon": "plug",
             "pages": [
               "integrations/webhooks",
               "integrations/email-notifications"
@@ -108,19 +138,12 @@
       },
       {
         "tab": "API Reference",
-        "icon": "terminal",
+        "icon": "code",
         "groups": [
           {
-            "group": "Overview",
-            "icon": "book-open",
+            "group": "API Documentation",
             "pages": [
-              "api-reference/index"
-            ]
-          },
-          {
-            "group": "Endpoints",
-            "icon": "code",
-            "pages": [
+              "api-reference/index",
               "api-reference/crawls",
               "api-reference/webhooks"
             ]
@@ -128,12 +151,11 @@
         ]
       },
       {
-        "tab": "Changelog",
-        "icon": "history",
+        "tab": "Resources",
+        "icon": "book-open",
         "groups": [
           {
-            "group": "Updates",
-            "icon": "clock",
+            "group": "Resources",
             "pages": [
               "changelog"
             ]
