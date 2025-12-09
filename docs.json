@@ -144,6 +144,7 @@
             "group": "API Documentation",
             "pages": [
               "api-reference/index",
+              "api-reference/domains",
               "api-reference/crawls",
               "api-reference/webhooks"
             ]
